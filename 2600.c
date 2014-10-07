@@ -13,12 +13,12 @@
 // 148 total instructions, (a lot of these are the very similar)
 // Little Endian architecture
 
-uint16_t pc;   // program counter
-int8_t acc;    // accumulator
-int8_t rx, ry; // registers
-int8_t sp;     // stack pointer
-uint8_t zf;    // zero flag
-int8_t sr;     // status register
+uint16_t pc;    // program counter
+uint8_t acc;    // accumulator
+uint8_t rx, ry; // registers
+int8_t sp;      // stack pointer
+uint8_t zf;     // zero flag
+int8_t sr;      // status register
 
 unsigned char *memory;
 
@@ -32,7 +32,6 @@ void cleanup() {
     free(memory);
 }
 
-int num_vblanks = 0;
 
 inline void write_memory(uint16_t addr, unsigned char data) {
     memory[addr] = data;
@@ -44,14 +43,9 @@ inline void write_memory(uint16_t addr, unsigned char data) {
             tia_process_until(TIA_VSYNC);
         } else if (addr == TIA_VBLANK) {
             tia_process_until(TIA_VBLANK);
-            num_vblanks++;
         } else if (addr == TIA_COLUBK) {
             tia_colubk_set();
-        } else {
-        //    memory[addr] = data;
         }
-    } else {
-        //memory[addr] = data;
     }
 }
 
@@ -65,7 +59,7 @@ inline int core_cycle(int cycles_to_execute) {
         opcode = memory[pc];
         pc++;
 
-        printf("pc: %x, opcode: %x\n", pc-1, opcode);
+        //printf("pc: %x, opcode: %x\n", pc-1, opcode);
 
         switch (opcode) {
             case STY_84:

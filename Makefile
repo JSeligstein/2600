@@ -9,4 +9,4 @@ all: 2600
 	$(CC) -o 2600 $(CFLAGS) $(FILES)
 	
 clean:
-	rm -fr *.o 2600
+	rm -fr *.o 2600 2600.dSYM
