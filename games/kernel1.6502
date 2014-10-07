@@ -67,15 +67,6 @@ StartOfFrame
               inx 
               stx COLUBK 
 
-              nop
-              nop
-              nop
-              nop
-              nop
-              nop
-              nop
-
-
               dey
               sty COLUBK
               sta WSYNC 

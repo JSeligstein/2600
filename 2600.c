@@ -31,85 +31,122 @@ void cleanup() {
     free(memory);
 }
 
+int num_vblanks = 0;
 
-void core() {
+inline void write_memory(uint16_t addr, unsigned char data) {
+    if (addr < 0x1000) {
+        if (addr == TIA_WSYNC) {
+            tia_process_until(TIA_WSYNC);
+        } else if (addr == TIA_VSYNC) {
+            tia_process_until(TIA_VSYNC);
+        } else if (addr == TIA_VBLANK) {
+            tia_process_until(TIA_VBLANK);
+            num_vblanks++;
+        } else {
+            memory[addr] = data;
+        }
+    } else {
+        memory[addr] = data;
+    }
+}
+
+inline int core_cycle(int cycles_to_execute) {
     unsigned char opcode;
     uint16_t addr;
-    int jc = 0;
-    for (int i = 0; jc < 5; i++) {
 
+    int cycles_left = cycles_to_execute;
+    while (cycles_left > 0) {
+        //printf("core_cycle\n");
         opcode = memory[pc];
         pc++;
 
-        printf("pc: %x, opcode: %x\n", pc-1, opcode);
+        //printf("pc: %x, opcode: %x\n", pc-1, opcode);
 
         switch (opcode) {
-            case LDA_A9:
-                acc = memory[pc];
-                zf = !acc;
+            case STY_84:
+                // zero-paged
+                addr = memory[pc];
+                write_memory(addr, ry);
                 pc++;
+                cycles_left -= 3;
                 break;
 
-            case LDX_A2:
-                rx = memory[pc];
-                zf = !rx;
+            case STA_85:
+                // zero-paged
+                addr = memory[pc];
+                write_memory(addr, acc);
                 pc++;
+                cycles_left -= 3;
+                break;
+
+            case STX_86:
+                // zero-paged
+                addr = memory[pc];
+                write_memory(addr, rx);
+                pc++;
+                cycles_left -= 3;
+                break;
+
+            case DEY_88:
+                ry--;
+                zf = !ry;
+                cycles_left -= 2;
                 break;
 
             case LDY_A0:
                 ry = memory[pc];
                 zf = !ry;
                 pc++;
+                cycles_left -= 2;
+                break;
+
+            case LDX_A2:
+                rx = memory[pc];
+                zf = !rx;
+                pc++;
+                cycles_left -= 2;
+                break;
+
+            case LDA_A9:
+                acc = memory[pc];
+                zf = !acc;
+                pc++;
+                cycles_left -= 2;
                 break;
 
             case INX_E8:
                 rx++;
                 zf = !rx;
+                cycles_left -= 2;
                 break;
-                
-
 
             case NOP_EA:
-                break;
-
-            case DEY_88:
-                ry--;
-                zf = !ry;
-                break;
-
-            case STY_84:
-                // zero-paged
-                addr = memory[pc];
-                memory[addr] = ry;
-                pc++;
-                break;
-                
-            case STA_85:
-                // zero-paged
-                addr = memory[pc];
-                memory[addr] = acc;
-                pc++;
-                break;
-
-            case STX_86:
-                // zero-paged
-                addr = memory[pc];
-                memory[addr] = rx;
-                pc++;
+                cycles_left -= 2;
                 break;
 
             case JMP_4C:
                 pc = (memory[pc+1] << 8) | memory[pc];
-                printf("jumping to %x\n", pc);
-                jc++;
+                //printf("jumping to %x\n", pc);
+                cycles_left -= 3;
                 break;
 
             default:
                 printf("Unknown opcode: %x\n", opcode);
-                return;
+                return cycles_to_execute-cycles_left;
                 break;
         }
+    }
 
+    return cycles_to_execute - cycles_left;
+}
+
+void core() {
+    int cycles_executed;
+    while (1) {
+        cycles_executed = core_cycle(1);
+        for (; cycles_executed; cycles_executed--) {
+            tia_process_cycle();
+        }
     }
 }
 
@@ -140,9 +177,9 @@ int main(int argc, char **argv) {
     memory = (unsigned char *)malloc(65536);
 
     reset();
-    readRom("/Users/joel/code/2600/games/kernel1.bin");
+    readRom((char *)"/Users/joel/code/2600/games/kernel1.bin");
     pc = 0xf000;
-    tia_start();
+    tia_start(memory);
     core();
     cleanup();
 }

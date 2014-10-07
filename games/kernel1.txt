@@ -435,3119 +435,1391 @@
      67  f060		       e8		      inx
      68  f061		       86 09		      stx	COLUBK
      69  f063
-     70  f063		       ea		      nop
-     71  f064		       ea		      nop
-     72  f065		       ea		      nop
-     73  f066		       ea		      nop
-     74  f067		       ea		      nop
-     75  f068		       ea		      nop
-     76  f069		       ea		      nop
-     77  f06a
-     78  f06a
-     79  f06a		       88		      dey
-     80  f06b		       84 09		      sty	COLUBK
-     81  f06d		       85 02		      sta	WSYNC
-     66  f06d					      REPEND
-     67  f06f		       e8		      inx
-     68  f070		       86 09		      stx	COLUBK
-     69  f072
-     70  f072		       ea		      nop
-     71  f073		       ea		      nop
-     72  f074		       ea		      nop
-     73  f075		       ea		      nop
-     74  f076		       ea		      nop
-     75  f077		       ea		      nop
-     76  f078		       ea		      nop
-     77  f079
-     78  f079
-     79  f079		       88		      dey
-     80  f07a		       84 09		      sty	COLUBK
-     81  f07c		       85 02		      sta	WSYNC
-     66  f07c					      REPEND
-     67  f07e		       e8		      inx
-     68  f07f		       86 09		      stx	COLUBK
-     69  f081
-     70  f081		       ea		      nop
-     71  f082		       ea		      nop
-     72  f083		       ea		      nop
-     73  f084		       ea		      nop
-     74  f085		       ea		      nop
-     75  f086		       ea		      nop
-     76  f087		       ea		      nop
-     77  f088
-     78  f088
-     79  f088		       88		      dey
-     80  f089		       84 09		      sty	COLUBK
-     81  f08b		       85 02		      sta	WSYNC
-     66  f08b					      REPEND
-     67  f08d		       e8		      inx
-     68  f08e		       86 09		      stx	COLUBK
-     69  f090
-     70  f090		       ea		      nop
-     71  f091		       ea		      nop
-     72  f092		       ea		      nop
-     73  f093		       ea		      nop
-     74  f094		       ea		      nop
-     75  f095		       ea		      nop
-     76  f096		       ea		      nop
-     77  f097
-     78  f097
-     79  f097		       88		      dey
-     80  f098		       84 09		      sty	COLUBK
-     81  f09a		       85 02		      sta	WSYNC
-     66  f09a					      REPEND
-     67  f09c		       e8		      inx
-     68  f09d		       86 09		      stx	COLUBK
-     69  f09f
-     70  f09f		       ea		      nop
-     71  f0a0		       ea		      nop
-     72  f0a1		       ea		      nop
-     73  f0a2		       ea		      nop
-     74  f0a3		       ea		      nop
-     75  f0a4		       ea		      nop
-     76  f0a5		       ea		      nop
-     77  f0a6
-     78  f0a6
-     79  f0a6		       88		      dey
-     80  f0a7		       84 09		      sty	COLUBK
-     81  f0a9		       85 02		      sta	WSYNC
-     66  f0a9					      REPEND
-     67  f0ab		       e8		      inx
-     68  f0ac		       86 09		      stx	COLUBK
-     69  f0ae
-     70  f0ae		       ea		      nop
-     71  f0af		       ea		      nop
-     72  f0b0		       ea		      nop
-     73  f0b1		       ea		      nop
-     74  f0b2		       ea		      nop
-     75  f0b3		       ea		      nop
-     76  f0b4		       ea		      nop
-     77  f0b5
-     78  f0b5
-     79  f0b5		       88		      dey
-     80  f0b6		       84 09		      sty	COLUBK
-     81  f0b8		       85 02		      sta	WSYNC
-     66  f0b8					      REPEND
-     67  f0ba		       e8		      inx
-     68  f0bb		       86 09		      stx	COLUBK
-     69  f0bd
-     70  f0bd		       ea		      nop
-     71  f0be		       ea		      nop
-     72  f0bf		       ea		      nop
-     73  f0c0		       ea		      nop
-     74  f0c1		       ea		      nop
-     75  f0c2		       ea		      nop
-     76  f0c3		       ea		      nop
-     77  f0c4
-     78  f0c4
-     79  f0c4		       88		      dey
-     80  f0c5		       84 09		      sty	COLUBK
-     81  f0c7		       85 02		      sta	WSYNC
-     66  f0c7					      REPEND
-     67  f0c9		       e8		      inx
-     68  f0ca		       86 09		      stx	COLUBK
-     69  f0cc
-     70  f0cc		       ea		      nop
-     71  f0cd		       ea		      nop
-     72  f0ce		       ea		      nop
-     73  f0cf		       ea		      nop
-     74  f0d0		       ea		      nop
-     75  f0d1		       ea		      nop
-     76  f0d2		       ea		      nop
-     77  f0d3
-     78  f0d3
-     79  f0d3		       88		      dey
-     80  f0d4		       84 09		      sty	COLUBK
-     81  f0d6		       85 02		      sta	WSYNC
+     70  f063		       88		      dey
+     71  f064		       84 09		      sty	COLUBK
+     72  f066		       85 02		      sta	WSYNC
+     66  f066					      REPEND
+     67  f068		       e8		      inx
+     68  f069		       86 09		      stx	COLUBK
+     69  f06b
+     70  f06b		       88		      dey
+     71  f06c		       84 09		      sty	COLUBK
+     72  f06e		       85 02		      sta	WSYNC
+     66  f06e					      REPEND
+     67  f070		       e8		      inx
+     68  f071		       86 09		      stx	COLUBK
+     69  f073
+     70  f073		       88		      dey
+     71  f074		       84 09		      sty	COLUBK
+     72  f076		       85 02		      sta	WSYNC
+     66  f076					      REPEND
+     67  f078		       e8		      inx
+     68  f079		       86 09		      stx	COLUBK
+     69  f07b
+     70  f07b		       88		      dey
+     71  f07c		       84 09		      sty	COLUBK
+     72  f07e		       85 02		      sta	WSYNC
+     66  f07e					      REPEND
+     67  f080		       e8		      inx
+     68  f081		       86 09		      stx	COLUBK
+     69  f083
+     70  f083		       88		      dey
+     71  f084		       84 09		      sty	COLUBK
+     72  f086		       85 02		      sta	WSYNC
+     66  f086					      REPEND
+     67  f088		       e8		      inx
+     68  f089		       86 09		      stx	COLUBK
+     69  f08b
+     70  f08b		       88		      dey
+     71  f08c		       84 09		      sty	COLUBK
+     72  f08e		       85 02		      sta	WSYNC
+     66  f08e					      REPEND
+     67  f090		       e8		      inx
+     68  f091		       86 09		      stx	COLUBK
+     69  f093
+     70  f093		       88		      dey
+     71  f094		       84 09		      sty	COLUBK
+     72  f096		       85 02		      sta	WSYNC
+     66  f096					      REPEND
+     67  f098		       e8		      inx
+     68  f099		       86 09		      stx	COLUBK
+     69  f09b
+     70  f09b		       88		      dey
+     71  f09c		       84 09		      sty	COLUBK
+     72  f09e		       85 02		      sta	WSYNC
+     66  f09e					      REPEND
+     67  f0a0		       e8		      inx
+     68  f0a1		       86 09		      stx	COLUBK
+     69  f0a3
+     70  f0a3		       88		      dey
+     71  f0a4		       84 09		      sty	COLUBK
+     72  f0a6		       85 02		      sta	WSYNC
+     66  f0a6					      REPEND
+     67  f0a8		       e8		      inx
+     68  f0a9		       86 09		      stx	COLUBK
+     69  f0ab
+     70  f0ab		       88		      dey
+     71  f0ac		       84 09		      sty	COLUBK
+     72  f0ae		       85 02		      sta	WSYNC
+     66  f0ae					      REPEND
+     67  f0b0		       e8		      inx
+     68  f0b1		       86 09		      stx	COLUBK
+     69  f0b3
+     70  f0b3		       88		      dey
+     71  f0b4		       84 09		      sty	COLUBK
+     72  f0b6		       85 02		      sta	WSYNC
+     66  f0b6					      REPEND
+     67  f0b8		       e8		      inx
+     68  f0b9		       86 09		      stx	COLUBK
+     69  f0bb
+     70  f0bb		       88		      dey
+     71  f0bc		       84 09		      sty	COLUBK
+     72  f0be		       85 02		      sta	WSYNC
+     66  f0be					      REPEND
+     67  f0c0		       e8		      inx
+     68  f0c1		       86 09		      stx	COLUBK
+     69  f0c3
+     70  f0c3		       88		      dey
+     71  f0c4		       84 09		      sty	COLUBK
+     72  f0c6		       85 02		      sta	WSYNC
+     66  f0c6					      REPEND
+     67  f0c8		       e8		      inx
+     68  f0c9		       86 09		      stx	COLUBK
+     69  f0cb
+     70  f0cb		       88		      dey
+     71  f0cc		       84 09		      sty	COLUBK
+     72  f0ce		       85 02		      sta	WSYNC
+     66  f0ce					      REPEND
+     67  f0d0		       e8		      inx
+     68  f0d1		       86 09		      stx	COLUBK
+     69  f0d3
+     70  f0d3		       88		      dey
+     71  f0d4		       84 09		      sty	COLUBK
+     72  f0d6		       85 02		      sta	WSYNC
      66  f0d6					      REPEND
      67  f0d8		       e8		      inx
      68  f0d9		       86 09		      stx	COLUBK
      69  f0db
-     70  f0db		       ea		      nop
-     71  f0dc		       ea		      nop
-     72  f0dd		       ea		      nop
-     73  f0de		       ea		      nop
-     74  f0df		       ea		      nop
-     75  f0e0		       ea		      nop
-     76  f0e1		       ea		      nop
-     77  f0e2
-     78  f0e2
-     79  f0e2		       88		      dey
-     80  f0e3		       84 09		      sty	COLUBK
-     81  f0e5		       85 02		      sta	WSYNC
-     66  f0e5					      REPEND
-     67  f0e7		       e8		      inx
-     68  f0e8		       86 09		      stx	COLUBK
-     69  f0ea
-     70  f0ea		       ea		      nop
-     71  f0eb		       ea		      nop
-     72  f0ec		       ea		      nop
-     73  f0ed		       ea		      nop
-     74  f0ee		       ea		      nop
-     75  f0ef		       ea		      nop
-     76  f0f0		       ea		      nop
-     77  f0f1
-     78  f0f1
-     79  f0f1		       88		      dey
-     80  f0f2		       84 09		      sty	COLUBK
-     81  f0f4		       85 02		      sta	WSYNC
-     66  f0f4					      REPEND
-     67  f0f6		       e8		      inx
-     68  f0f7		       86 09		      stx	COLUBK
-     69  f0f9
-     70  f0f9		       ea		      nop
-     71  f0fa		       ea		      nop
-     72  f0fb		       ea		      nop
-     73  f0fc		       ea		      nop
-     74  f0fd		       ea		      nop
-     75  f0fe		       ea		      nop
-     76  f0ff		       ea		      nop
-     77  f100
-     78  f100
-     79  f100		       88		      dey
-     80  f101		       84 09		      sty	COLUBK
-     81  f103		       85 02		      sta	WSYNC
-     66  f103					      REPEND
-     67  f105		       e8		      inx
-     68  f106		       86 09		      stx	COLUBK
-     69  f108
-     70  f108		       ea		      nop
-     71  f109		       ea		      nop
-     72  f10a		       ea		      nop
-     73  f10b		       ea		      nop
-     74  f10c		       ea		      nop
-     75  f10d		       ea		      nop
-     76  f10e		       ea		      nop
-     77  f10f
-     78  f10f
-     79  f10f		       88		      dey
-     80  f110		       84 09		      sty	COLUBK
-     81  f112		       85 02		      sta	WSYNC
-     66  f112					      REPEND
-     67  f114		       e8		      inx
-     68  f115		       86 09		      stx	COLUBK
-     69  f117
-     70  f117		       ea		      nop
-     71  f118		       ea		      nop
-     72  f119		       ea		      nop
-     73  f11a		       ea		      nop
-     74  f11b		       ea		      nop
-     75  f11c		       ea		      nop
-     76  f11d		       ea		      nop
-     77  f11e
-     78  f11e
-     79  f11e		       88		      dey
-     80  f11f		       84 09		      sty	COLUBK
-     81  f121		       85 02		      sta	WSYNC
-     66  f121					      REPEND
-     67  f123		       e8		      inx
-     68  f124		       86 09		      stx	COLUBK
-     69  f126
-     70  f126		       ea		      nop
-     71  f127		       ea		      nop
-     72  f128		       ea		      nop
-     73  f129		       ea		      nop
-     74  f12a		       ea		      nop
-     75  f12b		       ea		      nop
-     76  f12c		       ea		      nop
-     77  f12d
-     78  f12d
-     79  f12d		       88		      dey
-     80  f12e		       84 09		      sty	COLUBK
-     81  f130		       85 02		      sta	WSYNC
-     66  f130					      REPEND
-     67  f132		       e8		      inx
-     68  f133		       86 09		      stx	COLUBK
-     69  f135
-     70  f135		       ea		      nop
-     71  f136		       ea		      nop
-     72  f137		       ea		      nop
-     73  f138		       ea		      nop
-     74  f139		       ea		      nop
-     75  f13a		       ea		      nop
-     76  f13b		       ea		      nop
-     77  f13c
-     78  f13c
-     79  f13c		       88		      dey
-     80  f13d		       84 09		      sty	COLUBK
-     81  f13f		       85 02		      sta	WSYNC
-     66  f13f					      REPEND
-     67  f141		       e8		      inx
-     68  f142		       86 09		      stx	COLUBK
-     69  f144
-     70  f144		       ea		      nop
-     71  f145		       ea		      nop
-     72  f146		       ea		      nop
-     73  f147		       ea		      nop
-     74  f148		       ea		      nop
-     75  f149		       ea		      nop
-     76  f14a		       ea		      nop
-     77  f14b
-     78  f14b
-     79  f14b		       88		      dey
-     80  f14c		       84 09		      sty	COLUBK
-     81  f14e		       85 02		      sta	WSYNC
+     70  f0db		       88		      dey
+     71  f0dc		       84 09		      sty	COLUBK
+     72  f0de		       85 02		      sta	WSYNC
+     66  f0de					      REPEND
+     67  f0e0		       e8		      inx
+     68  f0e1		       86 09		      stx	COLUBK
+     69  f0e3
+     70  f0e3		       88		      dey
+     71  f0e4		       84 09		      sty	COLUBK
+     72  f0e6		       85 02		      sta	WSYNC
+     66  f0e6					      REPEND
+     67  f0e8		       e8		      inx
+     68  f0e9		       86 09		      stx	COLUBK
+     69  f0eb
+     70  f0eb		       88		      dey
+     71  f0ec		       84 09		      sty	COLUBK
+     72  f0ee		       85 02		      sta	WSYNC
+     66  f0ee					      REPEND
+     67  f0f0		       e8		      inx
+     68  f0f1		       86 09		      stx	COLUBK
+     69  f0f3
+     70  f0f3		       88		      dey
+     71  f0f4		       84 09		      sty	COLUBK
+     72  f0f6		       85 02		      sta	WSYNC
+     66  f0f6					      REPEND
+     67  f0f8		       e8		      inx
+     68  f0f9		       86 09		      stx	COLUBK
+     69  f0fb
+     70  f0fb		       88		      dey
+     71  f0fc		       84 09		      sty	COLUBK
+     72  f0fe		       85 02		      sta	WSYNC
+     66  f0fe					      REPEND
+     67  f100		       e8		      inx
+     68  f101		       86 09		      stx	COLUBK
+     69  f103
+     70  f103		       88		      dey
+     71  f104		       84 09		      sty	COLUBK
+     72  f106		       85 02		      sta	WSYNC
+     66  f106					      REPEND
+     67  f108		       e8		      inx
+     68  f109		       86 09		      stx	COLUBK
+     69  f10b
+     70  f10b		       88		      dey
+     71  f10c		       84 09		      sty	COLUBK
+     72  f10e		       85 02		      sta	WSYNC
+     66  f10e					      REPEND
+     67  f110		       e8		      inx
+     68  f111		       86 09		      stx	COLUBK
+     69  f113
+     70  f113		       88		      dey
+     71  f114		       84 09		      sty	COLUBK
+     72  f116		       85 02		      sta	WSYNC
+     66  f116					      REPEND
+     67  f118		       e8		      inx
+     68  f119		       86 09		      stx	COLUBK
+     69  f11b
+     70  f11b		       88		      dey
+     71  f11c		       84 09		      sty	COLUBK
+     72  f11e		       85 02		      sta	WSYNC
+     66  f11e					      REPEND
+     67  f120		       e8		      inx
+     68  f121		       86 09		      stx	COLUBK
+     69  f123
+     70  f123		       88		      dey
+     71  f124		       84 09		      sty	COLUBK
+     72  f126		       85 02		      sta	WSYNC
+     66  f126					      REPEND
+     67  f128		       e8		      inx
+     68  f129		       86 09		      stx	COLUBK
+     69  f12b
+     70  f12b		       88		      dey
+     71  f12c		       84 09		      sty	COLUBK
+     72  f12e		       85 02		      sta	WSYNC
+     66  f12e					      REPEND
+     67  f130		       e8		      inx
+     68  f131		       86 09		      stx	COLUBK
+     69  f133
+     70  f133		       88		      dey
+     71  f134		       84 09		      sty	COLUBK
+     72  f136		       85 02		      sta	WSYNC
+     66  f136					      REPEND
+     67  f138		       e8		      inx
+     68  f139		       86 09		      stx	COLUBK
+     69  f13b
+     70  f13b		       88		      dey
+     71  f13c		       84 09		      sty	COLUBK
+     72  f13e		       85 02		      sta	WSYNC
+     66  f13e					      REPEND
+     67  f140		       e8		      inx
+     68  f141		       86 09		      stx	COLUBK
+     69  f143
+     70  f143		       88		      dey
+     71  f144		       84 09		      sty	COLUBK
+     72  f146		       85 02		      sta	WSYNC
+     66  f146					      REPEND
+     67  f148		       e8		      inx
+     68  f149		       86 09		      stx	COLUBK
+     69  f14b
+     70  f14b		       88		      dey
+     71  f14c		       84 09		      sty	COLUBK
+     72  f14e		       85 02		      sta	WSYNC
      66  f14e					      REPEND
      67  f150		       e8		      inx
      68  f151		       86 09		      stx	COLUBK
      69  f153
-     70  f153		       ea		      nop
-     71  f154		       ea		      nop
-     72  f155		       ea		      nop
-     73  f156		       ea		      nop
-     74  f157		       ea		      nop
-     75  f158		       ea		      nop
-     76  f159		       ea		      nop
-     77  f15a
-     78  f15a
-     79  f15a		       88		      dey
-     80  f15b		       84 09		      sty	COLUBK
-     81  f15d		       85 02		      sta	WSYNC
-     66  f15d					      REPEND
-     67  f15f		       e8		      inx
-     68  f160		       86 09		      stx	COLUBK
-     69  f162
-     70  f162		       ea		      nop
-     71  f163		       ea		      nop
-     72  f164		       ea		      nop
-     73  f165		       ea		      nop
-     74  f166		       ea		      nop
-     75  f167		       ea		      nop
-     76  f168		       ea		      nop
-     77  f169
-     78  f169
-     79  f169		       88		      dey
-     80  f16a		       84 09		      sty	COLUBK
-     81  f16c		       85 02		      sta	WSYNC
-     66  f16c					      REPEND
-     67  f16e		       e8		      inx
-     68  f16f		       86 09		      stx	COLUBK
-     69  f171
-     70  f171		       ea		      nop
-     71  f172		       ea		      nop
-     72  f173		       ea		      nop
-     73  f174		       ea		      nop
-     74  f175		       ea		      nop
-     75  f176		       ea		      nop
-     76  f177		       ea		      nop
-     77  f178
-     78  f178
-     79  f178		       88		      dey
-     80  f179		       84 09		      sty	COLUBK
-     81  f17b		       85 02		      sta	WSYNC
-     66  f17b					      REPEND
-     67  f17d		       e8		      inx
-     68  f17e		       86 09		      stx	COLUBK
-     69  f180
-     70  f180		       ea		      nop
-     71  f181		       ea		      nop
-     72  f182		       ea		      nop
-     73  f183		       ea		      nop
-     74  f184		       ea		      nop
-     75  f185		       ea		      nop
-     76  f186		       ea		      nop
-     77  f187
-     78  f187
-     79  f187		       88		      dey
-     80  f188		       84 09		      sty	COLUBK
-     81  f18a		       85 02		      sta	WSYNC
-     66  f18a					      REPEND
-     67  f18c		       e8		      inx
-     68  f18d		       86 09		      stx	COLUBK
-     69  f18f
-     70  f18f		       ea		      nop
-     71  f190		       ea		      nop
-     72  f191		       ea		      nop
-     73  f192		       ea		      nop
-     74  f193		       ea		      nop
-     75  f194		       ea		      nop
-     76  f195		       ea		      nop
-     77  f196
-     78  f196
-     79  f196		       88		      dey
-     80  f197		       84 09		      sty	COLUBK
-     81  f199		       85 02		      sta	WSYNC
-     66  f199					      REPEND
-     67  f19b		       e8		      inx
-     68  f19c		       86 09		      stx	COLUBK
-     69  f19e
-     70  f19e		       ea		      nop
-     71  f19f		       ea		      nop
-     72  f1a0		       ea		      nop
-     73  f1a1		       ea		      nop
-     74  f1a2		       ea		      nop
-     75  f1a3		       ea		      nop
-     76  f1a4		       ea		      nop
-     77  f1a5
-     78  f1a5
-     79  f1a5		       88		      dey
-     80  f1a6		       84 09		      sty	COLUBK
-     81  f1a8		       85 02		      sta	WSYNC
-     66  f1a8					      REPEND
-     67  f1aa		       e8		      inx
-     68  f1ab		       86 09		      stx	COLUBK
-     69  f1ad
-     70  f1ad		       ea		      nop
-     71  f1ae		       ea		      nop
-     72  f1af		       ea		      nop
-     73  f1b0		       ea		      nop
-     74  f1b1		       ea		      nop
-     75  f1b2		       ea		      nop
-     76  f1b3		       ea		      nop
-     77  f1b4
-     78  f1b4
-     79  f1b4		       88		      dey
-     80  f1b5		       84 09		      sty	COLUBK
-     81  f1b7		       85 02		      sta	WSYNC
-     66  f1b7					      REPEND
-     67  f1b9		       e8		      inx
-     68  f1ba		       86 09		      stx	COLUBK
-     69  f1bc
-     70  f1bc		       ea		      nop
-     71  f1bd		       ea		      nop
-     72  f1be		       ea		      nop
-     73  f1bf		       ea		      nop
-     74  f1c0		       ea		      nop
-     75  f1c1		       ea		      nop
-     76  f1c2		       ea		      nop
-     77  f1c3
-     78  f1c3
-     79  f1c3		       88		      dey
-     80  f1c4		       84 09		      sty	COLUBK
-     81  f1c6		       85 02		      sta	WSYNC
+     70  f153		       88		      dey
+     71  f154		       84 09		      sty	COLUBK
+     72  f156		       85 02		      sta	WSYNC
+     66  f156					      REPEND
+     67  f158		       e8		      inx
+     68  f159		       86 09		      stx	COLUBK
+     69  f15b
+     70  f15b		       88		      dey
+     71  f15c		       84 09		      sty	COLUBK
+     72  f15e		       85 02		      sta	WSYNC
+     66  f15e					      REPEND
+     67  f160		       e8		      inx
+     68  f161		       86 09		      stx	COLUBK
+     69  f163
+     70  f163		       88		      dey
+     71  f164		       84 09		      sty	COLUBK
+     72  f166		       85 02		      sta	WSYNC
+     66  f166					      REPEND
+     67  f168		       e8		      inx
+     68  f169		       86 09		      stx	COLUBK
+     69  f16b
+     70  f16b		       88		      dey
+     71  f16c		       84 09		      sty	COLUBK
+     72  f16e		       85 02		      sta	WSYNC
+     66  f16e					      REPEND
+     67  f170		       e8		      inx
+     68  f171		       86 09		      stx	COLUBK
+     69  f173
+     70  f173		       88		      dey
+     71  f174		       84 09		      sty	COLUBK
+     72  f176		       85 02		      sta	WSYNC
+     66  f176					      REPEND
+     67  f178		       e8		      inx
+     68  f179		       86 09		      stx	COLUBK
+     69  f17b
+     70  f17b		       88		      dey
+     71  f17c		       84 09		      sty	COLUBK
+     72  f17e		       85 02		      sta	WSYNC
+     66  f17e					      REPEND
+     67  f180		       e8		      inx
+     68  f181		       86 09		      stx	COLUBK
+     69  f183
+     70  f183		       88		      dey
+     71  f184		       84 09		      sty	COLUBK
+     72  f186		       85 02		      sta	WSYNC
+     66  f186					      REPEND
+     67  f188		       e8		      inx
+     68  f189		       86 09		      stx	COLUBK
+     69  f18b
+     70  f18b		       88		      dey
+     71  f18c		       84 09		      sty	COLUBK
+     72  f18e		       85 02		      sta	WSYNC
+     66  f18e					      REPEND
+     67  f190		       e8		      inx
+     68  f191		       86 09		      stx	COLUBK
+     69  f193
+     70  f193		       88		      dey
+     71  f194		       84 09		      sty	COLUBK
+     72  f196		       85 02		      sta	WSYNC
+     66  f196					      REPEND
+     67  f198		       e8		      inx
+     68  f199		       86 09		      stx	COLUBK
+     69  f19b
+     70  f19b		       88		      dey
+     71  f19c		       84 09		      sty	COLUBK
+     72  f19e		       85 02		      sta	WSYNC
+     66  f19e					      REPEND
+     67  f1a0		       e8		      inx
+     68  f1a1		       86 09		      stx	COLUBK
+     69  f1a3
+     70  f1a3		       88		      dey
+     71  f1a4		       84 09		      sty	COLUBK
+     72  f1a6		       85 02		      sta	WSYNC
+     66  f1a6					      REPEND
+     67  f1a8		       e8		      inx
+     68  f1a9		       86 09		      stx	COLUBK
+     69  f1ab
+     70  f1ab		       88		      dey
+     71  f1ac		       84 09		      sty	COLUBK
+     72  f1ae		       85 02		      sta	WSYNC
+     66  f1ae					      REPEND
+     67  f1b0		       e8		      inx
+     68  f1b1		       86 09		      stx	COLUBK
+     69  f1b3
+     70  f1b3		       88		      dey
+     71  f1b4		       84 09		      sty	COLUBK
+     72  f1b6		       85 02		      sta	WSYNC
+     66  f1b6					      REPEND
+     67  f1b8		       e8		      inx
+     68  f1b9		       86 09		      stx	COLUBK
+     69  f1bb
+     70  f1bb		       88		      dey
+     71  f1bc		       84 09		      sty	COLUBK
+     72  f1be		       85 02		      sta	WSYNC
+     66  f1be					      REPEND
+     67  f1c0		       e8		      inx
+     68  f1c1		       86 09		      stx	COLUBK
+     69  f1c3
+     70  f1c3		       88		      dey
+     71  f1c4		       84 09		      sty	COLUBK
+     72  f1c6		       85 02		      sta	WSYNC
      66  f1c6					      REPEND
      67  f1c8		       e8		      inx
      68  f1c9		       86 09		      stx	COLUBK
      69  f1cb
-     70  f1cb		       ea		      nop
-     71  f1cc		       ea		      nop
-     72  f1cd		       ea		      nop
-     73  f1ce		       ea		      nop
-     74  f1cf		       ea		      nop
-     75  f1d0		       ea		      nop
-     76  f1d1		       ea		      nop
-     77  f1d2
-     78  f1d2
-     79  f1d2		       88		      dey
-     80  f1d3		       84 09		      sty	COLUBK
-     81  f1d5		       85 02		      sta	WSYNC
-     66  f1d5					      REPEND
-     67  f1d7		       e8		      inx
-     68  f1d8		       86 09		      stx	COLUBK
-     69  f1da
-     70  f1da		       ea		      nop
-     71  f1db		       ea		      nop
-     72  f1dc		       ea		      nop
-     73  f1dd		       ea		      nop
-     74  f1de		       ea		      nop
-     75  f1df		       ea		      nop
-     76  f1e0		       ea		      nop
-     77  f1e1
-     78  f1e1
-     79  f1e1		       88		      dey
-     80  f1e2		       84 09		      sty	COLUBK
-     81  f1e4		       85 02		      sta	WSYNC
-     66  f1e4					      REPEND
-     67  f1e6		       e8		      inx
-     68  f1e7		       86 09		      stx	COLUBK
-     69  f1e9
-     70  f1e9		       ea		      nop
-     71  f1ea		       ea		      nop
-     72  f1eb		       ea		      nop
-     73  f1ec		       ea		      nop
-     74  f1ed		       ea		      nop
-     75  f1ee		       ea		      nop
-     76  f1ef		       ea		      nop
-     77  f1f0
-     78  f1f0
-     79  f1f0		       88		      dey
-     80  f1f1		       84 09		      sty	COLUBK
-     81  f1f3		       85 02		      sta	WSYNC
-     66  f1f3					      REPEND
-     67  f1f5		       e8		      inx
-     68  f1f6		       86 09		      stx	COLUBK
-     69  f1f8
-     70  f1f8		       ea		      nop
-     71  f1f9		       ea		      nop
-     72  f1fa		       ea		      nop
-     73  f1fb		       ea		      nop
-     74  f1fc		       ea		      nop
-     75  f1fd		       ea		      nop
-     76  f1fe		       ea		      nop
-     77  f1ff
-     78  f1ff
-     79  f1ff		       88		      dey
-     80  f200		       84 09		      sty	COLUBK
-     81  f202		       85 02		      sta	WSYNC
-     66  f202					      REPEND
-     67  f204		       e8		      inx
-     68  f205		       86 09		      stx	COLUBK
-     69  f207
-     70  f207		       ea		      nop
-     71  f208		       ea		      nop
-     72  f209		       ea		      nop
-     73  f20a		       ea		      nop
-     74  f20b		       ea		      nop
-     75  f20c		       ea		      nop
-     76  f20d		       ea		      nop
-     77  f20e
-     78  f20e
-     79  f20e		       88		      dey
-     80  f20f		       84 09		      sty	COLUBK
-     81  f211		       85 02		      sta	WSYNC
-     66  f211					      REPEND
-     67  f213		       e8		      inx
-     68  f214		       86 09		      stx	COLUBK
-     69  f216
-     70  f216		       ea		      nop
-     71  f217		       ea		      nop
-     72  f218		       ea		      nop
-     73  f219		       ea		      nop
-     74  f21a		       ea		      nop
-     75  f21b		       ea		      nop
-     76  f21c		       ea		      nop
-     77  f21d
-     78  f21d
-     79  f21d		       88		      dey
-     80  f21e		       84 09		      sty	COLUBK
-     81  f220		       85 02		      sta	WSYNC
-     66  f220					      REPEND
-     67  f222		       e8		      inx
-     68  f223		       86 09		      stx	COLUBK
-     69  f225
-     70  f225		       ea		      nop
-     71  f226		       ea		      nop
-     72  f227		       ea		      nop
-     73  f228		       ea		      nop
-     74  f229		       ea		      nop
-     75  f22a		       ea		      nop
-     76  f22b		       ea		      nop
-     77  f22c
-     78  f22c
-     79  f22c		       88		      dey
-     80  f22d		       84 09		      sty	COLUBK
-     81  f22f		       85 02		      sta	WSYNC
-     66  f22f					      REPEND
-     67  f231		       e8		      inx
-     68  f232		       86 09		      stx	COLUBK
-     69  f234
-     70  f234		       ea		      nop
-     71  f235		       ea		      nop
-     72  f236		       ea		      nop
-     73  f237		       ea		      nop
-     74  f238		       ea		      nop
-     75  f239		       ea		      nop
-     76  f23a		       ea		      nop
-     77  f23b
-     78  f23b
-     79  f23b		       88		      dey
-     80  f23c		       84 09		      sty	COLUBK
-     81  f23e		       85 02		      sta	WSYNC
+     70  f1cb		       88		      dey
+     71  f1cc		       84 09		      sty	COLUBK
+     72  f1ce		       85 02		      sta	WSYNC
+     66  f1ce					      REPEND
+     67  f1d0		       e8		      inx
+     68  f1d1		       86 09		      stx	COLUBK
+     69  f1d3
+     70  f1d3		       88		      dey
+     71  f1d4		       84 09		      sty	COLUBK
+     72  f1d6		       85 02		      sta	WSYNC
+     66  f1d6					      REPEND
+     67  f1d8		       e8		      inx
+     68  f1d9		       86 09		      stx	COLUBK
+     69  f1db
+     70  f1db		       88		      dey
+     71  f1dc		       84 09		      sty	COLUBK
+     72  f1de		       85 02		      sta	WSYNC
+     66  f1de					      REPEND
+     67  f1e0		       e8		      inx
+     68  f1e1		       86 09		      stx	COLUBK
+     69  f1e3
+     70  f1e3		       88		      dey
+     71  f1e4		       84 09		      sty	COLUBK
+     72  f1e6		       85 02		      sta	WSYNC
+     66  f1e6					      REPEND
+     67  f1e8		       e8		      inx
+     68  f1e9		       86 09		      stx	COLUBK
+     69  f1eb
+     70  f1eb		       88		      dey
+     71  f1ec		       84 09		      sty	COLUBK
+     72  f1ee		       85 02		      sta	WSYNC
+     66  f1ee					      REPEND
+     67  f1f0		       e8		      inx
+     68  f1f1		       86 09		      stx	COLUBK
+     69  f1f3
+     70  f1f3		       88		      dey
+     71  f1f4		       84 09		      sty	COLUBK
+     72  f1f6		       85 02		      sta	WSYNC
+     66  f1f6					      REPEND
+     67  f1f8		       e8		      inx
+     68  f1f9		       86 09		      stx	COLUBK
+     69  f1fb
+     70  f1fb		       88		      dey
+     71  f1fc		       84 09		      sty	COLUBK
+     72  f1fe		       85 02		      sta	WSYNC
+     66  f1fe					      REPEND
+     67  f200		       e8		      inx
+     68  f201		       86 09		      stx	COLUBK
+     69  f203
+     70  f203		       88		      dey
+     71  f204		       84 09		      sty	COLUBK
+     72  f206		       85 02		      sta	WSYNC
+     66  f206					      REPEND
+     67  f208		       e8		      inx
+     68  f209		       86 09		      stx	COLUBK
+     69  f20b
+     70  f20b		       88		      dey
+     71  f20c		       84 09		      sty	COLUBK
+     72  f20e		       85 02		      sta	WSYNC
+     66  f20e					      REPEND
+     67  f210		       e8		      inx
+     68  f211		       86 09		      stx	COLUBK
+     69  f213
+     70  f213		       88		      dey
+     71  f214		       84 09		      sty	COLUBK
+     72  f216		       85 02		      sta	WSYNC
+     66  f216					      REPEND
+     67  f218		       e8		      inx
+     68  f219		       86 09		      stx	COLUBK
+     69  f21b
+     70  f21b		       88		      dey
+     71  f21c		       84 09		      sty	COLUBK
+     72  f21e		       85 02		      sta	WSYNC
+     66  f21e					      REPEND
+     67  f220		       e8		      inx
+     68  f221		       86 09		      stx	COLUBK
+     69  f223
+     70  f223		       88		      dey
+     71  f224		       84 09		      sty	COLUBK
+     72  f226		       85 02		      sta	WSYNC
+     66  f226					      REPEND
+     67  f228		       e8		      inx
+     68  f229		       86 09		      stx	COLUBK
+     69  f22b
+     70  f22b		       88		      dey
+     71  f22c		       84 09		      sty	COLUBK
+     72  f22e		       85 02		      sta	WSYNC
+     66  f22e					      REPEND
+     67  f230		       e8		      inx
+     68  f231		       86 09		      stx	COLUBK
+     69  f233
+     70  f233		       88		      dey
+     71  f234		       84 09		      sty	COLUBK
+     72  f236		       85 02		      sta	WSYNC
+     66  f236					      REPEND
+     67  f238		       e8		      inx
+     68  f239		       86 09		      stx	COLUBK
+     69  f23b
+     70  f23b		       88		      dey
+     71  f23c		       84 09		      sty	COLUBK
+     72  f23e		       85 02		      sta	WSYNC
      66  f23e					      REPEND
      67  f240		       e8		      inx
      68  f241		       86 09		      stx	COLUBK
      69  f243
-     70  f243		       ea		      nop
-     71  f244		       ea		      nop
-     72  f245		       ea		      nop
-     73  f246		       ea		      nop
-     74  f247		       ea		      nop
-     75  f248		       ea		      nop
-     76  f249		       ea		      nop
-     77  f24a
-     78  f24a
-     79  f24a		       88		      dey
-     80  f24b		       84 09		      sty	COLUBK
-     81  f24d		       85 02		      sta	WSYNC
-     66  f24d					      REPEND
-     67  f24f		       e8		      inx
-     68  f250		       86 09		      stx	COLUBK
-     69  f252
-     70  f252		       ea		      nop
-     71  f253		       ea		      nop
-     72  f254		       ea		      nop
-     73  f255		       ea		      nop
-     74  f256		       ea		      nop
-     75  f257		       ea		      nop
-     76  f258		       ea		      nop
-     77  f259
-     78  f259
-     79  f259		       88		      dey
-     80  f25a		       84 09		      sty	COLUBK
-     81  f25c		       85 02		      sta	WSYNC
-     66  f25c					      REPEND
-     67  f25e		       e8		      inx
-     68  f25f		       86 09		      stx	COLUBK
-     69  f261
-     70  f261		       ea		      nop
-     71  f262		       ea		      nop
-     72  f263		       ea		      nop
-     73  f264		       ea		      nop
-     74  f265		       ea		      nop
-     75  f266		       ea		      nop
-     76  f267		       ea		      nop
-     77  f268
-     78  f268
-     79  f268		       88		      dey
-     80  f269		       84 09		      sty	COLUBK
-     81  f26b		       85 02		      sta	WSYNC
-     66  f26b					      REPEND
-     67  f26d		       e8		      inx
-     68  f26e		       86 09		      stx	COLUBK
-     69  f270
-     70  f270		       ea		      nop
-     71  f271		       ea		      nop
-     72  f272		       ea		      nop
-     73  f273		       ea		      nop
-     74  f274		       ea		      nop
-     75  f275		       ea		      nop
-     76  f276		       ea		      nop
-     77  f277
-     78  f277
-     79  f277		       88		      dey
-     80  f278		       84 09		      sty	COLUBK
-     81  f27a		       85 02		      sta	WSYNC
-     66  f27a					      REPEND
-     67  f27c		       e8		      inx
-     68  f27d		       86 09		      stx	COLUBK
-     69  f27f
-     70  f27f		       ea		      nop
-     71  f280		       ea		      nop
-     72  f281		       ea		      nop
-     73  f282		       ea		      nop
-     74  f283		       ea		      nop
-     75  f284		       ea		      nop
-     76  f285		       ea		      nop
-     77  f286
-     78  f286
-     79  f286		       88		      dey
-     80  f287		       84 09		      sty	COLUBK
-     81  f289		       85 02		      sta	WSYNC
-     66  f289					      REPEND
-     67  f28b		       e8		      inx
-     68  f28c		       86 09		      stx	COLUBK
-     69  f28e
-     70  f28e		       ea		      nop
-     71  f28f		       ea		      nop
-     72  f290		       ea		      nop
-     73  f291		       ea		      nop
-     74  f292		       ea		      nop
-     75  f293		       ea		      nop
-     76  f294		       ea		      nop
-     77  f295
-     78  f295
-     79  f295		       88		      dey
-     80  f296		       84 09		      sty	COLUBK
-     81  f298		       85 02		      sta	WSYNC
-     66  f298					      REPEND
-     67  f29a		       e8		      inx
-     68  f29b		       86 09		      stx	COLUBK
-     69  f29d
-     70  f29d		       ea		      nop
-     71  f29e		       ea		      nop
-     72  f29f		       ea		      nop
-     73  f2a0		       ea		      nop
-     74  f2a1		       ea		      nop
-     75  f2a2		       ea		      nop
-     76  f2a3		       ea		      nop
-     77  f2a4
-     78  f2a4
-     79  f2a4		       88		      dey
-     80  f2a5		       84 09		      sty	COLUBK
-     81  f2a7		       85 02		      sta	WSYNC
-     66  f2a7					      REPEND
-     67  f2a9		       e8		      inx
-     68  f2aa		       86 09		      stx	COLUBK
-     69  f2ac
-     70  f2ac		       ea		      nop
-     71  f2ad		       ea		      nop
-     72  f2ae		       ea		      nop
-     73  f2af		       ea		      nop
-     74  f2b0		       ea		      nop
-     75  f2b1		       ea		      nop
-     76  f2b2		       ea		      nop
-     77  f2b3
-     78  f2b3
-     79  f2b3		       88		      dey
-     80  f2b4		       84 09		      sty	COLUBK
-     81  f2b6		       85 02		      sta	WSYNC
+     70  f243		       88		      dey
+     71  f244		       84 09		      sty	COLUBK
+     72  f246		       85 02		      sta	WSYNC
+     66  f246					      REPEND
+     67  f248		       e8		      inx
+     68  f249		       86 09		      stx	COLUBK
+     69  f24b
+     70  f24b		       88		      dey
+     71  f24c		       84 09		      sty	COLUBK
+     72  f24e		       85 02		      sta	WSYNC
+     66  f24e					      REPEND
+     67  f250		       e8		      inx
+     68  f251		       86 09		      stx	COLUBK
+     69  f253
+     70  f253		       88		      dey
+     71  f254		       84 09		      sty	COLUBK
+     72  f256		       85 02		      sta	WSYNC
+     66  f256					      REPEND
+     67  f258		       e8		      inx
+     68  f259		       86 09		      stx	COLUBK
+     69  f25b
+     70  f25b		       88		      dey
+     71  f25c		       84 09		      sty	COLUBK
+     72  f25e		       85 02		      sta	WSYNC
+     66  f25e					      REPEND
+     67  f260		       e8		      inx
+     68  f261		       86 09		      stx	COLUBK
+     69  f263
+     70  f263		       88		      dey
+     71  f264		       84 09		      sty	COLUBK
+     72  f266		       85 02		      sta	WSYNC
+     66  f266					      REPEND
+     67  f268		       e8		      inx
+     68  f269		       86 09		      stx	COLUBK
+     69  f26b
+     70  f26b		       88		      dey
+     71  f26c		       84 09		      sty	COLUBK
+     72  f26e		       85 02		      sta	WSYNC
+     66  f26e					      REPEND
+     67  f270		       e8		      inx
+     68  f271		       86 09		      stx	COLUBK
+     69  f273
+     70  f273		       88		      dey
+     71  f274		       84 09		      sty	COLUBK
+     72  f276		       85 02		      sta	WSYNC
+     66  f276					      REPEND
+     67  f278		       e8		      inx
+     68  f279		       86 09		      stx	COLUBK
+     69  f27b
+     70  f27b		       88		      dey
+     71  f27c		       84 09		      sty	COLUBK
+     72  f27e		       85 02		      sta	WSYNC
+     66  f27e					      REPEND
+     67  f280		       e8		      inx
+     68  f281		       86 09		      stx	COLUBK
+     69  f283
+     70  f283		       88		      dey
+     71  f284		       84 09		      sty	COLUBK
+     72  f286		       85 02		      sta	WSYNC
+     66  f286					      REPEND
+     67  f288		       e8		      inx
+     68  f289		       86 09		      stx	COLUBK
+     69  f28b
+     70  f28b		       88		      dey
+     71  f28c		       84 09		      sty	COLUBK
+     72  f28e		       85 02		      sta	WSYNC
+     66  f28e					      REPEND
+     67  f290		       e8		      inx
+     68  f291		       86 09		      stx	COLUBK
+     69  f293
+     70  f293		       88		      dey
+     71  f294		       84 09		      sty	COLUBK
+     72  f296		       85 02		      sta	WSYNC
+     66  f296					      REPEND
+     67  f298		       e8		      inx
+     68  f299		       86 09		      stx	COLUBK
+     69  f29b
+     70  f29b		       88		      dey
+     71  f29c		       84 09		      sty	COLUBK
+     72  f29e		       85 02		      sta	WSYNC
+     66  f29e					      REPEND
+     67  f2a0		       e8		      inx
+     68  f2a1		       86 09		      stx	COLUBK
+     69  f2a3
+     70  f2a3		       88		      dey
+     71  f2a4		       84 09		      sty	COLUBK
+     72  f2a6		       85 02		      sta	WSYNC
+     66  f2a6					      REPEND
+     67  f2a8		       e8		      inx
+     68  f2a9		       86 09		      stx	COLUBK
+     69  f2ab
+     70  f2ab		       88		      dey
+     71  f2ac		       84 09		      sty	COLUBK
+     72  f2ae		       85 02		      sta	WSYNC
+     66  f2ae					      REPEND
+     67  f2b0		       e8		      inx
+     68  f2b1		       86 09		      stx	COLUBK
+     69  f2b3
+     70  f2b3		       88		      dey
+     71  f2b4		       84 09		      sty	COLUBK
+     72  f2b6		       85 02		      sta	WSYNC
      66  f2b6					      REPEND
      67  f2b8		       e8		      inx
      68  f2b9		       86 09		      stx	COLUBK
      69  f2bb
-     70  f2bb		       ea		      nop
-     71  f2bc		       ea		      nop
-     72  f2bd		       ea		      nop
-     73  f2be		       ea		      nop
-     74  f2bf		       ea		      nop
-     75  f2c0		       ea		      nop
-     76  f2c1		       ea		      nop
-     77  f2c2
-     78  f2c2
-     79  f2c2		       88		      dey
-     80  f2c3		       84 09		      sty	COLUBK
-     81  f2c5		       85 02		      sta	WSYNC
-     66  f2c5					      REPEND
-     67  f2c7		       e8		      inx
-     68  f2c8		       86 09		      stx	COLUBK
-     69  f2ca
-     70  f2ca		       ea		      nop
-     71  f2cb		       ea		      nop
-     72  f2cc		       ea		      nop
-     73  f2cd		       ea		      nop
-     74  f2ce		       ea		      nop
-     75  f2cf		       ea		      nop
-     76  f2d0		       ea		      nop
-     77  f2d1
-     78  f2d1
-     79  f2d1		       88		      dey
-     80  f2d2		       84 09		      sty	COLUBK
-     81  f2d4		       85 02		      sta	WSYNC
-     66  f2d4					      REPEND
-     67  f2d6		       e8		      inx
-     68  f2d7		       86 09		      stx	COLUBK
-     69  f2d9
-     70  f2d9		       ea		      nop
-     71  f2da		       ea		      nop
-     72  f2db		       ea		      nop
-     73  f2dc		       ea		      nop
-     74  f2dd		       ea		      nop
-     75  f2de		       ea		      nop
-     76  f2df		       ea		      nop
-     77  f2e0
-     78  f2e0
-     79  f2e0		       88		      dey
-     80  f2e1		       84 09		      sty	COLUBK
-     81  f2e3		       85 02		      sta	WSYNC
-     66  f2e3					      REPEND
-     67  f2e5		       e8		      inx
-     68  f2e6		       86 09		      stx	COLUBK
-     69  f2e8
-     70  f2e8		       ea		      nop
-     71  f2e9		       ea		      nop
-     72  f2ea		       ea		      nop
-     73  f2eb		       ea		      nop
-     74  f2ec		       ea		      nop
-     75  f2ed		       ea		      nop
-     76  f2ee		       ea		      nop
-     77  f2ef
-     78  f2ef
-     79  f2ef		       88		      dey
-     80  f2f0		       84 09		      sty	COLUBK
-     81  f2f2		       85 02		      sta	WSYNC
-     66  f2f2					      REPEND
-     67  f2f4		       e8		      inx
-     68  f2f5		       86 09		      stx	COLUBK
-     69  f2f7
-     70  f2f7		       ea		      nop
-     71  f2f8		       ea		      nop
-     72  f2f9		       ea		      nop
-     73  f2fa		       ea		      nop
-     74  f2fb		       ea		      nop
-     75  f2fc		       ea		      nop
-     76  f2fd		       ea		      nop
-     77  f2fe
-     78  f2fe
-     79  f2fe		       88		      dey
-     80  f2ff		       84 09		      sty	COLUBK
-     81  f301		       85 02		      sta	WSYNC
-     66  f301					      REPEND
-     67  f303		       e8		      inx
-     68  f304		       86 09		      stx	COLUBK
-     69  f306
-     70  f306		       ea		      nop
-     71  f307		       ea		      nop
-     72  f308		       ea		      nop
-     73  f309		       ea		      nop
-     74  f30a		       ea		      nop
-     75  f30b		       ea		      nop
-     76  f30c		       ea		      nop
-     77  f30d
-     78  f30d
-     79  f30d		       88		      dey
-     80  f30e		       84 09		      sty	COLUBK
-     81  f310		       85 02		      sta	WSYNC
-     66  f310					      REPEND
-     67  f312		       e8		      inx
-     68  f313		       86 09		      stx	COLUBK
-     69  f315
-     70  f315		       ea		      nop
-     71  f316		       ea		      nop
-     72  f317		       ea		      nop
-     73  f318		       ea		      nop
-     74  f319		       ea		      nop
-     75  f31a		       ea		      nop
-     76  f31b		       ea		      nop
-     77  f31c
-     78  f31c
-     79  f31c		       88		      dey
-     80  f31d		       84 09		      sty	COLUBK
-     81  f31f		       85 02		      sta	WSYNC
-     66  f31f					      REPEND
-     67  f321		       e8		      inx
-     68  f322		       86 09		      stx	COLUBK
-     69  f324
-     70  f324		       ea		      nop
-     71  f325		       ea		      nop
-     72  f326		       ea		      nop
-     73  f327		       ea		      nop
-     74  f328		       ea		      nop
-     75  f329		       ea		      nop
-     76  f32a		       ea		      nop
-     77  f32b
-     78  f32b
-     79  f32b		       88		      dey
-     80  f32c		       84 09		      sty	COLUBK
-     81  f32e		       85 02		      sta	WSYNC
+     70  f2bb		       88		      dey
+     71  f2bc		       84 09		      sty	COLUBK
+     72  f2be		       85 02		      sta	WSYNC
+     66  f2be					      REPEND
+     67  f2c0		       e8		      inx
+     68  f2c1		       86 09		      stx	COLUBK
+     69  f2c3
+     70  f2c3		       88		      dey
+     71  f2c4		       84 09		      sty	COLUBK
+     72  f2c6		       85 02		      sta	WSYNC
+     66  f2c6					      REPEND
+     67  f2c8		       e8		      inx
+     68  f2c9		       86 09		      stx	COLUBK
+     69  f2cb
+     70  f2cb		       88		      dey
+     71  f2cc		       84 09		      sty	COLUBK
+     72  f2ce		       85 02		      sta	WSYNC
+     66  f2ce					      REPEND
+     67  f2d0		       e8		      inx
+     68  f2d1		       86 09		      stx	COLUBK
+     69  f2d3
+     70  f2d3		       88		      dey
+     71  f2d4		       84 09		      sty	COLUBK
+     72  f2d6		       85 02		      sta	WSYNC
+     66  f2d6					      REPEND
+     67  f2d8		       e8		      inx
+     68  f2d9		       86 09		      stx	COLUBK
+     69  f2db
+     70  f2db		       88		      dey
+     71  f2dc		       84 09		      sty	COLUBK
+     72  f2de		       85 02		      sta	WSYNC
+     66  f2de					      REPEND
+     67  f2e0		       e8		      inx
+     68  f2e1		       86 09		      stx	COLUBK
+     69  f2e3
+     70  f2e3		       88		      dey
+     71  f2e4		       84 09		      sty	COLUBK
+     72  f2e6		       85 02		      sta	WSYNC
+     66  f2e6					      REPEND
+     67  f2e8		       e8		      inx
+     68  f2e9		       86 09		      stx	COLUBK
+     69  f2eb
+     70  f2eb		       88		      dey
+     71  f2ec		       84 09		      sty	COLUBK
+     72  f2ee		       85 02		      sta	WSYNC
+     66  f2ee					      REPEND
+     67  f2f0		       e8		      inx
+     68  f2f1		       86 09		      stx	COLUBK
+     69  f2f3
+     70  f2f3		       88		      dey
+     71  f2f4		       84 09		      sty	COLUBK
+     72  f2f6		       85 02		      sta	WSYNC
+     66  f2f6					      REPEND
+     67  f2f8		       e8		      inx
+     68  f2f9		       86 09		      stx	COLUBK
+     69  f2fb
+     70  f2fb		       88		      dey
+     71  f2fc		       84 09		      sty	COLUBK
+     72  f2fe		       85 02		      sta	WSYNC
+     66  f2fe					      REPEND
+     67  f300		       e8		      inx
+     68  f301		       86 09		      stx	COLUBK
+     69  f303
+     70  f303		       88		      dey
+     71  f304		       84 09		      sty	COLUBK
+     72  f306		       85 02		      sta	WSYNC
+     66  f306					      REPEND
+     67  f308		       e8		      inx
+     68  f309		       86 09		      stx	COLUBK
+     69  f30b
+     70  f30b		       88		      dey
+     71  f30c		       84 09		      sty	COLUBK
+     72  f30e		       85 02		      sta	WSYNC
+     66  f30e					      REPEND
+     67  f310		       e8		      inx
+     68  f311		       86 09		      stx	COLUBK
+     69  f313
+     70  f313		       88		      dey
+     71  f314		       84 09		      sty	COLUBK
+     72  f316		       85 02		      sta	WSYNC
+     66  f316					      REPEND
+     67  f318		       e8		      inx
+     68  f319		       86 09		      stx	COLUBK
+     69  f31b
+     70  f31b		       88		      dey
+     71  f31c		       84 09		      sty	COLUBK
+     72  f31e		       85 02		      sta	WSYNC
+     66  f31e					      REPEND
+     67  f320		       e8		      inx
+     68  f321		       86 09		      stx	COLUBK
+     69  f323
+     70  f323		       88		      dey
+     71  f324		       84 09		      sty	COLUBK
+     72  f326		       85 02		      sta	WSYNC
+     66  f326					      REPEND
+     67  f328		       e8		      inx
+     68  f329		       86 09		      stx	COLUBK
+     69  f32b
+     70  f32b		       88		      dey
+     71  f32c		       84 09		      sty	COLUBK
+     72  f32e		       85 02		      sta	WSYNC
      66  f32e					      REPEND
      67  f330		       e8		      inx
      68  f331		       86 09		      stx	COLUBK
      69  f333
-     70  f333		       ea		      nop
-     71  f334		       ea		      nop
-     72  f335		       ea		      nop
-     73  f336		       ea		      nop
-     74  f337		       ea		      nop
-     75  f338		       ea		      nop
-     76  f339		       ea		      nop
-     77  f33a
-     78  f33a
-     79  f33a		       88		      dey
-     80  f33b		       84 09		      sty	COLUBK
-     81  f33d		       85 02		      sta	WSYNC
-     66  f33d					      REPEND
-     67  f33f		       e8		      inx
-     68  f340		       86 09		      stx	COLUBK
-     69  f342
-     70  f342		       ea		      nop
-     71  f343		       ea		      nop
-     72  f344		       ea		      nop
-     73  f345		       ea		      nop
-     74  f346		       ea		      nop
-     75  f347		       ea		      nop
-     76  f348		       ea		      nop
-     77  f349
-     78  f349
-     79  f349		       88		      dey
-     80  f34a		       84 09		      sty	COLUBK
-     81  f34c		       85 02		      sta	WSYNC
-     66  f34c					      REPEND
-     67  f34e		       e8		      inx
-     68  f34f		       86 09		      stx	COLUBK
-     69  f351
-     70  f351		       ea		      nop
-     71  f352		       ea		      nop
-     72  f353		       ea		      nop
-     73  f354		       ea		      nop
-     74  f355		       ea		      nop
-     75  f356		       ea		      nop
-     76  f357		       ea		      nop
-     77  f358
-     78  f358
-     79  f358		       88		      dey
-     80  f359		       84 09		      sty	COLUBK
-     81  f35b		       85 02		      sta	WSYNC
-     66  f35b					      REPEND
-     67  f35d		       e8		      inx
-     68  f35e		       86 09		      stx	COLUBK
-     69  f360
-     70  f360		       ea		      nop
-     71  f361		       ea		      nop
-     72  f362		       ea		      nop
-     73  f363		       ea		      nop
-     74  f364		       ea		      nop
-     75  f365		       ea		      nop
-     76  f366		       ea		      nop
-     77  f367
-     78  f367
-     79  f367		       88		      dey
-     80  f368		       84 09		      sty	COLUBK
-     81  f36a		       85 02		      sta	WSYNC
-     66  f36a					      REPEND
-     67  f36c		       e8		      inx
-     68  f36d		       86 09		      stx	COLUBK
-     69  f36f
-     70  f36f		       ea		      nop
-     71  f370		       ea		      nop
-     72  f371		       ea		      nop
-     73  f372		       ea		      nop
-     74  f373		       ea		      nop
-     75  f374		       ea		      nop
-     76  f375		       ea		      nop
-     77  f376
-     78  f376
-     79  f376		       88		      dey
-     80  f377		       84 09		      sty	COLUBK
-     81  f379		       85 02		      sta	WSYNC
-     66  f379					      REPEND
-     67  f37b		       e8		      inx
-     68  f37c		       86 09		      stx	COLUBK
-     69  f37e
-     70  f37e		       ea		      nop
-     71  f37f		       ea		      nop
-     72  f380		       ea		      nop
-     73  f381		       ea		      nop
-     74  f382		       ea		      nop
-     75  f383		       ea		      nop
-     76  f384		       ea		      nop
-     77  f385
-     78  f385
-     79  f385		       88		      dey
-     80  f386		       84 09		      sty	COLUBK
-     81  f388		       85 02		      sta	WSYNC
-     66  f388					      REPEND
-     67  f38a		       e8		      inx
-     68  f38b		       86 09		      stx	COLUBK
-     69  f38d
-     70  f38d		       ea		      nop
-     71  f38e		       ea		      nop
-     72  f38f		       ea		      nop
-     73  f390		       ea		      nop
-     74  f391		       ea		      nop
-     75  f392		       ea		      nop
-     76  f393		       ea		      nop
-     77  f394
-     78  f394
-     79  f394		       88		      dey
-     80  f395		       84 09		      sty	COLUBK
-     81  f397		       85 02		      sta	WSYNC
-     66  f397					      REPEND
-     67  f399		       e8		      inx
-     68  f39a		       86 09		      stx	COLUBK
-     69  f39c
-     70  f39c		       ea		      nop
-     71  f39d		       ea		      nop
-     72  f39e		       ea		      nop
-     73  f39f		       ea		      nop
-     74  f3a0		       ea		      nop
-     75  f3a1		       ea		      nop
-     76  f3a2		       ea		      nop
-     77  f3a3
-     78  f3a3
-     79  f3a3		       88		      dey
-     80  f3a4		       84 09		      sty	COLUBK
-     81  f3a6		       85 02		      sta	WSYNC
+     70  f333		       88		      dey
+     71  f334		       84 09		      sty	COLUBK
+     72  f336		       85 02		      sta	WSYNC
+     66  f336					      REPEND
+     67  f338		       e8		      inx
+     68  f339		       86 09		      stx	COLUBK
+     69  f33b
+     70  f33b		       88		      dey
+     71  f33c		       84 09		      sty	COLUBK
+     72  f33e		       85 02		      sta	WSYNC
+     66  f33e					      REPEND
+     67  f340		       e8		      inx
+     68  f341		       86 09		      stx	COLUBK
+     69  f343
+     70  f343		       88		      dey
+     71  f344		       84 09		      sty	COLUBK
+     72  f346		       85 02		      sta	WSYNC
+     66  f346					      REPEND
+     67  f348		       e8		      inx
+     68  f349		       86 09		      stx	COLUBK
+     69  f34b
+     70  f34b		       88		      dey
+     71  f34c		       84 09		      sty	COLUBK
+     72  f34e		       85 02		      sta	WSYNC
+     66  f34e					      REPEND
+     67  f350		       e8		      inx
+     68  f351		       86 09		      stx	COLUBK
+     69  f353
+     70  f353		       88		      dey
+     71  f354		       84 09		      sty	COLUBK
+     72  f356		       85 02		      sta	WSYNC
+     66  f356					      REPEND
+     67  f358		       e8		      inx
+     68  f359		       86 09		      stx	COLUBK
+     69  f35b
+     70  f35b		       88		      dey
+     71  f35c		       84 09		      sty	COLUBK
+     72  f35e		       85 02		      sta	WSYNC
+     66  f35e					      REPEND
+     67  f360		       e8		      inx
+     68  f361		       86 09		      stx	COLUBK
+     69  f363
+     70  f363		       88		      dey
+     71  f364		       84 09		      sty	COLUBK
+     72  f366		       85 02		      sta	WSYNC
+     66  f366					      REPEND
+     67  f368		       e8		      inx
+     68  f369		       86 09		      stx	COLUBK
+     69  f36b
+     70  f36b		       88		      dey
+     71  f36c		       84 09		      sty	COLUBK
+     72  f36e		       85 02		      sta	WSYNC
+     66  f36e					      REPEND
+     67  f370		       e8		      inx
+     68  f371		       86 09		      stx	COLUBK
+     69  f373
+     70  f373		       88		      dey
+     71  f374		       84 09		      sty	COLUBK
+     72  f376		       85 02		      sta	WSYNC
+     66  f376					      REPEND
+     67  f378		       e8		      inx
+     68  f379		       86 09		      stx	COLUBK
+     69  f37b
+     70  f37b		       88		      dey
+     71  f37c		       84 09		      sty	COLUBK
+     72  f37e		       85 02		      sta	WSYNC
+     66  f37e					      REPEND
+     67  f380		       e8		      inx
+     68  f381		       86 09		      stx	COLUBK
+     69  f383
+     70  f383		       88		      dey
+     71  f384		       84 09		      sty	COLUBK
+     72  f386		       85 02		      sta	WSYNC
+     66  f386					      REPEND
+     67  f388		       e8		      inx
+     68  f389		       86 09		      stx	COLUBK
+     69  f38b
+     70  f38b		       88		      dey
+     71  f38c		       84 09		      sty	COLUBK
+     72  f38e		       85 02		      sta	WSYNC
+     66  f38e					      REPEND
+     67  f390		       e8		      inx
+     68  f391		       86 09		      stx	COLUBK
+     69  f393
+     70  f393		       88		      dey
+     71  f394		       84 09		      sty	COLUBK
+     72  f396		       85 02		      sta	WSYNC
+     66  f396					      REPEND
+     67  f398		       e8		      inx
+     68  f399		       86 09		      stx	COLUBK
+     69  f39b
+     70  f39b		       88		      dey
+     71  f39c		       84 09		      sty	COLUBK
+     72  f39e		       85 02		      sta	WSYNC
+     66  f39e					      REPEND
+     67  f3a0		       e8		      inx
+     68  f3a1		       86 09		      stx	COLUBK
+     69  f3a3
+     70  f3a3		       88		      dey
+     71  f3a4		       84 09		      sty	COLUBK
+     72  f3a6		       85 02		      sta	WSYNC
      66  f3a6					      REPEND
      67  f3a8		       e8		      inx
      68  f3a9		       86 09		      stx	COLUBK
      69  f3ab
-     70  f3ab		       ea		      nop
-     71  f3ac		       ea		      nop
-     72  f3ad		       ea		      nop
-     73  f3ae		       ea		      nop
-     74  f3af		       ea		      nop
-     75  f3b0		       ea		      nop
-     76  f3b1		       ea		      nop
-     77  f3b2
-     78  f3b2
-     79  f3b2		       88		      dey
-     80  f3b3		       84 09		      sty	COLUBK
-     81  f3b5		       85 02		      sta	WSYNC
-     66  f3b5					      REPEND
-     67  f3b7		       e8		      inx
-     68  f3b8		       86 09		      stx	COLUBK
-     69  f3ba
-     70  f3ba		       ea		      nop
-     71  f3bb		       ea		      nop
-     72  f3bc		       ea		      nop
-     73  f3bd		       ea		      nop
-     74  f3be		       ea		      nop
-     75  f3bf		       ea		      nop
-     76  f3c0		       ea		      nop
-     77  f3c1
-     78  f3c1
-     79  f3c1		       88		      dey
-     80  f3c2		       84 09		      sty	COLUBK
-     81  f3c4		       85 02		      sta	WSYNC
-     66  f3c4					      REPEND
-     67  f3c6		       e8		      inx
-     68  f3c7		       86 09		      stx	COLUBK
-     69  f3c9
-     70  f3c9		       ea		      nop
-     71  f3ca		       ea		      nop
-     72  f3cb		       ea		      nop
-     73  f3cc		       ea		      nop
-     74  f3cd		       ea		      nop
-     75  f3ce		       ea		      nop
-     76  f3cf		       ea		      nop
-     77  f3d0
-     78  f3d0
-     79  f3d0		       88		      dey
-     80  f3d1		       84 09		      sty	COLUBK
-     81  f3d3		       85 02		      sta	WSYNC
-     66  f3d3					      REPEND
-     67  f3d5		       e8		      inx
-     68  f3d6		       86 09		      stx	COLUBK
-     69  f3d8
-     70  f3d8		       ea		      nop
-     71  f3d9		       ea		      nop
-     72  f3da		       ea		      nop
-     73  f3db		       ea		      nop
-     74  f3dc		       ea		      nop
-     75  f3dd		       ea		      nop
-     76  f3de		       ea		      nop
-     77  f3df
-     78  f3df
-     79  f3df		       88		      dey
-     80  f3e0		       84 09		      sty	COLUBK
-     81  f3e2		       85 02		      sta	WSYNC
-     66  f3e2					      REPEND
-     67  f3e4		       e8		      inx
-     68  f3e5		       86 09		      stx	COLUBK
-     69  f3e7
-     70  f3e7		       ea		      nop
-     71  f3e8		       ea		      nop
-     72  f3e9		       ea		      nop
-     73  f3ea		       ea		      nop
-     74  f3eb		       ea		      nop
-     75  f3ec		       ea		      nop
-     76  f3ed		       ea		      nop
-     77  f3ee
-     78  f3ee
-     79  f3ee		       88		      dey
-     80  f3ef		       84 09		      sty	COLUBK
-     81  f3f1		       85 02		      sta	WSYNC
-     66  f3f1					      REPEND
-     67  f3f3		       e8		      inx
-     68  f3f4		       86 09		      stx	COLUBK
-     69  f3f6
-     70  f3f6		       ea		      nop
-     71  f3f7		       ea		      nop
-     72  f3f8		       ea		      nop
-     73  f3f9		       ea		      nop
-     74  f3fa		       ea		      nop
-     75  f3fb		       ea		      nop
-     76  f3fc		       ea		      nop
-     77  f3fd
-     78  f3fd
-     79  f3fd		       88		      dey
-     80  f3fe		       84 09		      sty	COLUBK
-     81  f400		       85 02		      sta	WSYNC
-     66  f400					      REPEND
-     67  f402		       e8		      inx
-     68  f403		       86 09		      stx	COLUBK
-     69  f405
-     70  f405		       ea		      nop
-     71  f406		       ea		      nop
-     72  f407		       ea		      nop
-     73  f408		       ea		      nop
-     74  f409		       ea		      nop
-     75  f40a		       ea		      nop
-     76  f40b		       ea		      nop
-     77  f40c
-     78  f40c
-     79  f40c		       88		      dey
-     80  f40d		       84 09		      sty	COLUBK
-     81  f40f		       85 02		      sta	WSYNC
-     66  f40f					      REPEND
-     67  f411		       e8		      inx
-     68  f412		       86 09		      stx	COLUBK
-     69  f414
-     70  f414		       ea		      nop
-     71  f415		       ea		      nop
-     72  f416		       ea		      nop
-     73  f417		       ea		      nop
-     74  f418		       ea		      nop
-     75  f419		       ea		      nop
-     76  f41a		       ea		      nop
-     77  f41b
-     78  f41b
-     79  f41b		       88		      dey
-     80  f41c		       84 09		      sty	COLUBK
-     81  f41e		       85 02		      sta	WSYNC
+     70  f3ab		       88		      dey
+     71  f3ac		       84 09		      sty	COLUBK
+     72  f3ae		       85 02		      sta	WSYNC
+     66  f3ae					      REPEND
+     67  f3b0		       e8		      inx
+     68  f3b1		       86 09		      stx	COLUBK
+     69  f3b3
+     70  f3b3		       88		      dey
+     71  f3b4		       84 09		      sty	COLUBK
+     72  f3b6		       85 02		      sta	WSYNC
+     66  f3b6					      REPEND
+     67  f3b8		       e8		      inx
+     68  f3b9		       86 09		      stx	COLUBK
+     69  f3bb
+     70  f3bb		       88		      dey
+     71  f3bc		       84 09		      sty	COLUBK
+     72  f3be		       85 02		      sta	WSYNC
+     66  f3be					      REPEND
+     67  f3c0		       e8		      inx
+     68  f3c1		       86 09		      stx	COLUBK
+     69  f3c3
+     70  f3c3		       88		      dey
+     71  f3c4		       84 09		      sty	COLUBK
+     72  f3c6		       85 02		      sta	WSYNC
+     66  f3c6					      REPEND
+     67  f3c8		       e8		      inx
+     68  f3c9		       86 09		      stx	COLUBK
+     69  f3cb
+     70  f3cb		       88		      dey
+     71  f3cc		       84 09		      sty	COLUBK
+     72  f3ce		       85 02		      sta	WSYNC
+     66  f3ce					      REPEND
+     67  f3d0		       e8		      inx
+     68  f3d1		       86 09		      stx	COLUBK
+     69  f3d3
+     70  f3d3		       88		      dey
+     71  f3d4		       84 09		      sty	COLUBK
+     72  f3d6		       85 02		      sta	WSYNC
+     66  f3d6					      REPEND
+     67  f3d8		       e8		      inx
+     68  f3d9		       86 09		      stx	COLUBK
+     69  f3db
+     70  f3db		       88		      dey
+     71  f3dc		       84 09		      sty	COLUBK
+     72  f3de		       85 02		      sta	WSYNC
+     66  f3de					      REPEND
+     67  f3e0		       e8		      inx
+     68  f3e1		       86 09		      stx	COLUBK
+     69  f3e3
+     70  f3e3		       88		      dey
+     71  f3e4		       84 09		      sty	COLUBK
+     72  f3e6		       85 02		      sta	WSYNC
+     66  f3e6					      REPEND
+     67  f3e8		       e8		      inx
+     68  f3e9		       86 09		      stx	COLUBK
+     69  f3eb
+     70  f3eb		       88		      dey
+     71  f3ec		       84 09		      sty	COLUBK
+     72  f3ee		       85 02		      sta	WSYNC
+     66  f3ee					      REPEND
+     67  f3f0		       e8		      inx
+     68  f3f1		       86 09		      stx	COLUBK
+     69  f3f3
+     70  f3f3		       88		      dey
+     71  f3f4		       84 09		      sty	COLUBK
+     72  f3f6		       85 02		      sta	WSYNC
+     66  f3f6					      REPEND
+     67  f3f8		       e8		      inx
+     68  f3f9		       86 09		      stx	COLUBK
+     69  f3fb
+     70  f3fb		       88		      dey
+     71  f3fc		       84 09		      sty	COLUBK
+     72  f3fe		       85 02		      sta	WSYNC
+     66  f3fe					      REPEND
+     67  f400		       e8		      inx
+     68  f401		       86 09		      stx	COLUBK
+     69  f403
+     70  f403		       88		      dey
+     71  f404		       84 09		      sty	COLUBK
+     72  f406		       85 02		      sta	WSYNC
+     66  f406					      REPEND
+     67  f408		       e8		      inx
+     68  f409		       86 09		      stx	COLUBK
+     69  f40b
+     70  f40b		       88		      dey
+     71  f40c		       84 09		      sty	COLUBK
+     72  f40e		       85 02		      sta	WSYNC
+     66  f40e					      REPEND
+     67  f410		       e8		      inx
+     68  f411		       86 09		      stx	COLUBK
+     69  f413
+     70  f413		       88		      dey
+     71  f414		       84 09		      sty	COLUBK
+     72  f416		       85 02		      sta	WSYNC
+     66  f416					      REPEND
+     67  f418		       e8		      inx
+     68  f419		       86 09		      stx	COLUBK
+     69  f41b
+     70  f41b		       88		      dey
+     71  f41c		       84 09		      sty	COLUBK
+     72  f41e		       85 02		      sta	WSYNC
      66  f41e					      REPEND
      67  f420		       e8		      inx
      68  f421		       86 09		      stx	COLUBK
      69  f423
-     70  f423		       ea		      nop
-     71  f424		       ea		      nop
-     72  f425		       ea		      nop
-     73  f426		       ea		      nop
-     74  f427		       ea		      nop
-     75  f428		       ea		      nop
-     76  f429		       ea		      nop
-     77  f42a
-     78  f42a
-     79  f42a		       88		      dey
-     80  f42b		       84 09		      sty	COLUBK
-     81  f42d		       85 02		      sta	WSYNC
-     66  f42d					      REPEND
-     67  f42f		       e8		      inx
-     68  f430		       86 09		      stx	COLUBK
-     69  f432
-     70  f432		       ea		      nop
-     71  f433		       ea		      nop
-     72  f434		       ea		      nop
-     73  f435		       ea		      nop
-     74  f436		       ea		      nop
-     75  f437		       ea		      nop
-     76  f438		       ea		      nop
-     77  f439
-     78  f439
-     79  f439		       88		      dey
-     80  f43a		       84 09		      sty	COLUBK
-     81  f43c		       85 02		      sta	WSYNC
-     66  f43c					      REPEND
-     67  f43e		       e8		      inx
-     68  f43f		       86 09		      stx	COLUBK
-     69  f441
-     70  f441		       ea		      nop
-     71  f442		       ea		      nop
-     72  f443		       ea		      nop
-     73  f444		       ea		      nop
-     74  f445		       ea		      nop
-     75  f446		       ea		      nop
-     76  f447		       ea		      nop
-     77  f448
-     78  f448
-     79  f448		       88		      dey
-     80  f449		       84 09		      sty	COLUBK
-     81  f44b		       85 02		      sta	WSYNC
-     66  f44b					      REPEND
-     67  f44d		       e8		      inx
-     68  f44e		       86 09		      stx	COLUBK
-     69  f450
-     70  f450		       ea		      nop
-     71  f451		       ea		      nop
-     72  f452		       ea		      nop
-     73  f453		       ea		      nop
-     74  f454		       ea		      nop
-     75  f455		       ea		      nop
-     76  f456		       ea		      nop
-     77  f457
-     78  f457
-     79  f457		       88		      dey
-     80  f458		       84 09		      sty	COLUBK
-     81  f45a		       85 02		      sta	WSYNC
-     66  f45a					      REPEND
-     67  f45c		       e8		      inx
-     68  f45d		       86 09		      stx	COLUBK
-     69  f45f
-     70  f45f		       ea		      nop
-     71  f460		       ea		      nop
-     72  f461		       ea		      nop
-     73  f462		       ea		      nop
-     74  f463		       ea		      nop
-     75  f464		       ea		      nop
-     76  f465		       ea		      nop
-     77  f466
-     78  f466
-     79  f466		       88		      dey
-     80  f467		       84 09		      sty	COLUBK
-     81  f469		       85 02		      sta	WSYNC
-     66  f469					      REPEND
-     67  f46b		       e8		      inx
-     68  f46c		       86 09		      stx	COLUBK
-     69  f46e
-     70  f46e		       ea		      nop
-     71  f46f		       ea		      nop
-     72  f470		       ea		      nop
-     73  f471		       ea		      nop
-     74  f472		       ea		      nop
-     75  f473		       ea		      nop
-     76  f474		       ea		      nop
-     77  f475
-     78  f475
-     79  f475		       88		      dey
-     80  f476		       84 09		      sty	COLUBK
-     81  f478		       85 02		      sta	WSYNC
-     66  f478					      REPEND
-     67  f47a		       e8		      inx
-     68  f47b		       86 09		      stx	COLUBK
-     69  f47d
-     70  f47d		       ea		      nop
-     71  f47e		       ea		      nop
-     72  f47f		       ea		      nop
-     73  f480		       ea		      nop
-     74  f481		       ea		      nop
-     75  f482		       ea		      nop
-     76  f483		       ea		      nop
-     77  f484
-     78  f484
-     79  f484		       88		      dey
-     80  f485		       84 09		      sty	COLUBK
-     81  f487		       85 02		      sta	WSYNC
-     66  f487					      REPEND
-     67  f489		       e8		      inx
-     68  f48a		       86 09		      stx	COLUBK
-     69  f48c
-     70  f48c		       ea		      nop
-     71  f48d		       ea		      nop
-     72  f48e		       ea		      nop
-     73  f48f		       ea		      nop
-     74  f490		       ea		      nop
-     75  f491		       ea		      nop
-     76  f492		       ea		      nop
-     77  f493
-     78  f493
-     79  f493		       88		      dey
-     80  f494		       84 09		      sty	COLUBK
-     81  f496		       85 02		      sta	WSYNC
+     70  f423		       88		      dey
+     71  f424		       84 09		      sty	COLUBK
+     72  f426		       85 02		      sta	WSYNC
+     66  f426					      REPEND
+     67  f428		       e8		      inx
+     68  f429		       86 09		      stx	COLUBK
+     69  f42b
+     70  f42b		       88		      dey
+     71  f42c		       84 09		      sty	COLUBK
+     72  f42e		       85 02		      sta	WSYNC
+     66  f42e					      REPEND
+     67  f430		       e8		      inx
+     68  f431		       86 09		      stx	COLUBK
+     69  f433
+     70  f433		       88		      dey
+     71  f434		       84 09		      sty	COLUBK
+     72  f436		       85 02		      sta	WSYNC
+     66  f436					      REPEND
+     67  f438		       e8		      inx
+     68  f439		       86 09		      stx	COLUBK
+     69  f43b
+     70  f43b		       88		      dey
+     71  f43c		       84 09		      sty	COLUBK
+     72  f43e		       85 02		      sta	WSYNC
+     66  f43e					      REPEND
+     67  f440		       e8		      inx
+     68  f441		       86 09		      stx	COLUBK
+     69  f443
+     70  f443		       88		      dey
+     71  f444		       84 09		      sty	COLUBK
+     72  f446		       85 02		      sta	WSYNC
+     66  f446					      REPEND
+     67  f448		       e8		      inx
+     68  f449		       86 09		      stx	COLUBK
+     69  f44b
+     70  f44b		       88		      dey
+     71  f44c		       84 09		      sty	COLUBK
+     72  f44e		       85 02		      sta	WSYNC
+     66  f44e					      REPEND
+     67  f450		       e8		      inx
+     68  f451		       86 09		      stx	COLUBK
+     69  f453
+     70  f453		       88		      dey
+     71  f454		       84 09		      sty	COLUBK
+     72  f456		       85 02		      sta	WSYNC
+     66  f456					      REPEND
+     67  f458		       e8		      inx
+     68  f459		       86 09		      stx	COLUBK
+     69  f45b
+     70  f45b		       88		      dey
+     71  f45c		       84 09		      sty	COLUBK
+     72  f45e		       85 02		      sta	WSYNC
+     66  f45e					      REPEND
+     67  f460		       e8		      inx
+     68  f461		       86 09		      stx	COLUBK
+     69  f463
+     70  f463		       88		      dey
+     71  f464		       84 09		      sty	COLUBK
+     72  f466		       85 02		      sta	WSYNC
+     66  f466					      REPEND
+     67  f468		       e8		      inx
+     68  f469		       86 09		      stx	COLUBK
+     69  f46b
+     70  f46b		       88		      dey
+     71  f46c		       84 09		      sty	COLUBK
+     72  f46e		       85 02		      sta	WSYNC
+     66  f46e					      REPEND
+     67  f470		       e8		      inx
+     68  f471		       86 09		      stx	COLUBK
+     69  f473
+     70  f473		       88		      dey
+     71  f474		       84 09		      sty	COLUBK
+     72  f476		       85 02		      sta	WSYNC
+     66  f476					      REPEND
+     67  f478		       e8		      inx
+     68  f479		       86 09		      stx	COLUBK
+     69  f47b
+     70  f47b		       88		      dey
+     71  f47c		       84 09		      sty	COLUBK
+     72  f47e		       85 02		      sta	WSYNC
+     66  f47e					      REPEND
+     67  f480		       e8		      inx
+     68  f481		       86 09		      stx	COLUBK
+     69  f483
+     70  f483		       88		      dey
+     71  f484		       84 09		      sty	COLUBK
+     72  f486		       85 02		      sta	WSYNC
+     66  f486					      REPEND
+     67  f488		       e8		      inx
+     68  f489		       86 09		      stx	COLUBK
+     69  f48b
+     70  f48b		       88		      dey
+     71  f48c		       84 09		      sty	COLUBK
+     72  f48e		       85 02		      sta	WSYNC
+     66  f48e					      REPEND
+     67  f490		       e8		      inx
+     68  f491		       86 09		      stx	COLUBK
+     69  f493
+     70  f493		       88		      dey
+     71  f494		       84 09		      sty	COLUBK
+     72  f496		       85 02		      sta	WSYNC
      66  f496					      REPEND
      67  f498		       e8		      inx
      68  f499		       86 09		      stx	COLUBK
      69  f49b
-     70  f49b		       ea		      nop
-     71  f49c		       ea		      nop
-     72  f49d		       ea		      nop
-     73  f49e		       ea		      nop
-     74  f49f		       ea		      nop
-     75  f4a0		       ea		      nop
-     76  f4a1		       ea		      nop
-     77  f4a2
-     78  f4a2
-     79  f4a2		       88		      dey
-     80  f4a3		       84 09		      sty	COLUBK
-     81  f4a5		       85 02		      sta	WSYNC
-     66  f4a5					      REPEND
-     67  f4a7		       e8		      inx
-     68  f4a8		       86 09		      stx	COLUBK
-     69  f4aa
-     70  f4aa		       ea		      nop
-     71  f4ab		       ea		      nop
-     72  f4ac		       ea		      nop
-     73  f4ad		       ea		      nop
-     74  f4ae		       ea		      nop
-     75  f4af		       ea		      nop
-     76  f4b0		       ea		      nop
-     77  f4b1
-     78  f4b1
-     79  f4b1		       88		      dey
-     80  f4b2		       84 09		      sty	COLUBK
-     81  f4b4		       85 02		      sta	WSYNC
-     66  f4b4					      REPEND
-     67  f4b6		       e8		      inx
-     68  f4b7		       86 09		      stx	COLUBK
-     69  f4b9
-     70  f4b9		       ea		      nop
-     71  f4ba		       ea		      nop
-     72  f4bb		       ea		      nop
-     73  f4bc		       ea		      nop
-     74  f4bd		       ea		      nop
-     75  f4be		       ea		      nop
-     76  f4bf		       ea		      nop
-     77  f4c0
-     78  f4c0
-     79  f4c0		       88		      dey
-     80  f4c1		       84 09		      sty	COLUBK
-     81  f4c3		       85 02		      sta	WSYNC
-     66  f4c3					      REPEND
-     67  f4c5		       e8		      inx
-     68  f4c6		       86 09		      stx	COLUBK
-     69  f4c8
-     70  f4c8		       ea		      nop
-     71  f4c9		       ea		      nop
-     72  f4ca		       ea		      nop
-     73  f4cb		       ea		      nop
-     74  f4cc		       ea		      nop
-     75  f4cd		       ea		      nop
-     76  f4ce		       ea		      nop
-     77  f4cf
-     78  f4cf
-     79  f4cf		       88		      dey
-     80  f4d0		       84 09		      sty	COLUBK
-     81  f4d2		       85 02		      sta	WSYNC
-     66  f4d2					      REPEND
-     67  f4d4		       e8		      inx
-     68  f4d5		       86 09		      stx	COLUBK
-     69  f4d7
-     70  f4d7		       ea		      nop
-     71  f4d8		       ea		      nop
-     72  f4d9		       ea		      nop
-     73  f4da		       ea		      nop
-     74  f4db		       ea		      nop
-     75  f4dc		       ea		      nop
-     76  f4dd		       ea		      nop
-     77  f4de
-     78  f4de
-     79  f4de		       88		      dey
-     80  f4df		       84 09		      sty	COLUBK
-     81  f4e1		       85 02		      sta	WSYNC
-     66  f4e1					      REPEND
-     67  f4e3		       e8		      inx
-     68  f4e4		       86 09		      stx	COLUBK
-     69  f4e6
-     70  f4e6		       ea		      nop
-     71  f4e7		       ea		      nop
-     72  f4e8		       ea		      nop
-     73  f4e9		       ea		      nop
-     74  f4ea		       ea		      nop
-     75  f4eb		       ea		      nop
-     76  f4ec		       ea		      nop
-     77  f4ed
-     78  f4ed
-     79  f4ed		       88		      dey
-     80  f4ee		       84 09		      sty	COLUBK
-     81  f4f0		       85 02		      sta	WSYNC
-     66  f4f0					      REPEND
-     67  f4f2		       e8		      inx
-     68  f4f3		       86 09		      stx	COLUBK
-     69  f4f5
-     70  f4f5		       ea		      nop
-     71  f4f6		       ea		      nop
-     72  f4f7		       ea		      nop
-     73  f4f8		       ea		      nop
-     74  f4f9		       ea		      nop
-     75  f4fa		       ea		      nop
-     76  f4fb		       ea		      nop
-     77  f4fc
-     78  f4fc
-     79  f4fc		       88		      dey
-     80  f4fd		       84 09		      sty	COLUBK
-     81  f4ff		       85 02		      sta	WSYNC
-     66  f4ff					      REPEND
-     67  f501		       e8		      inx
-     68  f502		       86 09		      stx	COLUBK
-     69  f504
-     70  f504		       ea		      nop
-     71  f505		       ea		      nop
-     72  f506		       ea		      nop
-     73  f507		       ea		      nop
-     74  f508		       ea		      nop
-     75  f509		       ea		      nop
-     76  f50a		       ea		      nop
-     77  f50b
-     78  f50b
-     79  f50b		       88		      dey
-     80  f50c		       84 09		      sty	COLUBK
-     81  f50e		       85 02		      sta	WSYNC
+     70  f49b		       88		      dey
+     71  f49c		       84 09		      sty	COLUBK
+     72  f49e		       85 02		      sta	WSYNC
+     66  f49e					      REPEND
+     67  f4a0		       e8		      inx
+     68  f4a1		       86 09		      stx	COLUBK
+     69  f4a3
+     70  f4a3		       88		      dey
+     71  f4a4		       84 09		      sty	COLUBK
+     72  f4a6		       85 02		      sta	WSYNC
+     66  f4a6					      REPEND
+     67  f4a8		       e8		      inx
+     68  f4a9		       86 09		      stx	COLUBK
+     69  f4ab
+     70  f4ab		       88		      dey
+     71  f4ac		       84 09		      sty	COLUBK
+     72  f4ae		       85 02		      sta	WSYNC
+     66  f4ae					      REPEND
+     67  f4b0		       e8		      inx
+     68  f4b1		       86 09		      stx	COLUBK
+     69  f4b3
+     70  f4b3		       88		      dey
+     71  f4b4		       84 09		      sty	COLUBK
+     72  f4b6		       85 02		      sta	WSYNC
+     66  f4b6					      REPEND
+     67  f4b8		       e8		      inx
+     68  f4b9		       86 09		      stx	COLUBK
+     69  f4bb
+     70  f4bb		       88		      dey
+     71  f4bc		       84 09		      sty	COLUBK
+     72  f4be		       85 02		      sta	WSYNC
+     66  f4be					      REPEND
+     67  f4c0		       e8		      inx
+     68  f4c1		       86 09		      stx	COLUBK
+     69  f4c3
+     70  f4c3		       88		      dey
+     71  f4c4		       84 09		      sty	COLUBK
+     72  f4c6		       85 02		      sta	WSYNC
+     66  f4c6					      REPEND
+     67  f4c8		       e8		      inx
+     68  f4c9		       86 09		      stx	COLUBK
+     69  f4cb
+     70  f4cb		       88		      dey
+     71  f4cc		       84 09		      sty	COLUBK
+     72  f4ce		       85 02		      sta	WSYNC
+     66  f4ce					      REPEND
+     67  f4d0		       e8		      inx
+     68  f4d1		       86 09		      stx	COLUBK
+     69  f4d3
+     70  f4d3		       88		      dey
+     71  f4d4		       84 09		      sty	COLUBK
+     72  f4d6		       85 02		      sta	WSYNC
+     66  f4d6					      REPEND
+     67  f4d8		       e8		      inx
+     68  f4d9		       86 09		      stx	COLUBK
+     69  f4db
+     70  f4db		       88		      dey
+     71  f4dc		       84 09		      sty	COLUBK
+     72  f4de		       85 02		      sta	WSYNC
+     66  f4de					      REPEND
+     67  f4e0		       e8		      inx
+     68  f4e1		       86 09		      stx	COLUBK
+     69  f4e3
+     70  f4e3		       88		      dey
+     71  f4e4		       84 09		      sty	COLUBK
+     72  f4e6		       85 02		      sta	WSYNC
+     66  f4e6					      REPEND
+     67  f4e8		       e8		      inx
+     68  f4e9		       86 09		      stx	COLUBK
+     69  f4eb
+     70  f4eb		       88		      dey
+     71  f4ec		       84 09		      sty	COLUBK
+     72  f4ee		       85 02		      sta	WSYNC
+     66  f4ee					      REPEND
+     67  f4f0		       e8		      inx
+     68  f4f1		       86 09		      stx	COLUBK
+     69  f4f3
+     70  f4f3		       88		      dey
+     71  f4f4		       84 09		      sty	COLUBK
+     72  f4f6		       85 02		      sta	WSYNC
+     66  f4f6					      REPEND
+     67  f4f8		       e8		      inx
+     68  f4f9		       86 09		      stx	COLUBK
+     69  f4fb
+     70  f4fb		       88		      dey
+     71  f4fc		       84 09		      sty	COLUBK
+     72  f4fe		       85 02		      sta	WSYNC
+     66  f4fe					      REPEND
+     67  f500		       e8		      inx
+     68  f501		       86 09		      stx	COLUBK
+     69  f503
+     70  f503		       88		      dey
+     71  f504		       84 09		      sty	COLUBK
+     72  f506		       85 02		      sta	WSYNC
+     66  f506					      REPEND
+     67  f508		       e8		      inx
+     68  f509		       86 09		      stx	COLUBK
+     69  f50b
+     70  f50b		       88		      dey
+     71  f50c		       84 09		      sty	COLUBK
+     72  f50e		       85 02		      sta	WSYNC
      66  f50e					      REPEND
      67  f510		       e8		      inx
      68  f511		       86 09		      stx	COLUBK
      69  f513
-     70  f513		       ea		      nop
-     71  f514		       ea		      nop
-     72  f515		       ea		      nop
-     73  f516		       ea		      nop
-     74  f517		       ea		      nop
-     75  f518		       ea		      nop
-     76  f519		       ea		      nop
-     77  f51a
-     78  f51a
-     79  f51a		       88		      dey
-     80  f51b		       84 09		      sty	COLUBK
-     81  f51d		       85 02		      sta	WSYNC
-     66  f51d					      REPEND
-     67  f51f		       e8		      inx
-     68  f520		       86 09		      stx	COLUBK
-     69  f522
-     70  f522		       ea		      nop
-     71  f523		       ea		      nop
-     72  f524		       ea		      nop
-     73  f525		       ea		      nop
-     74  f526		       ea		      nop
-     75  f527		       ea		      nop
-     76  f528		       ea		      nop
-     77  f529
-     78  f529
-     79  f529		       88		      dey
-     80  f52a		       84 09		      sty	COLUBK
-     81  f52c		       85 02		      sta	WSYNC
-     66  f52c					      REPEND
-     67  f52e		       e8		      inx
-     68  f52f		       86 09		      stx	COLUBK
-     69  f531
-     70  f531		       ea		      nop
-     71  f532		       ea		      nop
-     72  f533		       ea		      nop
-     73  f534		       ea		      nop
-     74  f535		       ea		      nop
-     75  f536		       ea		      nop
-     76  f537		       ea		      nop
-     77  f538
-     78  f538
-     79  f538		       88		      dey
-     80  f539		       84 09		      sty	COLUBK
-     81  f53b		       85 02		      sta	WSYNC
-     66  f53b					      REPEND
-     67  f53d		       e8		      inx
-     68  f53e		       86 09		      stx	COLUBK
-     69  f540
-     70  f540		       ea		      nop
-     71  f541		       ea		      nop
-     72  f542		       ea		      nop
-     73  f543		       ea		      nop
-     74  f544		       ea		      nop
-     75  f545		       ea		      nop
-     76  f546		       ea		      nop
-     77  f547
-     78  f547
-     79  f547		       88		      dey
-     80  f548		       84 09		      sty	COLUBK
-     81  f54a		       85 02		      sta	WSYNC
-     66  f54a					      REPEND
-     67  f54c		       e8		      inx
-     68  f54d		       86 09		      stx	COLUBK
-     69  f54f
-     70  f54f		       ea		      nop
-     71  f550		       ea		      nop
-     72  f551		       ea		      nop
-     73  f552		       ea		      nop
-     74  f553		       ea		      nop
-     75  f554		       ea		      nop
-     76  f555		       ea		      nop
-     77  f556
-     78  f556
-     79  f556		       88		      dey
-     80  f557		       84 09		      sty	COLUBK
-     81  f559		       85 02		      sta	WSYNC
-     66  f559					      REPEND
-     67  f55b		       e8		      inx
-     68  f55c		       86 09		      stx	COLUBK
-     69  f55e
-     70  f55e		       ea		      nop
-     71  f55f		       ea		      nop
-     72  f560		       ea		      nop
-     73  f561		       ea		      nop
-     74  f562		       ea		      nop
-     75  f563		       ea		      nop
-     76  f564		       ea		      nop
-     77  f565
-     78  f565
-     79  f565		       88		      dey
-     80  f566		       84 09		      sty	COLUBK
-     81  f568		       85 02		      sta	WSYNC
-     66  f568					      REPEND
-     67  f56a		       e8		      inx
-     68  f56b		       86 09		      stx	COLUBK
-     69  f56d
-     70  f56d		       ea		      nop
-     71  f56e		       ea		      nop
-     72  f56f		       ea		      nop
-     73  f570		       ea		      nop
-     74  f571		       ea		      nop
-     75  f572		       ea		      nop
-     76  f573		       ea		      nop
-     77  f574
-     78  f574
-     79  f574		       88		      dey
-     80  f575		       84 09		      sty	COLUBK
-     81  f577		       85 02		      sta	WSYNC
-     66  f577					      REPEND
-     67  f579		       e8		      inx
-     68  f57a		       86 09		      stx	COLUBK
-     69  f57c
-     70  f57c		       ea		      nop
-     71  f57d		       ea		      nop
-     72  f57e		       ea		      nop
-     73  f57f		       ea		      nop
-     74  f580		       ea		      nop
-     75  f581		       ea		      nop
-     76  f582		       ea		      nop
-     77  f583
-     78  f583
-     79  f583		       88		      dey
-     80  f584		       84 09		      sty	COLUBK
-     81  f586		       85 02		      sta	WSYNC
+     70  f513		       88		      dey
+     71  f514		       84 09		      sty	COLUBK
+     72  f516		       85 02		      sta	WSYNC
+     66  f516					      REPEND
+     67  f518		       e8		      inx
+     68  f519		       86 09		      stx	COLUBK
+     69  f51b
+     70  f51b		       88		      dey
+     71  f51c		       84 09		      sty	COLUBK
+     72  f51e		       85 02		      sta	WSYNC
+     66  f51e					      REPEND
+     67  f520		       e8		      inx
+     68  f521		       86 09		      stx	COLUBK
+     69  f523
+     70  f523		       88		      dey
+     71  f524		       84 09		      sty	COLUBK
+     72  f526		       85 02		      sta	WSYNC
+     66  f526					      REPEND
+     67  f528		       e8		      inx
+     68  f529		       86 09		      stx	COLUBK
+     69  f52b
+     70  f52b		       88		      dey
+     71  f52c		       84 09		      sty	COLUBK
+     72  f52e		       85 02		      sta	WSYNC
+     66  f52e					      REPEND
+     67  f530		       e8		      inx
+     68  f531		       86 09		      stx	COLUBK
+     69  f533
+     70  f533		       88		      dey
+     71  f534		       84 09		      sty	COLUBK
+     72  f536		       85 02		      sta	WSYNC
+     66  f536					      REPEND
+     67  f538		       e8		      inx
+     68  f539		       86 09		      stx	COLUBK
+     69  f53b
+     70  f53b		       88		      dey
+     71  f53c		       84 09		      sty	COLUBK
+     72  f53e		       85 02		      sta	WSYNC
+     66  f53e					      REPEND
+     67  f540		       e8		      inx
+     68  f541		       86 09		      stx	COLUBK
+     69  f543
+     70  f543		       88		      dey
+     71  f544		       84 09		      sty	COLUBK
+     72  f546		       85 02		      sta	WSYNC
+     66  f546					      REPEND
+     67  f548		       e8		      inx
+     68  f549		       86 09		      stx	COLUBK
+     69  f54b
+     70  f54b		       88		      dey
+     71  f54c		       84 09		      sty	COLUBK
+     72  f54e		       85 02		      sta	WSYNC
+     66  f54e					      REPEND
+     67  f550		       e8		      inx
+     68  f551		       86 09		      stx	COLUBK
+     69  f553
+     70  f553		       88		      dey
+     71  f554		       84 09		      sty	COLUBK
+     72  f556		       85 02		      sta	WSYNC
+     66  f556					      REPEND
+     67  f558		       e8		      inx
+     68  f559		       86 09		      stx	COLUBK
+     69  f55b
+     70  f55b		       88		      dey
+     71  f55c		       84 09		      sty	COLUBK
+     72  f55e		       85 02		      sta	WSYNC
+     66  f55e					      REPEND
+     67  f560		       e8		      inx
+     68  f561		       86 09		      stx	COLUBK
+     69  f563
+     70  f563		       88		      dey
+     71  f564		       84 09		      sty	COLUBK
+     72  f566		       85 02		      sta	WSYNC
+     66  f566					      REPEND
+     67  f568		       e8		      inx
+     68  f569		       86 09		      stx	COLUBK
+     69  f56b
+     70  f56b		       88		      dey
+     71  f56c		       84 09		      sty	COLUBK
+     72  f56e		       85 02		      sta	WSYNC
+     66  f56e					      REPEND
+     67  f570		       e8		      inx
+     68  f571		       86 09		      stx	COLUBK
+     69  f573
+     70  f573		       88		      dey
+     71  f574		       84 09		      sty	COLUBK
+     72  f576		       85 02		      sta	WSYNC
+     66  f576					      REPEND
+     67  f578		       e8		      inx
+     68  f579		       86 09		      stx	COLUBK
+     69  f57b
+     70  f57b		       88		      dey
+     71  f57c		       84 09		      sty	COLUBK
+     72  f57e		       85 02		      sta	WSYNC
+     66  f57e					      REPEND
+     67  f580		       e8		      inx
+     68  f581		       86 09		      stx	COLUBK
+     69  f583
+     70  f583		       88		      dey
+     71  f584		       84 09		      sty	COLUBK
+     72  f586		       85 02		      sta	WSYNC
      66  f586					      REPEND
      67  f588		       e8		      inx
      68  f589		       86 09		      stx	COLUBK
      69  f58b
-     70  f58b		       ea		      nop
-     71  f58c		       ea		      nop
-     72  f58d		       ea		      nop
-     73  f58e		       ea		      nop
-     74  f58f		       ea		      nop
-     75  f590		       ea		      nop
-     76  f591		       ea		      nop
-     77  f592
-     78  f592
-     79  f592		       88		      dey
-     80  f593		       84 09		      sty	COLUBK
-     81  f595		       85 02		      sta	WSYNC
-     66  f595					      REPEND
-     67  f597		       e8		      inx
-     68  f598		       86 09		      stx	COLUBK
-     69  f59a
-     70  f59a		       ea		      nop
-     71  f59b		       ea		      nop
-     72  f59c		       ea		      nop
-     73  f59d		       ea		      nop
-     74  f59e		       ea		      nop
-     75  f59f		       ea		      nop
-     76  f5a0		       ea		      nop
-     77  f5a1
-     78  f5a1
-     79  f5a1		       88		      dey
-     80  f5a2		       84 09		      sty	COLUBK
-     81  f5a4		       85 02		      sta	WSYNC
-     66  f5a4					      REPEND
-     67  f5a6		       e8		      inx
-     68  f5a7		       86 09		      stx	COLUBK
-     69  f5a9
-     70  f5a9		       ea		      nop
-     71  f5aa		       ea		      nop
-     72  f5ab		       ea		      nop
-     73  f5ac		       ea		      nop
-     74  f5ad		       ea		      nop
-     75  f5ae		       ea		      nop
-     76  f5af		       ea		      nop
-     77  f5b0
-     78  f5b0
-     79  f5b0		       88		      dey
-     80  f5b1		       84 09		      sty	COLUBK
-     81  f5b3		       85 02		      sta	WSYNC
-     66  f5b3					      REPEND
-     67  f5b5		       e8		      inx
-     68  f5b6		       86 09		      stx	COLUBK
-     69  f5b8
-     70  f5b8		       ea		      nop
-     71  f5b9		       ea		      nop
-     72  f5ba		       ea		      nop
-     73  f5bb		       ea		      nop
-     74  f5bc		       ea		      nop
-     75  f5bd		       ea		      nop
-     76  f5be		       ea		      nop
-     77  f5bf
-     78  f5bf
-     79  f5bf		       88		      dey
-     80  f5c0		       84 09		      sty	COLUBK
-     81  f5c2		       85 02		      sta	WSYNC
-     66  f5c2					      REPEND
-     67  f5c4		       e8		      inx
-     68  f5c5		       86 09		      stx	COLUBK
-     69  f5c7
-     70  f5c7		       ea		      nop
-     71  f5c8		       ea		      nop
-     72  f5c9		       ea		      nop
-     73  f5ca		       ea		      nop
-     74  f5cb		       ea		      nop
-     75  f5cc		       ea		      nop
-     76  f5cd		       ea		      nop
-     77  f5ce
-     78  f5ce
-     79  f5ce		       88		      dey
-     80  f5cf		       84 09		      sty	COLUBK
-     81  f5d1		       85 02		      sta	WSYNC
-     66  f5d1					      REPEND
-     67  f5d3		       e8		      inx
-     68  f5d4		       86 09		      stx	COLUBK
-     69  f5d6
-     70  f5d6		       ea		      nop
-     71  f5d7		       ea		      nop
-     72  f5d8		       ea		      nop
-     73  f5d9		       ea		      nop
-     74  f5da		       ea		      nop
-     75  f5db		       ea		      nop
-     76  f5dc		       ea		      nop
-     77  f5dd
-     78  f5dd
-     79  f5dd		       88		      dey
-     80  f5de		       84 09		      sty	COLUBK
-     81  f5e0		       85 02		      sta	WSYNC
-     66  f5e0					      REPEND
-     67  f5e2		       e8		      inx
-     68  f5e3		       86 09		      stx	COLUBK
-     69  f5e5
-     70  f5e5		       ea		      nop
-     71  f5e6		       ea		      nop
-     72  f5e7		       ea		      nop
-     73  f5e8		       ea		      nop
-     74  f5e9		       ea		      nop
-     75  f5ea		       ea		      nop
-     76  f5eb		       ea		      nop
-     77  f5ec
-     78  f5ec
-     79  f5ec		       88		      dey
-     80  f5ed		       84 09		      sty	COLUBK
-     81  f5ef		       85 02		      sta	WSYNC
-     66  f5ef					      REPEND
-     67  f5f1		       e8		      inx
-     68  f5f2		       86 09		      stx	COLUBK
-     69  f5f4
-     70  f5f4		       ea		      nop
-     71  f5f5		       ea		      nop
-     72  f5f6		       ea		      nop
-     73  f5f7		       ea		      nop
-     74  f5f8		       ea		      nop
-     75  f5f9		       ea		      nop
-     76  f5fa		       ea		      nop
-     77  f5fb
-     78  f5fb
-     79  f5fb		       88		      dey
-     80  f5fc		       84 09		      sty	COLUBK
-     81  f5fe		       85 02		      sta	WSYNC
+     70  f58b		       88		      dey
+     71  f58c		       84 09		      sty	COLUBK
+     72  f58e		       85 02		      sta	WSYNC
+     66  f58e					      REPEND
+     67  f590		       e8		      inx
+     68  f591		       86 09		      stx	COLUBK
+     69  f593
+     70  f593		       88		      dey
+     71  f594		       84 09		      sty	COLUBK
+     72  f596		       85 02		      sta	WSYNC
+     66  f596					      REPEND
+     67  f598		       e8		      inx
+     68  f599		       86 09		      stx	COLUBK
+     69  f59b
+     70  f59b		       88		      dey
+     71  f59c		       84 09		      sty	COLUBK
+     72  f59e		       85 02		      sta	WSYNC
+     66  f59e					      REPEND
+     67  f5a0		       e8		      inx
+     68  f5a1		       86 09		      stx	COLUBK
+     69  f5a3
+     70  f5a3		       88		      dey
+     71  f5a4		       84 09		      sty	COLUBK
+     72  f5a6		       85 02		      sta	WSYNC
+     66  f5a6					      REPEND
+     67  f5a8		       e8		      inx
+     68  f5a9		       86 09		      stx	COLUBK
+     69  f5ab
+     70  f5ab		       88		      dey
+     71  f5ac		       84 09		      sty	COLUBK
+     72  f5ae		       85 02		      sta	WSYNC
+     66  f5ae					      REPEND
+     67  f5b0		       e8		      inx
+     68  f5b1		       86 09		      stx	COLUBK
+     69  f5b3
+     70  f5b3		       88		      dey
+     71  f5b4		       84 09		      sty	COLUBK
+     72  f5b6		       85 02		      sta	WSYNC
+     66  f5b6					      REPEND
+     67  f5b8		       e8		      inx
+     68  f5b9		       86 09		      stx	COLUBK
+     69  f5bb
+     70  f5bb		       88		      dey
+     71  f5bc		       84 09		      sty	COLUBK
+     72  f5be		       85 02		      sta	WSYNC
+     66  f5be					      REPEND
+     67  f5c0		       e8		      inx
+     68  f5c1		       86 09		      stx	COLUBK
+     69  f5c3
+     70  f5c3		       88		      dey
+     71  f5c4		       84 09		      sty	COLUBK
+     72  f5c6		       85 02		      sta	WSYNC
+     66  f5c6					      REPEND
+     67  f5c8		       e8		      inx
+     68  f5c9		       86 09		      stx	COLUBK
+     69  f5cb
+     70  f5cb		       88		      dey
+     71  f5cc		       84 09		      sty	COLUBK
+     72  f5ce		       85 02		      sta	WSYNC
+     66  f5ce					      REPEND
+     67  f5d0		       e8		      inx
+     68  f5d1		       86 09		      stx	COLUBK
+     69  f5d3
+     70  f5d3		       88		      dey
+     71  f5d4		       84 09		      sty	COLUBK
+     72  f5d6		       85 02		      sta	WSYNC
+     66  f5d6					      REPEND
+     67  f5d8		       e8		      inx
+     68  f5d9		       86 09		      stx	COLUBK
+     69  f5db
+     70  f5db		       88		      dey
+     71  f5dc		       84 09		      sty	COLUBK
+     72  f5de		       85 02		      sta	WSYNC
+     66  f5de					      REPEND
+     67  f5e0		       e8		      inx
+     68  f5e1		       86 09		      stx	COLUBK
+     69  f5e3
+     70  f5e3		       88		      dey
+     71  f5e4		       84 09		      sty	COLUBK
+     72  f5e6		       85 02		      sta	WSYNC
+     66  f5e6					      REPEND
+     67  f5e8		       e8		      inx
+     68  f5e9		       86 09		      stx	COLUBK
+     69  f5eb
+     70  f5eb		       88		      dey
+     71  f5ec		       84 09		      sty	COLUBK
+     72  f5ee		       85 02		      sta	WSYNC
+     66  f5ee					      REPEND
+     67  f5f0		       e8		      inx
+     68  f5f1		       86 09		      stx	COLUBK
+     69  f5f3
+     70  f5f3		       88		      dey
+     71  f5f4		       84 09		      sty	COLUBK
+     72  f5f6		       85 02		      sta	WSYNC
+     66  f5f6					      REPEND
+     67  f5f8		       e8		      inx
+     68  f5f9		       86 09		      stx	COLUBK
+     69  f5fb
+     70  f5fb		       88		      dey
+     71  f5fc		       84 09		      sty	COLUBK
+     72  f5fe		       85 02		      sta	WSYNC
      66  f5fe					      REPEND
      67  f600		       e8		      inx
      68  f601		       86 09		      stx	COLUBK
      69  f603
-     70  f603		       ea		      nop
-     71  f604		       ea		      nop
-     72  f605		       ea		      nop
-     73  f606		       ea		      nop
-     74  f607		       ea		      nop
-     75  f608		       ea		      nop
-     76  f609		       ea		      nop
-     77  f60a
-     78  f60a
-     79  f60a		       88		      dey
-     80  f60b		       84 09		      sty	COLUBK
-     81  f60d		       85 02		      sta	WSYNC
-     66  f60d					      REPEND
-     67  f60f		       e8		      inx
-     68  f610		       86 09		      stx	COLUBK
-     69  f612
-     70  f612		       ea		      nop
-     71  f613		       ea		      nop
-     72  f614		       ea		      nop
-     73  f615		       ea		      nop
-     74  f616		       ea		      nop
-     75  f617		       ea		      nop
-     76  f618		       ea		      nop
-     77  f619
-     78  f619
-     79  f619		       88		      dey
-     80  f61a		       84 09		      sty	COLUBK
-     81  f61c		       85 02		      sta	WSYNC
-     66  f61c					      REPEND
-     67  f61e		       e8		      inx
-     68  f61f		       86 09		      stx	COLUBK
-     69  f621
-     70  f621		       ea		      nop
-     71  f622		       ea		      nop
-     72  f623		       ea		      nop
-     73  f624		       ea		      nop
-     74  f625		       ea		      nop
-     75  f626		       ea		      nop
-     76  f627		       ea		      nop
-     77  f628
-     78  f628
-     79  f628		       88		      dey
-     80  f629		       84 09		      sty	COLUBK
-     81  f62b		       85 02		      sta	WSYNC
-     66  f62b					      REPEND
-     67  f62d		       e8		      inx
-     68  f62e		       86 09		      stx	COLUBK
-     69  f630
-     70  f630		       ea		      nop
-     71  f631		       ea		      nop
-     72  f632		       ea		      nop
-     73  f633		       ea		      nop
-     74  f634		       ea		      nop
-     75  f635		       ea		      nop
-     76  f636		       ea		      nop
-     77  f637
-     78  f637
-     79  f637		       88		      dey
-     80  f638		       84 09		      sty	COLUBK
-     81  f63a		       85 02		      sta	WSYNC
-     66  f63a					      REPEND
-     67  f63c		       e8		      inx
-     68  f63d		       86 09		      stx	COLUBK
-     69  f63f
-     70  f63f		       ea		      nop
-     71  f640		       ea		      nop
-     72  f641		       ea		      nop
-     73  f642		       ea		      nop
-     74  f643		       ea		      nop
-     75  f644		       ea		      nop
-     76  f645		       ea		      nop
-     77  f646
-     78  f646
-     79  f646		       88		      dey
-     80  f647		       84 09		      sty	COLUBK
-     81  f649		       85 02		      sta	WSYNC
-     66  f649					      REPEND
-     67  f64b		       e8		      inx
-     68  f64c		       86 09		      stx	COLUBK
-     69  f64e
-     70  f64e		       ea		      nop
-     71  f64f		       ea		      nop
-     72  f650		       ea		      nop
-     73  f651		       ea		      nop
-     74  f652		       ea		      nop
-     75  f653		       ea		      nop
-     76  f654		       ea		      nop
-     77  f655
-     78  f655
-     79  f655		       88		      dey
-     80  f656		       84 09		      sty	COLUBK
-     81  f658		       85 02		      sta	WSYNC
-     66  f658					      REPEND
-     67  f65a		       e8		      inx
-     68  f65b		       86 09		      stx	COLUBK
-     69  f65d
-     70  f65d		       ea		      nop
-     71  f65e		       ea		      nop
-     72  f65f		       ea		      nop
-     73  f660		       ea		      nop
-     74  f661		       ea		      nop
-     75  f662		       ea		      nop
-     76  f663		       ea		      nop
-     77  f664
-     78  f664
-     79  f664		       88		      dey
-     80  f665		       84 09		      sty	COLUBK
-     81  f667		       85 02		      sta	WSYNC
-     66  f667					      REPEND
-     67  f669		       e8		      inx
-     68  f66a		       86 09		      stx	COLUBK
-     69  f66c
-     70  f66c		       ea		      nop
-     71  f66d		       ea		      nop
-     72  f66e		       ea		      nop
-     73  f66f		       ea		      nop
-     74  f670		       ea		      nop
-     75  f671		       ea		      nop
-     76  f672		       ea		      nop
-     77  f673
-     78  f673
-     79  f673		       88		      dey
-     80  f674		       84 09		      sty	COLUBK
-     81  f676		       85 02		      sta	WSYNC
-     66  f676					      REPEND
-     67  f678		       e8		      inx
-     68  f679		       86 09		      stx	COLUBK
-     69  f67b
-     70  f67b		       ea		      nop
-     71  f67c		       ea		      nop
-     72  f67d		       ea		      nop
-     73  f67e		       ea		      nop
-     74  f67f		       ea		      nop
-     75  f680		       ea		      nop
-     76  f681		       ea		      nop
-     77  f682
-     78  f682
-     79  f682		       88		      dey
-     80  f683		       84 09		      sty	COLUBK
-     81  f685		       85 02		      sta	WSYNC
-     66  f685					      REPEND
-     67  f687		       e8		      inx
-     68  f688		       86 09		      stx	COLUBK
-     69  f68a
-     70  f68a		       ea		      nop
-     71  f68b		       ea		      nop
-     72  f68c		       ea		      nop
-     73  f68d		       ea		      nop
-     74  f68e		       ea		      nop
-     75  f68f		       ea		      nop
-     76  f690		       ea		      nop
-     77  f691
-     78  f691
-     79  f691		       88		      dey
-     80  f692		       84 09		      sty	COLUBK
-     81  f694		       85 02		      sta	WSYNC
-     66  f694					      REPEND
-     67  f696		       e8		      inx
-     68  f697		       86 09		      stx	COLUBK
-     69  f699
-     70  f699		       ea		      nop
-     71  f69a		       ea		      nop
-     72  f69b		       ea		      nop
-     73  f69c		       ea		      nop
-     74  f69d		       ea		      nop
-     75  f69e		       ea		      nop
-     76  f69f		       ea		      nop
-     77  f6a0
-     78  f6a0
-     79  f6a0		       88		      dey
-     80  f6a1		       84 09		      sty	COLUBK
-     81  f6a3		       85 02		      sta	WSYNC
-     66  f6a3					      REPEND
-     67  f6a5		       e8		      inx
-     68  f6a6		       86 09		      stx	COLUBK
-     69  f6a8
-     70  f6a8		       ea		      nop
-     71  f6a9		       ea		      nop
-     72  f6aa		       ea		      nop
-     73  f6ab		       ea		      nop
-     74  f6ac		       ea		      nop
-     75  f6ad		       ea		      nop
-     76  f6ae		       ea		      nop
-     77  f6af
-     78  f6af
-     79  f6af		       88		      dey
-     80  f6b0		       84 09		      sty	COLUBK
-     81  f6b2		       85 02		      sta	WSYNC
-     66  f6b2					      REPEND
-     67  f6b4		       e8		      inx
-     68  f6b5		       86 09		      stx	COLUBK
-     69  f6b7
-     70  f6b7		       ea		      nop
-     71  f6b8		       ea		      nop
-     72  f6b9		       ea		      nop
-     73  f6ba		       ea		      nop
-     74  f6bb		       ea		      nop
-     75  f6bc		       ea		      nop
-     76  f6bd		       ea		      nop
-     77  f6be
-     78  f6be
-     79  f6be		       88		      dey
-     80  f6bf		       84 09		      sty	COLUBK
-     81  f6c1		       85 02		      sta	WSYNC
-     66  f6c1					      REPEND
-     67  f6c3		       e8		      inx
-     68  f6c4		       86 09		      stx	COLUBK
-     69  f6c6
-     70  f6c6		       ea		      nop
-     71  f6c7		       ea		      nop
-     72  f6c8		       ea		      nop
-     73  f6c9		       ea		      nop
-     74  f6ca		       ea		      nop
-     75  f6cb		       ea		      nop
-     76  f6cc		       ea		      nop
-     77  f6cd
-     78  f6cd
-     79  f6cd		       88		      dey
-     80  f6ce		       84 09		      sty	COLUBK
-     81  f6d0		       85 02		      sta	WSYNC
-     66  f6d0					      REPEND
-     67  f6d2		       e8		      inx
-     68  f6d3		       86 09		      stx	COLUBK
-     69  f6d5
-     70  f6d5		       ea		      nop
-     71  f6d6		       ea		      nop
-     72  f6d7		       ea		      nop
-     73  f6d8		       ea		      nop
-     74  f6d9		       ea		      nop
-     75  f6da		       ea		      nop
-     76  f6db		       ea		      nop
-     77  f6dc
-     78  f6dc
-     79  f6dc		       88		      dey
-     80  f6dd		       84 09		      sty	COLUBK
-     81  f6df		       85 02		      sta	WSYNC
-     66  f6df					      REPEND
-     67  f6e1		       e8		      inx
-     68  f6e2		       86 09		      stx	COLUBK
-     69  f6e4
-     70  f6e4		       ea		      nop
-     71  f6e5		       ea		      nop
-     72  f6e6		       ea		      nop
-     73  f6e7		       ea		      nop
-     74  f6e8		       ea		      nop
-     75  f6e9		       ea		      nop
-     76  f6ea		       ea		      nop
-     77  f6eb
-     78  f6eb
-     79  f6eb		       88		      dey
-     80  f6ec		       84 09		      sty	COLUBK
-     81  f6ee		       85 02		      sta	WSYNC
-     66  f6ee					      REPEND
-     67  f6f0		       e8		      inx
-     68  f6f1		       86 09		      stx	COLUBK
-     69  f6f3
-     70  f6f3		       ea		      nop
-     71  f6f4		       ea		      nop
-     72  f6f5		       ea		      nop
-     73  f6f6		       ea		      nop
-     74  f6f7		       ea		      nop
-     75  f6f8		       ea		      nop
-     76  f6f9		       ea		      nop
-     77  f6fa
-     78  f6fa
-     79  f6fa		       88		      dey
-     80  f6fb		       84 09		      sty	COLUBK
-     81  f6fd		       85 02		      sta	WSYNC
-     66  f6fd					      REPEND
-     67  f6ff		       e8		      inx
-     68  f700		       86 09		      stx	COLUBK
-     69  f702
-     70  f702		       ea		      nop
-     71  f703		       ea		      nop
-     72  f704		       ea		      nop
-     73  f705		       ea		      nop
-     74  f706		       ea		      nop
-     75  f707		       ea		      nop
-     76  f708		       ea		      nop
-     77  f709
-     78  f709
-     79  f709		       88		      dey
-     80  f70a		       84 09		      sty	COLUBK
-     81  f70c		       85 02		      sta	WSYNC
-     66  f70c					      REPEND
-     67  f70e		       e8		      inx
-     68  f70f		       86 09		      stx	COLUBK
-     69  f711
-     70  f711		       ea		      nop
-     71  f712		       ea		      nop
-     72  f713		       ea		      nop
-     73  f714		       ea		      nop
-     74  f715		       ea		      nop
-     75  f716		       ea		      nop
-     76  f717		       ea		      nop
-     77  f718
-     78  f718
-     79  f718		       88		      dey
-     80  f719		       84 09		      sty	COLUBK
-     81  f71b		       85 02		      sta	WSYNC
-     66  f71b					      REPEND
-     67  f71d		       e8		      inx
-     68  f71e		       86 09		      stx	COLUBK
-     69  f720
-     70  f720		       ea		      nop
-     71  f721		       ea		      nop
-     72  f722		       ea		      nop
-     73  f723		       ea		      nop
-     74  f724		       ea		      nop
-     75  f725		       ea		      nop
-     76  f726		       ea		      nop
-     77  f727
-     78  f727
-     79  f727		       88		      dey
-     80  f728		       84 09		      sty	COLUBK
-     81  f72a		       85 02		      sta	WSYNC
-     66  f72a					      REPEND
-     67  f72c		       e8		      inx
-     68  f72d		       86 09		      stx	COLUBK
-     69  f72f
-     70  f72f		       ea		      nop
-     71  f730		       ea		      nop
-     72  f731		       ea		      nop
-     73  f732		       ea		      nop
-     74  f733		       ea		      nop
-     75  f734		       ea		      nop
-     76  f735		       ea		      nop
-     77  f736
-     78  f736
-     79  f736		       88		      dey
-     80  f737		       84 09		      sty	COLUBK
-     81  f739		       85 02		      sta	WSYNC
-     66  f739					      REPEND
-     67  f73b		       e8		      inx
-     68  f73c		       86 09		      stx	COLUBK
-     69  f73e
-     70  f73e		       ea		      nop
-     71  f73f		       ea		      nop
-     72  f740		       ea		      nop
-     73  f741		       ea		      nop
-     74  f742		       ea		      nop
-     75  f743		       ea		      nop
-     76  f744		       ea		      nop
-     77  f745
-     78  f745
-     79  f745		       88		      dey
-     80  f746		       84 09		      sty	COLUBK
-     81  f748		       85 02		      sta	WSYNC
-     66  f748					      REPEND
-     67  f74a		       e8		      inx
-     68  f74b		       86 09		      stx	COLUBK
-     69  f74d
-     70  f74d		       ea		      nop
-     71  f74e		       ea		      nop
-     72  f74f		       ea		      nop
-     73  f750		       ea		      nop
-     74  f751		       ea		      nop
-     75  f752		       ea		      nop
-     76  f753		       ea		      nop
-     77  f754
-     78  f754
-     79  f754		       88		      dey
-     80  f755		       84 09		      sty	COLUBK
-     81  f757		       85 02		      sta	WSYNC
-     66  f757					      REPEND
-     67  f759		       e8		      inx
-     68  f75a		       86 09		      stx	COLUBK
-     69  f75c
-     70  f75c		       ea		      nop
-     71  f75d		       ea		      nop
-     72  f75e		       ea		      nop
-     73  f75f		       ea		      nop
-     74  f760		       ea		      nop
-     75  f761		       ea		      nop
-     76  f762		       ea		      nop
-     77  f763
-     78  f763
-     79  f763		       88		      dey
-     80  f764		       84 09		      sty	COLUBK
-     81  f766		       85 02		      sta	WSYNC
-     66  f766					      REPEND
-     67  f768		       e8		      inx
-     68  f769		       86 09		      stx	COLUBK
-     69  f76b
-     70  f76b		       ea		      nop
-     71  f76c		       ea		      nop
-     72  f76d		       ea		      nop
-     73  f76e		       ea		      nop
-     74  f76f		       ea		      nop
-     75  f770		       ea		      nop
-     76  f771		       ea		      nop
-     77  f772
-     78  f772
-     79  f772		       88		      dey
-     80  f773		       84 09		      sty	COLUBK
-     81  f775		       85 02		      sta	WSYNC
-     66  f775					      REPEND
-     67  f777		       e8		      inx
-     68  f778		       86 09		      stx	COLUBK
-     69  f77a
-     70  f77a		       ea		      nop
-     71  f77b		       ea		      nop
-     72  f77c		       ea		      nop
-     73  f77d		       ea		      nop
-     74  f77e		       ea		      nop
-     75  f77f		       ea		      nop
-     76  f780		       ea		      nop
-     77  f781
-     78  f781
-     79  f781		       88		      dey
-     80  f782		       84 09		      sty	COLUBK
-     81  f784		       85 02		      sta	WSYNC
-     66  f784					      REPEND
-     67  f786		       e8		      inx
-     68  f787		       86 09		      stx	COLUBK
-     69  f789
-     70  f789		       ea		      nop
-     71  f78a		       ea		      nop
-     72  f78b		       ea		      nop
-     73  f78c		       ea		      nop
-     74  f78d		       ea		      nop
-     75  f78e		       ea		      nop
-     76  f78f		       ea		      nop
-     77  f790
-     78  f790
-     79  f790		       88		      dey
-     80  f791		       84 09		      sty	COLUBK
-     81  f793		       85 02		      sta	WSYNC
-     66  f793					      REPEND
-     67  f795		       e8		      inx
-     68  f796		       86 09		      stx	COLUBK
-     69  f798
-     70  f798		       ea		      nop
-     71  f799		       ea		      nop
-     72  f79a		       ea		      nop
-     73  f79b		       ea		      nop
-     74  f79c		       ea		      nop
-     75  f79d		       ea		      nop
-     76  f79e		       ea		      nop
-     77  f79f
-     78  f79f
-     79  f79f		       88		      dey
-     80  f7a0		       84 09		      sty	COLUBK
-     81  f7a2		       85 02		      sta	WSYNC
-     66  f7a2					      REPEND
-     67  f7a4		       e8		      inx
-     68  f7a5		       86 09		      stx	COLUBK
-     69  f7a7
-     70  f7a7		       ea		      nop
-     71  f7a8		       ea		      nop
-     72  f7a9		       ea		      nop
-     73  f7aa		       ea		      nop
-     74  f7ab		       ea		      nop
-     75  f7ac		       ea		      nop
-     76  f7ad		       ea		      nop
-     77  f7ae
-     78  f7ae
-     79  f7ae		       88		      dey
-     80  f7af		       84 09		      sty	COLUBK
-     81  f7b1		       85 02		      sta	WSYNC
-     66  f7b1					      REPEND
-     67  f7b3		       e8		      inx
-     68  f7b4		       86 09		      stx	COLUBK
-     69  f7b6
-     70  f7b6		       ea		      nop
-     71  f7b7		       ea		      nop
-     72  f7b8		       ea		      nop
-     73  f7b9		       ea		      nop
-     74  f7ba		       ea		      nop
-     75  f7bb		       ea		      nop
-     76  f7bc		       ea		      nop
-     77  f7bd
-     78  f7bd
-     79  f7bd		       88		      dey
-     80  f7be		       84 09		      sty	COLUBK
-     81  f7c0		       85 02		      sta	WSYNC
-     66  f7c0					      REPEND
-     67  f7c2		       e8		      inx
-     68  f7c3		       86 09		      stx	COLUBK
-     69  f7c5
-     70  f7c5		       ea		      nop
-     71  f7c6		       ea		      nop
-     72  f7c7		       ea		      nop
-     73  f7c8		       ea		      nop
-     74  f7c9		       ea		      nop
-     75  f7ca		       ea		      nop
-     76  f7cb		       ea		      nop
-     77  f7cc
-     78  f7cc
-     79  f7cc		       88		      dey
-     80  f7cd		       84 09		      sty	COLUBK
-     81  f7cf		       85 02		      sta	WSYNC
-     66  f7cf					      REPEND
-     67  f7d1		       e8		      inx
-     68  f7d2		       86 09		      stx	COLUBK
-     69  f7d4
-     70  f7d4		       ea		      nop
-     71  f7d5		       ea		      nop
-     72  f7d6		       ea		      nop
-     73  f7d7		       ea		      nop
-     74  f7d8		       ea		      nop
-     75  f7d9		       ea		      nop
-     76  f7da		       ea		      nop
-     77  f7db
-     78  f7db
-     79  f7db		       88		      dey
-     80  f7dc		       84 09		      sty	COLUBK
-     81  f7de		       85 02		      sta	WSYNC
-     66  f7de					      REPEND
-     67  f7e0		       e8		      inx
-     68  f7e1		       86 09		      stx	COLUBK
-     69  f7e3
-     70  f7e3		       ea		      nop
-     71  f7e4		       ea		      nop
-     72  f7e5		       ea		      nop
-     73  f7e6		       ea		      nop
-     74  f7e7		       ea		      nop
-     75  f7e8		       ea		      nop
-     76  f7e9		       ea		      nop
-     77  f7ea
-     78  f7ea
-     79  f7ea		       88		      dey
-     80  f7eb		       84 09		      sty	COLUBK
-     81  f7ed		       85 02		      sta	WSYNC
-     66  f7ed					      REPEND
-     67  f7ef		       e8		      inx
-     68  f7f0		       86 09		      stx	COLUBK
-     69  f7f2
-     70  f7f2		       ea		      nop
-     71  f7f3		       ea		      nop
-     72  f7f4		       ea		      nop
-     73  f7f5		       ea		      nop
-     74  f7f6		       ea		      nop
-     75  f7f7		       ea		      nop
-     76  f7f8		       ea		      nop
-     77  f7f9
-     78  f7f9
-     79  f7f9		       88		      dey
-     80  f7fa		       84 09		      sty	COLUBK
-     81  f7fc		       85 02		      sta	WSYNC
-     66  f7fc					      REPEND
-     67  f7fe		       e8		      inx
-     68  f7ff		       86 09		      stx	COLUBK
-     69  f801
-     70  f801		       ea		      nop
-     71  f802		       ea		      nop
-     72  f803		       ea		      nop
-     73  f804		       ea		      nop
-     74  f805		       ea		      nop
-     75  f806		       ea		      nop
-     76  f807		       ea		      nop
-     77  f808
-     78  f808
-     79  f808		       88		      dey
-     80  f809		       84 09		      sty	COLUBK
-     81  f80b		       85 02		      sta	WSYNC
-     66  f80b					      REPEND
-     67  f80d		       e8		      inx
-     68  f80e		       86 09		      stx	COLUBK
-     69  f810
-     70  f810		       ea		      nop
-     71  f811		       ea		      nop
-     72  f812		       ea		      nop
-     73  f813		       ea		      nop
-     74  f814		       ea		      nop
-     75  f815		       ea		      nop
-     76  f816		       ea		      nop
-     77  f817
-     78  f817
-     79  f817		       88		      dey
-     80  f818		       84 09		      sty	COLUBK
-     81  f81a		       85 02		      sta	WSYNC
-     66  f81a					      REPEND
-     67  f81c		       e8		      inx
-     68  f81d		       86 09		      stx	COLUBK
-     69  f81f
-     70  f81f		       ea		      nop
-     71  f820		       ea		      nop
-     72  f821		       ea		      nop
-     73  f822		       ea		      nop
-     74  f823		       ea		      nop
-     75  f824		       ea		      nop
-     76  f825		       ea		      nop
-     77  f826
-     78  f826
-     79  f826		       88		      dey
-     80  f827		       84 09		      sty	COLUBK
-     81  f829		       85 02		      sta	WSYNC
-     66  f829					      REPEND
-     67  f82b		       e8		      inx
-     68  f82c		       86 09		      stx	COLUBK
-     69  f82e
-     70  f82e		       ea		      nop
-     71  f82f		       ea		      nop
-     72  f830		       ea		      nop
-     73  f831		       ea		      nop
-     74  f832		       ea		      nop
-     75  f833		       ea		      nop
-     76  f834		       ea		      nop
-     77  f835
-     78  f835
-     79  f835		       88		      dey
-     80  f836		       84 09		      sty	COLUBK
-     81  f838		       85 02		      sta	WSYNC
-     66  f838					      REPEND
-     67  f83a		       e8		      inx
-     68  f83b		       86 09		      stx	COLUBK
-     69  f83d
-     70  f83d		       ea		      nop
-     71  f83e		       ea		      nop
-     72  f83f		       ea		      nop
-     73  f840		       ea		      nop
-     74  f841		       ea		      nop
-     75  f842		       ea		      nop
-     76  f843		       ea		      nop
-     77  f844
-     78  f844
-     79  f844		       88		      dey
-     80  f845		       84 09		      sty	COLUBK
-     81  f847		       85 02		      sta	WSYNC
-     66  f847					      REPEND
-     67  f849		       e8		      inx
-     68  f84a		       86 09		      stx	COLUBK
-     69  f84c
-     70  f84c		       ea		      nop
-     71  f84d		       ea		      nop
-     72  f84e		       ea		      nop
-     73  f84f		       ea		      nop
-     74  f850		       ea		      nop
-     75  f851		       ea		      nop
-     76  f852		       ea		      nop
-     77  f853
-     78  f853
-     79  f853		       88		      dey
-     80  f854		       84 09		      sty	COLUBK
-     81  f856		       85 02		      sta	WSYNC
-     66  f856					      REPEND
-     67  f858		       e8		      inx
-     68  f859		       86 09		      stx	COLUBK
-     69  f85b
-     70  f85b		       ea		      nop
-     71  f85c		       ea		      nop
-     72  f85d		       ea		      nop
-     73  f85e		       ea		      nop
-     74  f85f		       ea		      nop
-     75  f860		       ea		      nop
-     76  f861		       ea		      nop
-     77  f862
-     78  f862
-     79  f862		       88		      dey
-     80  f863		       84 09		      sty	COLUBK
-     81  f865		       85 02		      sta	WSYNC
-     66  f865					      REPEND
-     67  f867		       e8		      inx
-     68  f868		       86 09		      stx	COLUBK
-     69  f86a
-     70  f86a		       ea		      nop
-     71  f86b		       ea		      nop
-     72  f86c		       ea		      nop
-     73  f86d		       ea		      nop
-     74  f86e		       ea		      nop
-     75  f86f		       ea		      nop
-     76  f870		       ea		      nop
-     77  f871
-     78  f871
-     79  f871		       88		      dey
-     80  f872		       84 09		      sty	COLUBK
-     81  f874		       85 02		      sta	WSYNC
-     66  f874					      REPEND
-     67  f876		       e8		      inx
-     68  f877		       86 09		      stx	COLUBK
-     69  f879
-     70  f879		       ea		      nop
-     71  f87a		       ea		      nop
-     72  f87b		       ea		      nop
-     73  f87c		       ea		      nop
-     74  f87d		       ea		      nop
-     75  f87e		       ea		      nop
-     76  f87f		       ea		      nop
-     77  f880
-     78  f880
-     79  f880		       88		      dey
-     80  f881		       84 09		      sty	COLUBK
-     81  f883		       85 02		      sta	WSYNC
-     66  f883					      REPEND
-     67  f885		       e8		      inx
-     68  f886		       86 09		      stx	COLUBK
-     69  f888
-     70  f888		       ea		      nop
-     71  f889		       ea		      nop
-     72  f88a		       ea		      nop
-     73  f88b		       ea		      nop
-     74  f88c		       ea		      nop
-     75  f88d		       ea		      nop
-     76  f88e		       ea		      nop
-     77  f88f
-     78  f88f
-     79  f88f		       88		      dey
-     80  f890		       84 09		      sty	COLUBK
-     81  f892		       85 02		      sta	WSYNC
-     66  f892					      REPEND
-     67  f894		       e8		      inx
-     68  f895		       86 09		      stx	COLUBK
-     69  f897
-     70  f897		       ea		      nop
-     71  f898		       ea		      nop
-     72  f899		       ea		      nop
-     73  f89a		       ea		      nop
-     74  f89b		       ea		      nop
-     75  f89c		       ea		      nop
-     76  f89d		       ea		      nop
-     77  f89e
-     78  f89e
-     79  f89e		       88		      dey
-     80  f89f		       84 09		      sty	COLUBK
-     81  f8a1		       85 02		      sta	WSYNC
-     66  f8a1					      REPEND
-     67  f8a3		       e8		      inx
-     68  f8a4		       86 09		      stx	COLUBK
-     69  f8a6
-     70  f8a6		       ea		      nop
-     71  f8a7		       ea		      nop
-     72  f8a8		       ea		      nop
-     73  f8a9		       ea		      nop
-     74  f8aa		       ea		      nop
-     75  f8ab		       ea		      nop
-     76  f8ac		       ea		      nop
-     77  f8ad
-     78  f8ad
-     79  f8ad		       88		      dey
-     80  f8ae		       84 09		      sty	COLUBK
-     81  f8b0		       85 02		      sta	WSYNC
-     66  f8b0					      REPEND
-     67  f8b2		       e8		      inx
-     68  f8b3		       86 09		      stx	COLUBK
-     69  f8b5
-     70  f8b5		       ea		      nop
-     71  f8b6		       ea		      nop
-     72  f8b7		       ea		      nop
-     73  f8b8		       ea		      nop
-     74  f8b9		       ea		      nop
-     75  f8ba		       ea		      nop
-     76  f8bb		       ea		      nop
-     77  f8bc
-     78  f8bc
-     79  f8bc		       88		      dey
-     80  f8bd		       84 09		      sty	COLUBK
-     81  f8bf		       85 02		      sta	WSYNC
-     66  f8bf					      REPEND
-     67  f8c1		       e8		      inx
-     68  f8c2		       86 09		      stx	COLUBK
-     69  f8c4
-     70  f8c4		       ea		      nop
-     71  f8c5		       ea		      nop
-     72  f8c6		       ea		      nop
-     73  f8c7		       ea		      nop
-     74  f8c8		       ea		      nop
-     75  f8c9		       ea		      nop
-     76  f8ca		       ea		      nop
-     77  f8cb
-     78  f8cb
-     79  f8cb		       88		      dey
-     80  f8cc		       84 09		      sty	COLUBK
-     81  f8ce		       85 02		      sta	WSYNC
-     66  f8ce					      REPEND
-     67  f8d0		       e8		      inx
-     68  f8d1		       86 09		      stx	COLUBK
-     69  f8d3
-     70  f8d3		       ea		      nop
-     71  f8d4		       ea		      nop
-     72  f8d5		       ea		      nop
-     73  f8d6		       ea		      nop
-     74  f8d7		       ea		      nop
-     75  f8d8		       ea		      nop
-     76  f8d9		       ea		      nop
-     77  f8da
-     78  f8da
-     79  f8da		       88		      dey
-     80  f8db		       84 09		      sty	COLUBK
-     81  f8dd		       85 02		      sta	WSYNC
-     66  f8dd					      REPEND
-     67  f8df		       e8		      inx
-     68  f8e0		       86 09		      stx	COLUBK
-     69  f8e2
-     70  f8e2		       ea		      nop
-     71  f8e3		       ea		      nop
-     72  f8e4		       ea		      nop
-     73  f8e5		       ea		      nop
-     74  f8e6		       ea		      nop
-     75  f8e7		       ea		      nop
-     76  f8e8		       ea		      nop
-     77  f8e9
-     78  f8e9
-     79  f8e9		       88		      dey
-     80  f8ea		       84 09		      sty	COLUBK
-     81  f8ec		       85 02		      sta	WSYNC
-     66  f8ec					      REPEND
-     67  f8ee		       e8		      inx
-     68  f8ef		       86 09		      stx	COLUBK
-     69  f8f1
-     70  f8f1		       ea		      nop
-     71  f8f2		       ea		      nop
-     72  f8f3		       ea		      nop
-     73  f8f4		       ea		      nop
-     74  f8f5		       ea		      nop
-     75  f8f6		       ea		      nop
-     76  f8f7		       ea		      nop
-     77  f8f8
-     78  f8f8
-     79  f8f8		       88		      dey
-     80  f8f9		       84 09		      sty	COLUBK
-     81  f8fb		       85 02		      sta	WSYNC
-     66  f8fb					      REPEND
-     67  f8fd		       e8		      inx
-     68  f8fe		       86 09		      stx	COLUBK
-     69  f900
-     70  f900		       ea		      nop
-     71  f901		       ea		      nop
-     72  f902		       ea		      nop
-     73  f903		       ea		      nop
-     74  f904		       ea		      nop
-     75  f905		       ea		      nop
-     76  f906		       ea		      nop
-     77  f907
-     78  f907
-     79  f907		       88		      dey
-     80  f908		       84 09		      sty	COLUBK
-     81  f90a		       85 02		      sta	WSYNC
-     66  f90a					      REPEND
-     67  f90c		       e8		      inx
-     68  f90d		       86 09		      stx	COLUBK
-     69  f90f
-     70  f90f		       ea		      nop
-     71  f910		       ea		      nop
-     72  f911		       ea		      nop
-     73  f912		       ea		      nop
-     74  f913		       ea		      nop
-     75  f914		       ea		      nop
-     76  f915		       ea		      nop
-     77  f916
-     78  f916
-     79  f916		       88		      dey
-     80  f917		       84 09		      sty	COLUBK
-     81  f919		       85 02		      sta	WSYNC
-     66  f919					      REPEND
-     67  f91b		       e8		      inx
-     68  f91c		       86 09		      stx	COLUBK
-     69  f91e
-     70  f91e		       ea		      nop
-     71  f91f		       ea		      nop
-     72  f920		       ea		      nop
-     73  f921		       ea		      nop
-     74  f922		       ea		      nop
-     75  f923		       ea		      nop
-     76  f924		       ea		      nop
-     77  f925
-     78  f925
-     79  f925		       88		      dey
-     80  f926		       84 09		      sty	COLUBK
-     81  f928		       85 02		      sta	WSYNC
-     66  f928					      REPEND
-     67  f92a		       e8		      inx
-     68  f92b		       86 09		      stx	COLUBK
-     69  f92d
-     70  f92d		       ea		      nop
-     71  f92e		       ea		      nop
-     72  f92f		       ea		      nop
-     73  f930		       ea		      nop
-     74  f931		       ea		      nop
-     75  f932		       ea		      nop
-     76  f933		       ea		      nop
-     77  f934
-     78  f934
-     79  f934		       88		      dey
-     80  f935		       84 09		      sty	COLUBK
-     81  f937		       85 02		      sta	WSYNC
-     66  f937					      REPEND
-     67  f939		       e8		      inx
-     68  f93a		       86 09		      stx	COLUBK
-     69  f93c
-     70  f93c		       ea		      nop
-     71  f93d		       ea		      nop
-     72  f93e		       ea		      nop
-     73  f93f		       ea		      nop
-     74  f940		       ea		      nop
-     75  f941		       ea		      nop
-     76  f942		       ea		      nop
-     77  f943
-     78  f943
-     79  f943		       88		      dey
-     80  f944		       84 09		      sty	COLUBK
-     81  f946		       85 02		      sta	WSYNC
-     66  f946					      REPEND
-     67  f948		       e8		      inx
-     68  f949		       86 09		      stx	COLUBK
-     69  f94b
-     70  f94b		       ea		      nop
-     71  f94c		       ea		      nop
-     72  f94d		       ea		      nop
-     73  f94e		       ea		      nop
-     74  f94f		       ea		      nop
-     75  f950		       ea		      nop
-     76  f951		       ea		      nop
-     77  f952
-     78  f952
-     79  f952		       88		      dey
-     80  f953		       84 09		      sty	COLUBK
-     81  f955		       85 02		      sta	WSYNC
-     66  f955					      REPEND
-     67  f957		       e8		      inx
-     68  f958		       86 09		      stx	COLUBK
-     69  f95a
-     70  f95a		       ea		      nop
-     71  f95b		       ea		      nop
-     72  f95c		       ea		      nop
-     73  f95d		       ea		      nop
-     74  f95e		       ea		      nop
-     75  f95f		       ea		      nop
-     76  f960		       ea		      nop
-     77  f961
-     78  f961
-     79  f961		       88		      dey
-     80  f962		       84 09		      sty	COLUBK
-     81  f964		       85 02		      sta	WSYNC
-     66  f964					      REPEND
-     67  f966		       e8		      inx
-     68  f967		       86 09		      stx	COLUBK
-     69  f969
-     70  f969		       ea		      nop
-     71  f96a		       ea		      nop
-     72  f96b		       ea		      nop
-     73  f96c		       ea		      nop
-     74  f96d		       ea		      nop
-     75  f96e		       ea		      nop
-     76  f96f		       ea		      nop
-     77  f970
-     78  f970
-     79  f970		       88		      dey
-     80  f971		       84 09		      sty	COLUBK
-     81  f973		       85 02		      sta	WSYNC
-     66  f973					      REPEND
-     67  f975		       e8		      inx
-     68  f976		       86 09		      stx	COLUBK
-     69  f978
-     70  f978		       ea		      nop
-     71  f979		       ea		      nop
-     72  f97a		       ea		      nop
-     73  f97b		       ea		      nop
-     74  f97c		       ea		      nop
-     75  f97d		       ea		      nop
-     76  f97e		       ea		      nop
-     77  f97f
-     78  f97f
-     79  f97f		       88		      dey
-     80  f980		       84 09		      sty	COLUBK
-     81  f982		       85 02		      sta	WSYNC
-     66  f982					      REPEND
-     67  f984		       e8		      inx
-     68  f985		       86 09		      stx	COLUBK
-     69  f987
-     70  f987		       ea		      nop
-     71  f988		       ea		      nop
-     72  f989		       ea		      nop
-     73  f98a		       ea		      nop
-     74  f98b		       ea		      nop
-     75  f98c		       ea		      nop
-     76  f98d		       ea		      nop
-     77  f98e
-     78  f98e
-     79  f98e		       88		      dey
-     80  f98f		       84 09		      sty	COLUBK
-     81  f991		       85 02		      sta	WSYNC
-     66  f991					      REPEND
-     67  f993		       e8		      inx
-     68  f994		       86 09		      stx	COLUBK
-     69  f996
-     70  f996		       ea		      nop
-     71  f997		       ea		      nop
-     72  f998		       ea		      nop
-     73  f999		       ea		      nop
-     74  f99a		       ea		      nop
-     75  f99b		       ea		      nop
-     76  f99c		       ea		      nop
-     77  f99d
-     78  f99d
-     79  f99d		       88		      dey
-     80  f99e		       84 09		      sty	COLUBK
-     81  f9a0		       85 02		      sta	WSYNC
-     66  f9a0					      REPEND
-     67  f9a2		       e8		      inx
-     68  f9a3		       86 09		      stx	COLUBK
-     69  f9a5
-     70  f9a5		       ea		      nop
-     71  f9a6		       ea		      nop
-     72  f9a7		       ea		      nop
-     73  f9a8		       ea		      nop
-     74  f9a9		       ea		      nop
-     75  f9aa		       ea		      nop
-     76  f9ab		       ea		      nop
-     77  f9ac
-     78  f9ac
-     79  f9ac		       88		      dey
-     80  f9ad		       84 09		      sty	COLUBK
-     81  f9af		       85 02		      sta	WSYNC
-     66  f9af					      REPEND
-     67  f9b1		       e8		      inx
-     68  f9b2		       86 09		      stx	COLUBK
-     69  f9b4
-     70  f9b4		       ea		      nop
-     71  f9b5		       ea		      nop
-     72  f9b6		       ea		      nop
-     73  f9b7		       ea		      nop
-     74  f9b8		       ea		      nop
-     75  f9b9		       ea		      nop
-     76  f9ba		       ea		      nop
-     77  f9bb
-     78  f9bb
-     79  f9bb		       88		      dey
-     80  f9bc		       84 09		      sty	COLUBK
-     81  f9be		       85 02		      sta	WSYNC
-     66  f9be					      REPEND
-     67  f9c0		       e8		      inx
-     68  f9c1		       86 09		      stx	COLUBK
-     69  f9c3
-     70  f9c3		       ea		      nop
-     71  f9c4		       ea		      nop
-     72  f9c5		       ea		      nop
-     73  f9c6		       ea		      nop
-     74  f9c7		       ea		      nop
-     75  f9c8		       ea		      nop
-     76  f9c9		       ea		      nop
-     77  f9ca
-     78  f9ca
-     79  f9ca		       88		      dey
-     80  f9cb		       84 09		      sty	COLUBK
-     81  f9cd		       85 02		      sta	WSYNC
-     66  f9cd					      REPEND
-     67  f9cf		       e8		      inx
-     68  f9d0		       86 09		      stx	COLUBK
-     69  f9d2
-     70  f9d2		       ea		      nop
-     71  f9d3		       ea		      nop
-     72  f9d4		       ea		      nop
-     73  f9d5		       ea		      nop
-     74  f9d6		       ea		      nop
-     75  f9d7		       ea		      nop
-     76  f9d8		       ea		      nop
-     77  f9d9
-     78  f9d9
-     79  f9d9		       88		      dey
-     80  f9da		       84 09		      sty	COLUBK
-     81  f9dc		       85 02		      sta	WSYNC
-     66  f9dc					      REPEND
-     67  f9de		       e8		      inx
-     68  f9df		       86 09		      stx	COLUBK
-     69  f9e1
-     70  f9e1		       ea		      nop
-     71  f9e2		       ea		      nop
-     72  f9e3		       ea		      nop
-     73  f9e4		       ea		      nop
-     74  f9e5		       ea		      nop
-     75  f9e6		       ea		      nop
-     76  f9e7		       ea		      nop
-     77  f9e8
-     78  f9e8
-     79  f9e8		       88		      dey
-     80  f9e9		       84 09		      sty	COLUBK
-     81  f9eb		       85 02		      sta	WSYNC
-     66  f9eb					      REPEND
-     67  f9ed		       e8		      inx
-     68  f9ee		       86 09		      stx	COLUBK
-     69  f9f0
-     70  f9f0		       ea		      nop
-     71  f9f1		       ea		      nop
-     72  f9f2		       ea		      nop
-     73  f9f3		       ea		      nop
-     74  f9f4		       ea		      nop
-     75  f9f5		       ea		      nop
-     76  f9f6		       ea		      nop
-     77  f9f7
-     78  f9f7
-     79  f9f7		       88		      dey
-     80  f9f8		       84 09		      sty	COLUBK
-     81  f9fa		       85 02		      sta	WSYNC
-     66  f9fa					      REPEND
-     67  f9fc		       e8		      inx
-     68  f9fd		       86 09		      stx	COLUBK
-     69  f9ff
-     70  f9ff		       ea		      nop
-     71  fa00		       ea		      nop
-     72  fa01		       ea		      nop
-     73  fa02		       ea		      nop
-     74  fa03		       ea		      nop
-     75  fa04		       ea		      nop
-     76  fa05		       ea		      nop
-     77  fa06
-     78  fa06
-     79  fa06		       88		      dey
-     80  fa07		       84 09		      sty	COLUBK
-     81  fa09		       85 02		      sta	WSYNC
-     66  fa09					      REPEND
-     67  fa0b		       e8		      inx
-     68  fa0c		       86 09		      stx	COLUBK
-     69  fa0e
-     70  fa0e		       ea		      nop
-     71  fa0f		       ea		      nop
-     72  fa10		       ea		      nop
-     73  fa11		       ea		      nop
-     74  fa12		       ea		      nop
-     75  fa13		       ea		      nop
-     76  fa14		       ea		      nop
-     77  fa15
-     78  fa15
-     79  fa15		       88		      dey
-     80  fa16		       84 09		      sty	COLUBK
-     81  fa18		       85 02		      sta	WSYNC
-     66  fa18					      REPEND
-     67  fa1a		       e8		      inx
-     68  fa1b		       86 09		      stx	COLUBK
-     69  fa1d
-     70  fa1d		       ea		      nop
-     71  fa1e		       ea		      nop
-     72  fa1f		       ea		      nop
-     73  fa20		       ea		      nop
-     74  fa21		       ea		      nop
-     75  fa22		       ea		      nop
-     76  fa23		       ea		      nop
-     77  fa24
-     78  fa24
-     79  fa24		       88		      dey
-     80  fa25		       84 09		      sty	COLUBK
-     81  fa27		       85 02		      sta	WSYNC
-     66  fa27					      REPEND
-     67  fa29		       e8		      inx
-     68  fa2a		       86 09		      stx	COLUBK
-     69  fa2c
-     70  fa2c		       ea		      nop
-     71  fa2d		       ea		      nop
-     72  fa2e		       ea		      nop
-     73  fa2f		       ea		      nop
-     74  fa30		       ea		      nop
-     75  fa31		       ea		      nop
-     76  fa32		       ea		      nop
-     77  fa33
-     78  fa33
-     79  fa33		       88		      dey
-     80  fa34		       84 09		      sty	COLUBK
-     81  fa36		       85 02		      sta	WSYNC
-     66  fa36					      REPEND
-     67  fa38		       e8		      inx
-     68  fa39		       86 09		      stx	COLUBK
-     69  fa3b
-     70  fa3b		       ea		      nop
-     71  fa3c		       ea		      nop
-     72  fa3d		       ea		      nop
-     73  fa3e		       ea		      nop
-     74  fa3f		       ea		      nop
-     75  fa40		       ea		      nop
-     76  fa41		       ea		      nop
-     77  fa42
-     78  fa42
-     79  fa42		       88		      dey
-     80  fa43		       84 09		      sty	COLUBK
-     81  fa45		       85 02		      sta	WSYNC
-     66  fa45					      REPEND
-     67  fa47		       e8		      inx
-     68  fa48		       86 09		      stx	COLUBK
-     69  fa4a
-     70  fa4a		       ea		      nop
-     71  fa4b		       ea		      nop
-     72  fa4c		       ea		      nop
-     73  fa4d		       ea		      nop
-     74  fa4e		       ea		      nop
-     75  fa4f		       ea		      nop
-     76  fa50		       ea		      nop
-     77  fa51
-     78  fa51
-     79  fa51		       88		      dey
-     80  fa52		       84 09		      sty	COLUBK
-     81  fa54		       85 02		      sta	WSYNC
-     66  fa54					      REPEND
-     67  fa56		       e8		      inx
-     68  fa57		       86 09		      stx	COLUBK
-     69  fa59
-     70  fa59		       ea		      nop
-     71  fa5a		       ea		      nop
-     72  fa5b		       ea		      nop
-     73  fa5c		       ea		      nop
-     74  fa5d		       ea		      nop
-     75  fa5e		       ea		      nop
-     76  fa5f		       ea		      nop
-     77  fa60
-     78  fa60
-     79  fa60		       88		      dey
-     80  fa61		       84 09		      sty	COLUBK
-     81  fa63		       85 02		      sta	WSYNC
-     66  fa63					      REPEND
-     67  fa65		       e8		      inx
-     68  fa66		       86 09		      stx	COLUBK
-     69  fa68
-     70  fa68		       ea		      nop
-     71  fa69		       ea		      nop
-     72  fa6a		       ea		      nop
-     73  fa6b		       ea		      nop
-     74  fa6c		       ea		      nop
-     75  fa6d		       ea		      nop
-     76  fa6e		       ea		      nop
-     77  fa6f
-     78  fa6f
-     79  fa6f		       88		      dey
-     80  fa70		       84 09		      sty	COLUBK
-     81  fa72		       85 02		      sta	WSYNC
-     66  fa72					      REPEND
-     67  fa74		       e8		      inx
-     68  fa75		       86 09		      stx	COLUBK
-     69  fa77
-     70  fa77		       ea		      nop
-     71  fa78		       ea		      nop
-     72  fa79		       ea		      nop
-     73  fa7a		       ea		      nop
-     74  fa7b		       ea		      nop
-     75  fa7c		       ea		      nop
-     76  fa7d		       ea		      nop
-     77  fa7e
-     78  fa7e
-     79  fa7e		       88		      dey
-     80  fa7f		       84 09		      sty	COLUBK
-     81  fa81		       85 02		      sta	WSYNC
-     66  fa81					      REPEND
-     67  fa83		       e8		      inx
-     68  fa84		       86 09		      stx	COLUBK
-     69  fa86
-     70  fa86		       ea		      nop
-     71  fa87		       ea		      nop
-     72  fa88		       ea		      nop
-     73  fa89		       ea		      nop
-     74  fa8a		       ea		      nop
-     75  fa8b		       ea		      nop
-     76  fa8c		       ea		      nop
-     77  fa8d
-     78  fa8d
-     79  fa8d		       88		      dey
-     80  fa8e		       84 09		      sty	COLUBK
-     81  fa90		       85 02		      sta	WSYNC
-     66  fa90					      REPEND
-     67  fa92		       e8		      inx
-     68  fa93		       86 09		      stx	COLUBK
-     69  fa95
-     70  fa95		       ea		      nop
-     71  fa96		       ea		      nop
-     72  fa97		       ea		      nop
-     73  fa98		       ea		      nop
-     74  fa99		       ea		      nop
-     75  fa9a		       ea		      nop
-     76  fa9b		       ea		      nop
-     77  fa9c
-     78  fa9c
-     79  fa9c		       88		      dey
-     80  fa9d		       84 09		      sty	COLUBK
-     81  fa9f		       85 02		      sta	WSYNC
-     66  fa9f					      REPEND
-     67  faa1		       e8		      inx
-     68  faa2		       86 09		      stx	COLUBK
-     69  faa4
-     70  faa4		       ea		      nop
-     71  faa5		       ea		      nop
-     72  faa6		       ea		      nop
-     73  faa7		       ea		      nop
-     74  faa8		       ea		      nop
-     75  faa9		       ea		      nop
-     76  faaa		       ea		      nop
-     77  faab
-     78  faab
-     79  faab		       88		      dey
-     80  faac		       84 09		      sty	COLUBK
-     81  faae		       85 02		      sta	WSYNC
-     66  faae					      REPEND
-     67  fab0		       e8		      inx
-     68  fab1		       86 09		      stx	COLUBK
-     69  fab3
-     70  fab3		       ea		      nop
-     71  fab4		       ea		      nop
-     72  fab5		       ea		      nop
-     73  fab6		       ea		      nop
-     74  fab7		       ea		      nop
-     75  fab8		       ea		      nop
-     76  fab9		       ea		      nop
-     77  faba
-     78  faba
-     79  faba		       88		      dey
-     80  fabb		       84 09		      sty	COLUBK
-     81  fabd		       85 02		      sta	WSYNC
-     66  fabd					      REPEND
-     67  fabf		       e8		      inx
-     68  fac0		       86 09		      stx	COLUBK
-     69  fac2
-     70  fac2		       ea		      nop
-     71  fac3		       ea		      nop
-     72  fac4		       ea		      nop
-     73  fac5		       ea		      nop
-     74  fac6		       ea		      nop
-     75  fac7		       ea		      nop
-     76  fac8		       ea		      nop
-     77  fac9
-     78  fac9
-     79  fac9		       88		      dey
-     80  faca		       84 09		      sty	COLUBK
-     81  facc		       85 02		      sta	WSYNC
-     66  facc					      REPEND
-     67  face		       e8		      inx
-     68  facf		       86 09		      stx	COLUBK
-     69  fad1
-     70  fad1		       ea		      nop
-     71  fad2		       ea		      nop
-     72  fad3		       ea		      nop
-     73  fad4		       ea		      nop
-     74  fad5		       ea		      nop
-     75  fad6		       ea		      nop
-     76  fad7		       ea		      nop
-     77  fad8
-     78  fad8
-     79  fad8		       88		      dey
-     80  fad9		       84 09		      sty	COLUBK
-     81  fadb		       85 02		      sta	WSYNC
-     66  fadb					      REPEND
-     67  fadd		       e8		      inx
-     68  fade		       86 09		      stx	COLUBK
-     69  fae0
-     70  fae0		       ea		      nop
-     71  fae1		       ea		      nop
-     72  fae2		       ea		      nop
-     73  fae3		       ea		      nop
-     74  fae4		       ea		      nop
-     75  fae5		       ea		      nop
-     76  fae6		       ea		      nop
-     77  fae7
-     78  fae7
-     79  fae7		       88		      dey
-     80  fae8		       84 09		      sty	COLUBK
-     81  faea		       85 02		      sta	WSYNC
-     66  faea					      REPEND
-     67  faec		       e8		      inx
-     68  faed		       86 09		      stx	COLUBK
-     69  faef
-     70  faef		       ea		      nop
-     71  faf0		       ea		      nop
-     72  faf1		       ea		      nop
-     73  faf2		       ea		      nop
-     74  faf3		       ea		      nop
-     75  faf4		       ea		      nop
-     76  faf5		       ea		      nop
-     77  faf6
-     78  faf6
-     79  faf6		       88		      dey
-     80  faf7		       84 09		      sty	COLUBK
-     81  faf9		       85 02		      sta	WSYNC
-     66  faf9					      REPEND
-     67  fafb		       e8		      inx
-     68  fafc		       86 09		      stx	COLUBK
-     69  fafe
-     70  fafe		       ea		      nop
-     71  faff		       ea		      nop
-     72  fb00		       ea		      nop
-     73  fb01		       ea		      nop
-     74  fb02		       ea		      nop
-     75  fb03		       ea		      nop
-     76  fb04		       ea		      nop
-     77  fb05
-     78  fb05
-     79  fb05		       88		      dey
-     80  fb06		       84 09		      sty	COLUBK
-     81  fb08		       85 02		      sta	WSYNC
-     66  fb08					      REPEND
-     67  fb0a		       e8		      inx
-     68  fb0b		       86 09		      stx	COLUBK
-     69  fb0d
-     70  fb0d		       ea		      nop
-     71  fb0e		       ea		      nop
-     72  fb0f		       ea		      nop
-     73  fb10		       ea		      nop
-     74  fb11		       ea		      nop
-     75  fb12		       ea		      nop
-     76  fb13		       ea		      nop
-     77  fb14
-     78  fb14
-     79  fb14		       88		      dey
-     80  fb15		       84 09		      sty	COLUBK
-     81  fb17		       85 02		      sta	WSYNC
-     66  fb17					      REPEND
-     67  fb19		       e8		      inx
-     68  fb1a		       86 09		      stx	COLUBK
-     69  fb1c
-     70  fb1c		       ea		      nop
-     71  fb1d		       ea		      nop
-     72  fb1e		       ea		      nop
-     73  fb1f		       ea		      nop
-     74  fb20		       ea		      nop
-     75  fb21		       ea		      nop
-     76  fb22		       ea		      nop
-     77  fb23
-     78  fb23
-     79  fb23		       88		      dey
-     80  fb24		       84 09		      sty	COLUBK
-     81  fb26		       85 02		      sta	WSYNC
-     66  fb26					      REPEND
-     67  fb28		       e8		      inx
-     68  fb29		       86 09		      stx	COLUBK
-     69  fb2b
-     70  fb2b		       ea		      nop
-     71  fb2c		       ea		      nop
-     72  fb2d		       ea		      nop
-     73  fb2e		       ea		      nop
-     74  fb2f		       ea		      nop
-     75  fb30		       ea		      nop
-     76  fb31		       ea		      nop
-     77  fb32
-     78  fb32
-     79  fb32		       88		      dey
-     80  fb33		       84 09		      sty	COLUBK
-     81  fb35		       85 02		      sta	WSYNC
-     66  fb35					      REPEND
-     67  fb37		       e8		      inx
-     68  fb38		       86 09		      stx	COLUBK
-     69  fb3a
-     70  fb3a		       ea		      nop
-     71  fb3b		       ea		      nop
-     72  fb3c		       ea		      nop
-     73  fb3d		       ea		      nop
-     74  fb3e		       ea		      nop
-     75  fb3f		       ea		      nop
-     76  fb40		       ea		      nop
-     77  fb41
-     78  fb41
-     79  fb41		       88		      dey
-     80  fb42		       84 09		      sty	COLUBK
-     81  fb44		       85 02		      sta	WSYNC
-     66  fb44					      REPEND
-     67  fb46		       e8		      inx
-     68  fb47		       86 09		      stx	COLUBK
-     69  fb49
-     70  fb49		       ea		      nop
-     71  fb4a		       ea		      nop
-     72  fb4b		       ea		      nop
-     73  fb4c		       ea		      nop
-     74  fb4d		       ea		      nop
-     75  fb4e		       ea		      nop
-     76  fb4f		       ea		      nop
-     77  fb50
-     78  fb50
-     79  fb50		       88		      dey
-     80  fb51		       84 09		      sty	COLUBK
-     81  fb53		       85 02		      sta	WSYNC
-     66  fb53					      REPEND
-     67  fb55		       e8		      inx
-     68  fb56		       86 09		      stx	COLUBK
-     69  fb58
-     70  fb58		       ea		      nop
-     71  fb59		       ea		      nop
-     72  fb5a		       ea		      nop
-     73  fb5b		       ea		      nop
-     74  fb5c		       ea		      nop
-     75  fb5d		       ea		      nop
-     76  fb5e		       ea		      nop
-     77  fb5f
-     78  fb5f
-     79  fb5f		       88		      dey
-     80  fb60		       84 09		      sty	COLUBK
-     81  fb62		       85 02		      sta	WSYNC
-     66  fb62					      REPEND
-     67  fb64		       e8		      inx
-     68  fb65		       86 09		      stx	COLUBK
-     69  fb67
-     70  fb67		       ea		      nop
-     71  fb68		       ea		      nop
-     72  fb69		       ea		      nop
-     73  fb6a		       ea		      nop
-     74  fb6b		       ea		      nop
-     75  fb6c		       ea		      nop
-     76  fb6d		       ea		      nop
-     77  fb6e
-     78  fb6e
-     79  fb6e		       88		      dey
-     80  fb6f		       84 09		      sty	COLUBK
-     81  fb71		       85 02		      sta	WSYNC
-     66  fb71					      REPEND
-     67  fb73		       e8		      inx
-     68  fb74		       86 09		      stx	COLUBK
-     69  fb76
-     70  fb76		       ea		      nop
-     71  fb77		       ea		      nop
-     72  fb78		       ea		      nop
-     73  fb79		       ea		      nop
-     74  fb7a		       ea		      nop
-     75  fb7b		       ea		      nop
-     76  fb7c		       ea		      nop
-     77  fb7d
-     78  fb7d
-     79  fb7d		       88		      dey
-     80  fb7e		       84 09		      sty	COLUBK
-     81  fb80		       85 02		      sta	WSYNC
-     66  fb80					      REPEND
-     67  fb82		       e8		      inx
-     68  fb83		       86 09		      stx	COLUBK
-     69  fb85
-     70  fb85		       ea		      nop
-     71  fb86		       ea		      nop
-     72  fb87		       ea		      nop
-     73  fb88		       ea		      nop
-     74  fb89		       ea		      nop
-     75  fb8a		       ea		      nop
-     76  fb8b		       ea		      nop
-     77  fb8c
-     78  fb8c
-     79  fb8c		       88		      dey
-     80  fb8d		       84 09		      sty	COLUBK
-     81  fb8f		       85 02		      sta	WSYNC
-     66  fb8f					      REPEND
-     67  fb91		       e8		      inx
-     68  fb92		       86 09		      stx	COLUBK
-     69  fb94
-     70  fb94		       ea		      nop
-     71  fb95		       ea		      nop
-     72  fb96		       ea		      nop
-     73  fb97		       ea		      nop
-     74  fb98		       ea		      nop
-     75  fb99		       ea		      nop
-     76  fb9a		       ea		      nop
-     77  fb9b
-     78  fb9b
-     79  fb9b		       88		      dey
-     80  fb9c		       84 09		      sty	COLUBK
-     81  fb9e		       85 02		      sta	WSYNC
-     82  fba0					      REPEND
-     83  fba0
-     84  fba0							; 192 scanlines of picture...
-     85  fba0							;ldx #0
-     86  fba0							;REPEAT 192; scanlines
-     87  fba0							;    inx
-     88  fba0							;    stx COLUBK
-     89  fba0							;    sta WSYNC
-     90  fba0							;REPEND
-     91  fba0		       a9 42		      lda	#%01000010
-     92  fba2		       85 01		      sta	VBLANK	; end of screen - enter blanking
-     93  fba4							; 30 scanlines of overscan...
-     94  fba4		       85 02		      sta	WSYNC
-     95  fba6		       85 02		      sta	WSYNC
-     96  fba8		       85 02		      sta	WSYNC
-     97  fbaa		       85 02		      sta	WSYNC
-     98  fbac		       85 02		      sta	WSYNC
-     99  fbae		       85 02		      sta	WSYNC
-    100  fbb0		       85 02		      sta	WSYNC
-    101  fbb2		       85 02		      sta	WSYNC
-    102  fbb4		       85 02		      sta	WSYNC
-    103  fbb6		       85 02		      sta	WSYNC
-    104  fbb8		       85 02		      sta	WSYNC
-    105  fbba		       85 02		      sta	WSYNC
-    106  fbbc		       85 02		      sta	WSYNC
-    107  fbbe		       85 02		      sta	WSYNC
-    108  fbc0		       85 02		      sta	WSYNC
-    109  fbc2		       85 02		      sta	WSYNC
-    110  fbc4		       85 02		      sta	WSYNC
-    111  fbc6		       85 02		      sta	WSYNC
-    112  fbc8		       85 02		      sta	WSYNC
-    113  fbca		       85 02		      sta	WSYNC
-    114  fbcc		       85 02		      sta	WSYNC
-    115  fbce		       85 02		      sta	WSYNC
-    116  fbd0		       85 02		      sta	WSYNC
-    117  fbd2		       85 02		      sta	WSYNC
-    118  fbd4		       85 02		      sta	WSYNC
-    119  fbd6		       85 02		      sta	WSYNC
-    120  fbd8		       85 02		      sta	WSYNC
-    121  fbda		       85 02		      sta	WSYNC
-    122  fbdc		       85 02		      sta	WSYNC
-    123  fbde		       85 02		      sta	WSYNC
-    124  fbe0		       4c 00 f0 	      jmp	StartOfFrame
-    125  fffa					      ORG	$FFFA
-    126  fffa		       00 f0		      .word.w	Reset	; NMI
-    127  fffc		       00 f0		      .word.w	Reset	; RESET
-    128  fffe		       00 f0		      .word.w	Reset	; IRQ
-    129  10000				    END
+     70  f603		       88		      dey
+     71  f604		       84 09		      sty	COLUBK
+     72  f606		       85 02		      sta	WSYNC
+     66  f606					      REPEND
+     67  f608		       e8		      inx
+     68  f609		       86 09		      stx	COLUBK
+     69  f60b
+     70  f60b		       88		      dey
+     71  f60c		       84 09		      sty	COLUBK
+     72  f60e		       85 02		      sta	WSYNC
+     66  f60e					      REPEND
+     67  f610		       e8		      inx
+     68  f611		       86 09		      stx	COLUBK
+     69  f613
+     70  f613		       88		      dey
+     71  f614		       84 09		      sty	COLUBK
+     72  f616		       85 02		      sta	WSYNC
+     66  f616					      REPEND
+     67  f618		       e8		      inx
+     68  f619		       86 09		      stx	COLUBK
+     69  f61b
+     70  f61b		       88		      dey
+     71  f61c		       84 09		      sty	COLUBK
+     72  f61e		       85 02		      sta	WSYNC
+     66  f61e					      REPEND
+     67  f620		       e8		      inx
+     68  f621		       86 09		      stx	COLUBK
+     69  f623
+     70  f623		       88		      dey
+     71  f624		       84 09		      sty	COLUBK
+     72  f626		       85 02		      sta	WSYNC
+     66  f626					      REPEND
+     67  f628		       e8		      inx
+     68  f629		       86 09		      stx	COLUBK
+     69  f62b
+     70  f62b		       88		      dey
+     71  f62c		       84 09		      sty	COLUBK
+     72  f62e		       85 02		      sta	WSYNC
+     66  f62e					      REPEND
+     67  f630		       e8		      inx
+     68  f631		       86 09		      stx	COLUBK
+     69  f633
+     70  f633		       88		      dey
+     71  f634		       84 09		      sty	COLUBK
+     72  f636		       85 02		      sta	WSYNC
+     66  f636					      REPEND
+     67  f638		       e8		      inx
+     68  f639		       86 09		      stx	COLUBK
+     69  f63b
+     70  f63b		       88		      dey
+     71  f63c		       84 09		      sty	COLUBK
+     72  f63e		       85 02		      sta	WSYNC
+     66  f63e					      REPEND
+     67  f640		       e8		      inx
+     68  f641		       86 09		      stx	COLUBK
+     69  f643
+     70  f643		       88		      dey
+     71  f644		       84 09		      sty	COLUBK
+     72  f646		       85 02		      sta	WSYNC
+     66  f646					      REPEND
+     67  f648		       e8		      inx
+     68  f649		       86 09		      stx	COLUBK
+     69  f64b
+     70  f64b		       88		      dey
+     71  f64c		       84 09		      sty	COLUBK
+     72  f64e		       85 02		      sta	WSYNC
+     66  f64e					      REPEND
+     67  f650		       e8		      inx
+     68  f651		       86 09		      stx	COLUBK
+     69  f653
+     70  f653		       88		      dey
+     71  f654		       84 09		      sty	COLUBK
+     72  f656		       85 02		      sta	WSYNC
+     66  f656					      REPEND
+     67  f658		       e8		      inx
+     68  f659		       86 09		      stx	COLUBK
+     69  f65b
+     70  f65b		       88		      dey
+     71  f65c		       84 09		      sty	COLUBK
+     72  f65e		       85 02		      sta	WSYNC
+     73  f660					      REPEND
+     74  f660
+     75  f660							; 192 scanlines of picture...
+     76  f660							;ldx #0
+     77  f660							;REPEAT 192; scanlines
+     78  f660							;    inx
+     79  f660							;    stx COLUBK
+     80  f660							;    sta WSYNC
+     81  f660							;REPEND
+     82  f660		       a9 42		      lda	#%01000010
+     83  f662		       85 01		      sta	VBLANK	; end of screen - enter blanking
+     84  f664							; 30 scanlines of overscan...
+     85  f664		       85 02		      sta	WSYNC
+     86  f666		       85 02		      sta	WSYNC
+     87  f668		       85 02		      sta	WSYNC
+     88  f66a		       85 02		      sta	WSYNC
+     89  f66c		       85 02		      sta	WSYNC
+     90  f66e		       85 02		      sta	WSYNC
+     91  f670		       85 02		      sta	WSYNC
+     92  f672		       85 02		      sta	WSYNC
+     93  f674		       85 02		      sta	WSYNC
+     94  f676		       85 02		      sta	WSYNC
+     95  f678		       85 02		      sta	WSYNC
+     96  f67a		       85 02		      sta	WSYNC
+     97  f67c		       85 02		      sta	WSYNC
+     98  f67e		       85 02		      sta	WSYNC
+     99  f680		       85 02		      sta	WSYNC
+    100  f682		       85 02		      sta	WSYNC
+    101  f684		       85 02		      sta	WSYNC
+    102  f686		       85 02		      sta	WSYNC
+    103  f688		       85 02		      sta	WSYNC
+    104  f68a		       85 02		      sta	WSYNC
+    105  f68c		       85 02		      sta	WSYNC
+    106  f68e		       85 02		      sta	WSYNC
+    107  f690		       85 02		      sta	WSYNC
+    108  f692		       85 02		      sta	WSYNC
+    109  f694		       85 02		      sta	WSYNC
+    110  f696		       85 02		      sta	WSYNC
+    111  f698		       85 02		      sta	WSYNC
+    112  f69a		       85 02		      sta	WSYNC
+    113  f69c		       85 02		      sta	WSYNC
+    114  f69e		       85 02		      sta	WSYNC
+    115  f6a0		       4c 00 f0 	      jmp	StartOfFrame
+    116  fffa					      ORG	$FFFA
+    117  fffa		       00 f0		      .word.w	Reset	; NMI
+    118  fffc		       00 f0		      .word.w	Reset	; RESET
+    119  fffe		       00 f0		      .word.w	Reset	; IRQ
+    120  10000				    END

@@ -1,0 +1,84 @@
+<html>
+<head></head>
+<body>
+    <textarea id="getme"></textarea>
+    <input type="button" value="Click Me" onclick="doit();" />
+
+    <div id="results"></div>
+
+<script type="text/javascript">
+function rgb2pix(rgb) {
+    if (/^#[0-9A-F]{6}$/i.test(rgb)) return rgb;
+
+    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    function hex(x) {
+        return ("0" + parseInt(x).toString(16)).slice(-2);
+    }
+
+    return '{' + parseInt(rgb[1]) + ','
+               + parseInt(rgb[2]) + ','
+               + parseInt(rgb[3]) + '},';
+
+    return '(' + parseInt(rgb[1]) + ' << 16)'
+                + '| (' + parseInt(rgb[2]) + ' << 8)'
+                + '| '+parseInt(rgb[3])
+                + ',';
+
+    return (parseInt(rgb[1]) << 16)
+            | (parseInt(rgb[2]) << 8)
+            | parseInt(3);
+}
+
+var doit=function() {
+    var div = document.createElement('div');
+    div.innerHTML = document.getElementById('getme').value;
+
+    var table = div.children[0];
+    var tbody = table.children[0];
+
+    var colors = [];
+    for (var rr = 1; rr < tbody.children.length; rr++) {
+        var row = tbody.children[rr];
+        colors[rr-1] = [];
+        for (var cc = 1; cc < row.children.length; cc++) {
+            var el = row.children[cc];
+            colors[rr-1][cc-1] = el.style.backgroundColor;
+            document.getElementById('results').innerHTML += "<br />"+rgb2pix(el.style.backgroundColor);
+        }
+    }
+
+    var newTable = document.createElement('table');
+    var newTopHeader = document.createElement('tr');
+    var header1 = document.createElement('th');
+    header1.innerHTML = 'h / l';
+    newTopHeader.appendChild(header1);
+    for (var cc = 0; cc < colors[0].length; cc++) {
+        var headerC = document.createElement('th');
+        headerC.innerHTML = cc*2;
+        newTopHeader.appendChild(headerC);
+    }
+    newTable.appendChild(newTopHeader);
+    for (var rr = 0; rr < colors.length; rr++) {
+        var row = document.createElement('tr');
+        var headerR = document.createElement('th');
+        headerR.innerHTML = rr;
+        row.appendChild(headerR);
+        for (var cc = 0; cc < colors[rr].length; cc++) {
+            var cell = document.createElement('td');
+            cell.style.width = '20px';
+            cell.style.height = '20px';
+            cell.style.backgroundColor = colors[rr][cc];
+            row.appendChild(cell);
+        }
+        newTable.appendChild(row);
+    }
+
+    document.getElementById('results').appendChild(newTable);
+
+    console.log(colors);
+};
+</script>
+
+</body>
+
+</html>
