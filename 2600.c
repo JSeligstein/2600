@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "tia.h"
 
@@ -34,7 +35,9 @@ void cleanup() {
 int num_vblanks = 0;
 
 inline void write_memory(uint16_t addr, unsigned char data) {
+    memory[addr] = data;
     if (addr < 0x1000) {
+        // special addresses
         if (addr == TIA_WSYNC) {
             tia_process_until(TIA_WSYNC);
         } else if (addr == TIA_VSYNC) {
@@ -42,11 +45,13 @@ inline void write_memory(uint16_t addr, unsigned char data) {
         } else if (addr == TIA_VBLANK) {
             tia_process_until(TIA_VBLANK);
             num_vblanks++;
+        } else if (addr == TIA_COLUBK) {
+            tia_colubk_set();
         } else {
-            memory[addr] = data;
+        //    memory[addr] = data;
         }
     } else {
-        memory[addr] = data;
+        //memory[addr] = data;
     }
 }
 
@@ -60,7 +65,7 @@ inline int core_cycle(int cycles_to_execute) {
         opcode = memory[pc];
         pc++;
 
-        //printf("pc: %x, opcode: %x\n", pc-1, opcode);
+        printf("pc: %x, opcode: %x\n", pc-1, opcode);
 
         switch (opcode) {
             case STY_84:

@@ -14,6 +14,7 @@ void tia_end();
 int tia_start(unsigned char *pmem);
 uint8_t tia_process_cycle();
 void tia_process_until(uint8_t condition);
+void tia_colubk_set();
 
 extern const uint32_t ntsc_colors[][3];
 

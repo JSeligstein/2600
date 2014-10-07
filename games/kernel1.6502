@@ -61,24 +61,24 @@ StartOfFrame
 
 
 
-        ldx #0 
-        ldy #0
-        REPEAT 192; scanlines 
-              inx 
-              stx COLUBK 
-
-              dey
-              sty COLUBK
-              sta WSYNC 
-        REPEND 
+        ;ldx #0 
+        ;ldy #0
+        ;REPEAT 192; scanlines 
+        ;      inx 
+        ;      stx COLUBK 
+        ;
+        ;      dey
+        ;      sty COLUBK
+        ;      sta WSYNC 
+        ;REPEND 
 
     ; 192 scanlines of picture...
-    ;ldx #0
-    ;REPEAT 192; scanlines
-    ;    inx
-    ;    stx COLUBK
-    ;    sta WSYNC
-    ;REPEND
+    ldx #0
+    REPEAT 192; scanlines
+        inx
+        stx COLUBK
+        sta WSYNC
+    REPEND
     lda #%01000010
     sta VBLANK                     ; end of screen - enter blanking
     ; 30 scanlines of overscan...

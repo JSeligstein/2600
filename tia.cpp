@@ -31,12 +31,14 @@ uint16_t tia_scanline_x = 0;
 // random
 uint8_t waiting_condition = 0xff;
 uint8_t ntsc_outline_color[] = {155, 155, 0};
+uint8_t nexties = 0;
 
 // condition flags
 uint8_t tia_fwsync = 0;
 uint8_t tia_fvblank_top = 0;
 uint8_t tia_fvblank_bottom = 0;
 uint8_t tia_fvsync = 0;
+uint8_t tia_fcolubk = 0;
 
 void *tia_exec_thread(void *param) {
     //printf("exec thread started \n");
@@ -73,14 +75,8 @@ void *tia_update_thread(void *param) {
 }
 
 void tia_process_until(uint8_t condition) {
-    //printf("tia_process_until %d\n", condition);
+    printf("tia_process_until %d starting at %d, %d\n", condition, tia_scanline_x, tia_scanline);
     waiting_condition = condition;
-
-    // copy flags
-    int fvsync = tia_fvsync;
-    int fwsync = tia_fwsync;
-    int fvblank_top = tia_fvblank_top;
-    int fvblank_bottom = tia_fvblank_bottom;
 
     switch (condition) {
         case TIA_WSYNC:
@@ -89,18 +85,26 @@ void tia_process_until(uint8_t condition) {
             }
             while (!tia_fwsync) {
                 tia_process_cycle();
+                nexties = 1;
             }
             break;
         case TIA_VSYNC:
-            while (tia_fvsync) {
-                tia_process_cycle();
-            }
-            while (!tia_fvsync) {
-                tia_process_cycle();
+                printf("skipping this vsync\n");
+                break;
+            if (program_memory[TIA_VSYNC] == 0) {
+                while (tia_fvsync) {
+                    tia_process_cycle();
+
+                }
+                while (!tia_fvsync) {
+                    tia_process_cycle();
+                }
+            } else {
+                printf("skipping this vsync\n");
             }
             break;
-        case TIA_VLBANK:
-            if (memory[TIA_VBLANK] == 0) {
+        case TIA_VBLANK:
+            if (program_memory[TIA_VBLANK] == 0) {
                 while (tia_fvblank_top) {
                     tia_process_cycle();
                 }
@@ -120,8 +124,36 @@ void tia_process_until(uint8_t condition) {
             printf("Invalid process_until condition: %d\n", condition);
             break;
     }
+
+    printf("tia_process_until done at %d, %d\n", tia_scanline_x, tia_scanline);
+
 }
-                
+
+inline void tia_process_flags() {
+    if (tia_scanline_x == 0) {
+        tia_fvsync = (tia_scanline == 3) ? 1 : 0;
+        tia_fvblank_bottom = (tia_scanline >= 232) ? 1 : 0;
+        tia_fvblank_top = (tia_scanline < 3) ? 1 : 0;
+    }
+    tia_fwsync = (tia_scanline_x == 66) ? 1 : 0;
+}
+
+inline const uint32_t* ntsc_color(uint8_t byte) {
+    // luminosity is first 4 bits followed by hue's 4 bits
+    // luminosity comes in pairs of two
+    // ntsc_colors is a big array running one hue at a time
+    //const uint32_t *color = ntsc_colors[((byte & 0xf) * 16)+(((byte & 0xf0) >> 4) / 2)];
+    const uint32_t *color = ntsc_colors[(((byte & 0xf0) >> 4)* 16)+((byte & 0xf) / 2)];
+    if (nexties) {
+        printf("color: %x, %ud, %ud, %ud\n", byte, color[0], color[1], color[2]);
+        nexties = 0;
+    }
+    return color;
+}
+
+void tia_colubk_set() {
+    tia_fcolubk = 1;
+}
 
 uint8_t tia_process_cycle() {
     //printf("tia_process_cycle (waiting: %x)\n", waiting_condition);
@@ -129,39 +161,42 @@ uint8_t tia_process_cycle() {
 
     // run 3 pixels
     int idx = tia_scanline * ntsc_width + tia_scanline_x;
+    
+    if (tia_fcolubk) {
+        tmemory[idx] = program_memory[TIA_COLUBK];
+        tia_image->draw_point(tia_scanline_x, tia_scanline, ntsc_color(tmemory[idx]));
+        //printf("%d,%d   ", tia_scanline_x, tia_scanline);
+        tia_scanline_x++;
+        idx++;
 
-    tmemory[idx] = program_memory[TIA_COLUBK];
-    tia_image->draw_point(tia_scanline_x, tia_scanline, ntsc_colors[tmemory[idx]]);
-    printf("%d,%d   ", tia_scanline_x, tia_scanline);
-    tia_scanline_x++;
-    idx++;
+        tmemory[idx] = program_memory[TIA_COLUBK];
+        tia_image->draw_point(tia_scanline_x, tia_scanline, ntsc_color(tmemory[idx]));
+        //printf("%d,%d   ", tia_scanline_x, tia_scanline);
+        tia_scanline_x++;
+        idx++;
 
-    tmemory[idx] = program_memory[TIA_COLUBK];
-    tia_image->draw_point(tia_scanline_x, tia_scanline, ntsc_colors[tmemory[idx]]);
-    printf("%d,%d   ", tia_scanline_x, tia_scanline);
-    tia_scanline_x++;
-    idx++;
-
-    tmemory[idx] = program_memory[TIA_COLUBK];
-    tia_image->draw_point(tia_scanline_x, tia_scanline, ntsc_colors[tmemory[idx]]);
-    printf("%d,%d   ", tia_scanline_x, tia_scanline);
-    tia_scanline_x++;
+        tmemory[idx] = program_memory[TIA_COLUBK];
+        tia_image->draw_point(tia_scanline_x, tia_scanline, ntsc_color(tmemory[idx]));
+        //printf("%d,%d   ", tia_scanline_x, tia_scanline);
+        tia_scanline_x++;
+    } else {
+        tia_scanline_x += 3;
+    }
 
     if (tia_scanline_x >= ntsc_width) {
         tia_scanline_x = 0;
         tia_scanline++;
+        tia_fcolubk = 0;
 
         if (tia_scanline >= ntsc_height) {
             tia_scanline = 0;
         }
-
-        tia_fvsync = (tia_scanline == 3);
-        tia_fvblank_bottom = (tia_scanline >= 232);
-        tia_fvblank_top = (tia_scanline < 3);
     }
-    tia_fwsync = (tia_scanline_x == 68);
 
-    printf("= %d\n", ret);
+    tia_process_flags();
+
+
+    //printf("= %d\n", ret);
 
     //printf("done with cycle (%d, %d)\n", tia_scanline_x, tia_scanline);
 
@@ -184,9 +219,10 @@ int tia_start(unsigned char *pmem) {
     tia_started = 1;
     tia_scanline = 0;
     tia_scanline_x = 0;
+    tia_process_flags();
 
     tmemory = (unsigned char *)malloc(ntsc_width*ntsc_height*2);
-    tia_image = new CImg<unsigned char>(ntsc_width, ntsc_height, 1,3, 0);
+    tia_image = new CImg<unsigned char>(ntsc_width*3, ntsc_height, 1,3, 0);
     tia_display = new CImgDisplay(*tia_image, "TIA");
     tia_display->show();
 
