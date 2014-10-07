@@ -1,0 +1,1073 @@
+------- FILE sample.asm LEVEL 1 PASS 2
+      1  10000 ????
+      2  10000 ????						;   FATROM.ASM
+      3  10000 ????						;
+      4  10000 ????						;-----------------------------------------------------
+      5  10000 ????						;			MEMORY MAP		     -
+      6  10000 ????						;-----------------------------------------------------
+      7  10000 ????						;
+      8  10000 ????						;   We throw away some internal ram (96 bytes) in order
+      9  10000 ????						;   to use direct addressing for the majority of memory
+     10  10000 ????						;   accesses by mapping the registers at 0.
+     11  10000 ????						;
+     12  10000 ????						;   MC68HC11F1 port and bit assignments
+     13  10000 ????						;
+     14  10000 ????						;   We setup a very fast OC1 interrupt.. around 208uS, to
+     15  10000 ????						;   handle main system timing.  This also allows us to have
+     16  10000 ????						;   a WAI instruction in our serial poll loop to lower power
+     17  10000 ????						;   consumption.
+     18  10000 ????
+     19  10000 ????		00 00	    RAM        equ	$0000	;   1K byte of RAM
+     20  10000 ????		00 60	    LORAMBEG   equ	$0060	;   96 unusable due to ctl regs
+     21  10000 ????				       ifconst	INEEPROM
+     22  10000 ????		03 00	    HIRAMBEG   equ	$0300	;   hardwired for RTU software
+     23  10000 ????			   -	       else
+     24  10000 ????			   -HIRAMBEG   equ	$0320
+     25  10000 ????				       eif
+     26  10000 ????		00 00	    REGS       equ	$0000	;   96 control regs (after INIT)
+     27  10000 ????		fe 00	    EEPROM     equ	$FE00	;   512 bytes EEPROM
+     28  10000 ????
+     29  10000 ????		00 00	    PORTA      equ	REGS+$00	;   i/o port A
+     30  10000 ????		00 80	    PORTA_24V  equ	$80	;   24V power switch
+     31  10000 ????
+     32  10000 ????		00 01	    DDRA       equ	REGS+$01	;
+     33  10000 ????
+     34  10000 ????		00 02	    PORTG      equ	REGS+$02
+     35  10000 ????		00 80	    CSPROG     equ	$80
+     36  10000 ????		00 40	    CSGEN      equ	$40
+     37  10000 ????		00 20	    CS101      equ	$20
+     38  10000 ????		00 10	    CS102      equ	$10
+     39  10000 ????		00 80	    PORTG_RESERVED7 equ	$80
+     40  10000 ????		00 40	    PORTG_MUXSEL3 equ	$40
+     41  10000 ????		00 20	    PORTG_MUXSEL2 equ	$20
+     42  10000 ????		00 10	    PORTG_MUXSEL1 equ	$10
+     43  10000 ????		00 08	    PORTG_MUXSEL0 equ	$08
+     44  10000 ????		00 04	    PORTG_ADSTROBHI equ	$04
+     45  10000 ????
+     46  10000 ????		00 03	    DDRG       equ	REGS+$03
+     47  10000 ????
+     48  10000 ????		00 04	    PORTB      equ	REGS+$04	;   i/o port B
+     49  10000 ????
+     50  10000 ????		00 05	    PORTF      equ	REGS+$05	;   PORTF l.e.d's and digout 1 & 2
+     51  10000 ????		00 80	    PORTF_DIGOUT2 equ	$80
+     52  10000 ????		00 40	    PORTF_DIGOUT1 equ	$40
+     53  10000 ????		00 20	    PORTF_GRN  equ	$20
+     54  10000 ????		00 10	    PORTF_RED  equ	$10
+     55  10000 ????
+     56  10000 ????		00 06	    PORTC      equ	REGS+$06
+     57  10000 ????
+     58  10000 ????		00 07	    DDRC       equ	REGS+$07
+     59  10000 ????
+     60  10000 ????		00 08	    PORTD      equ	REGS+$08
+     61  10000 ????
+     62  10000 ????		00 09	    DDRD       equ	REGS+$09
+     63  10000 ????
+     64  10000 ????		00 0a	    PORTE      equ	REGS+$0A
+     65  10000 ????
+     66  10000 ????		00 0b	    CFORC      equ	REGS+$0B
+     67  10000 ????		00 80	    CFORC_FOC1 equ	$80	; FORCE OUTPUT COMPARE 1-4
+     68  10000 ????		00 40	    CFORC_FOC2 equ	$40	;	....OR'D WITH TOC'S
+     69  10000 ????		00 20	    CFORC_FOC3 equ	$20	;
+     70  10000 ????		00 10	    CFORC_FOC4 equ	$10	;
+     71  10000 ????		00 08	    CFORC_FOC5 equ	$08	;
+     72  10000 ????
+     73  10000 ????		00 0c	    OC1M       equ	REGS+$0C	; OUTPUT COMPARE MASK
+     74  10000 ????		00 80	    OC1_M7     equ	$80	; ALLOWS COUNTER COMPARE OUTPUTS ESTABLISHED BY
+     75  10000 ????		00 40	    OC1_M6     equ	$40	; OC1D6-D3 ON PA
+     76  10000 ????		00 20	    OC1_M5     equ	$20	;   EXCEPT FOR OC1M7 WHICH ALLOWS EITHER
+     77  10000 ????		00 10	    OC1_M4     equ	$10	; INTERNAL DATA (0) OR OC1D7 DURING WRITES TO
+     78  10000 ????		00 08	    OC1_M3     equ	$08	; PA7
+     79  10000 ????
+     80  10000 ????		00 0d	    OC1D       equ	REGS+$0D
+     81  10000 ????		00 80	    OC1_d7     equ	$80	; STATES WHICH WILL BE PRESENT ON PA6-PA3
+     82  10000 ????		00 40	    OC1_d6     equ	$40	; WHEN PERMITTED BY OC1_M6-M3
+     83  10000 ????		00 20	    OC1_d5     equ	$20	;
+     84  10000 ????		00 10	    OC1_d4     equ	$10	;
+     85  10000 ????		00 08	    OC1_d3     equ	$08	;
+     86  10000 ????
+     87  10000 ????		00 0e	    TCNT       equ	REGS+$0E
+     88  10000 ????
+     89  10000 ????		00 10	    TIC1       equ	REGS+$10
+     90  10000 ????
+     91  10000 ????		00 12	    TIC2       equ	REGS+$12
+     92  10000 ????
+     93  10000 ????		00 14	    TIC3       equ	REGS+$14
+     94  10000 ????
+     95  10000 ????		00 16	    TOC1       equ	REGS+$16
+     96  10000 ????
+     97  10000 ????		00 18	    TOC2       equ	REGS+$18
+     98  10000 ????
+     99  10000 ????		00 1a	    TOC3       equ	REGS+$1A
+    100  10000 ????
+    101  10000 ????		00 1c	    TOC4       equ	REGS+$1C
+    102  10000 ????
+    103  10000 ????		00 1e	    TOC5       equ	REGS+$1E
+    104  10000 ????
+    105  10000 ????		00 20	    TCTL1      equ	REGS+$20	;ACTION TAKEN CODES  M	L
+    106  10000 ????		00 80	    TCTL1_OM2  equ	$80	;		     0	0 -DISABLE
+    107  10000 ????		00 40	    TCTL1_OL2  equ	$40	;		     0	1 -TOGGLE
+    108  10000 ????		00 20	    TCTL1_OM3  equ	$20	;		     1	0 -CLEAR
+    109  10000 ????		00 10	    TCTL1_OL3  equ	$10	;		     1	1 -SET
+    110  10000 ????		00 08	    TCTL1_OM4  equ	$08	;
+    111  10000 ????		00 04	    TCTL1_OL4  equ	$04	;  OR, WHAT 1 OF 4 THINGS HAPPEN TO OUT.CMP
+    112  10000 ????		00 02	    TCTL1_OM5  equ	$02	;  FLAGS IN TFLG1 2-5 (OCF'S 2-5)
+    113  10000 ????		00 01	    TCTL1_OL5  equ	$01	;
+    114  10000 ????
+    115  10000 ????		00 21	    TCTL2      equ	REGS+$21	; B  A
+    116  10000 ????		00 20	    TCTL2_EDG1B equ	$20	; 0  0 CAPTURE DISABLED
+    117  10000 ????		00 10	    TCTL2_EDG1A equ	$10	; 0  1	 ''	ON RISING
+    118  10000 ????		00 08	    TCTL2_EDG2B equ	$08	; 1  0   ''	  ON FALLING
+    119  10000 ????		00 04	    TCTL2_EDG2A equ	$04	; 1  1   ''	ON ANY
+    120  10000 ????		00 02	    TCTL2_EDG3B equ	$02
+    121  10000 ????		00 01	    TCTL2_EDG3A equ	$01
+    122  10000 ????
+    123  10000 ????		00 22	    TMSK1      equ	REGS+$22
+    124  10000 ????		00 80	    TMSK1_OC1I equ	$80	;
+    125  10000 ????		00 40	    TMSK1_OC2I equ	$40	; ENABLE OUTPUT COMPARE INTERRUPT WHEN SET
+    126  10000 ????		00 20	    TMSK1_OC3I equ	$20	;
+    127  10000 ????		00 10	    TMSK1_OC4I equ	$10	;
+    128  10000 ????		00 08	    TMSK1_OC5I equ	$08	;
+    129  10000 ????		00 04	    TMSK1_IC1I equ	$04	; ENABLE INTERUPTS ON CAPTURE FLAG WHEN SET
+    130  10000 ????		00 02	    TMSK1_IC2I equ	$02	;
+    131  10000 ????		00 01	    TMSK1_IC3I equ	$01	;
+    132  10000 ????
+    133  10000 ????		00 23	    TFLG1      equ	REGS+$23
+    134  10000 ????		00 80	    TFLG1_OC1F equ	$80	; CORRESPONDING FLAGS TO THE ABOVE
+    135  10000 ????		00 40	    TFLG1_OC2F equ	$40	;
+    136  10000 ????		00 20	    TFLG1_OC3F equ	$20	;
+    137  10000 ????		00 10	    TFLG1_OC4F equ	$10	;
+    138  10000 ????		00 08	    TFLG1_OC5F equ	$08	;
+    139  10000 ????		00 04	    TFLG1_IC1F equ	$04	;
+    140  10000 ????		00 02	    TFLG1_IC2F equ	$02	;
+    141  10000 ????		00 01	    TFLG1_IC3F equ	$01	;
+    142  10000 ????
+    143  10000 ????						;NOTE: PR1 & PR0 MUST BE WRITTEN IMMEDIATELY AFTER RESET!!
+    144  10000 ????
+    145  10000 ????		00 24	    TMSK2      equ	REGS+$24
+    146  10000 ????		00 80	    TMSK2_TOI  equ	$80	; Timer overflow interrupt enable
+    147  10000 ????		00 40	    TMSK2_RTII equ	$40	; Real time interrupt
+    148  10000 ????		00 20	    TMSK2_PAOVI equ	$20	; Pulse accumulator overflow
+    149  10000 ????		00 10	    TMSK2_PAII equ	$10	; Pulse accumulator count
+    150  10000 ????		00 02	    TMSK2_PR1  equ	$02	; Timer prescale select
+    151  10000 ????		00 01	    TMSK2_PR0  equ	$01	;  0,0=/1  0,1=/4  1,0=/8  1,1=/16
+    152  10000 ????
+    153  10000 ????
+    154  10000 ????
+    155  10000 ????		00 25	    TFLG2      equ	REGS+$25
+    156  10000 ????		00 80	    TFLG2_TOF  equ	$80	; FLAGS FOR THE ABOVE 1ST 4 INTERRUPTS
+    157  10000 ????		00 40	    TFLG2_RTIF equ	$40	;
+    158  10000 ????		00 20	    TFLG2_PAOVF equ	$20	;
+    159  10000 ????		00 10	    TFLG2_PAIF equ	$10	;
+    160  10000 ????
+    161  10000 ????
+    162  10000 ????		00 26	    PACTL      equ	REGS+$26
+    163  10000 ????		00 80	    PACTL_DDRA7 equ	$80	; 0=INPUT ONLY, 1=OUTPUT
+    164  10000 ????		00 40	    PACTL_PAEN equ	$40	; ENABLE PA
+    165  10000 ????		00 20	    PACTL_PAMOD equ	$20	; 0=COUNT EXTERNAL EVENTS,1=GATED TIME ACCUM.
+    166  10000 ????		00 10	    PACTL_PEDGE equ	$10	; 0=INC ON FALLING OR INHIBITS CNT;1=OPPOSITE
+    167  10000 ????		00 02	    PACTL_RTR1 equ	$02	; Divider for real time interrupt
+    168  10000 ????		00 01	    PACTL_RTR0 equ	$01	; Divide by 2^13, 2^14, 2^15, or 2^16
+    169  10000 ????
+    170  10000 ????
+    171  10000 ????		00 27	    PACNT      equ	REGS+$27
+    172  10000 ????
+    173  10000 ????		00 28	    SPCR       equ	REGS+$28
+    174  10000 ????		00 80	    SPCR_SPIE  equ	$80	; serial PERIPH INTERRUPT ENABLE
+    175  10000 ????		00 40	    SPCR_SPE   equ	$40	; serial periph system enable
+    176  10000 ????		00 20	    SPCR_DWOM  equ	$20	; PORT D WIRED-OR 0=TOTEM,1=OPEN DRAIN
+    177  10000 ????		00 10	    SPCR_MSTR  equ	$10	; 0=SLAVE, 1=MASTER
+    178  10000 ????		00 08	    SPCR_CPOL  equ	$08	; 0=ACT. HIGH CLKS;SCK IDLES LOW--1 IS OPPOSITE
+    179  10000 ????		00 04	    SPCR_CPHA  equ	$04	; CLOCK PHASE
+    180  10000 ????		00 02	    SPCR_SPR1  equ	$02	;	  E CLOCK /  2	 4   16   32
+    181  10000 ????		00 01	    SPCR_SPR0  equ	$01	;		     00  01  10   11
+    182  10000 ????
+    183  10000 ????		00 29	    SPSR       equ	REGS+$29
+    184  10000 ????		00 80	    SPSR_SPIF  equ	$80	; TXFR COMPLETE
+    185  10000 ????		00 40	    SPSR_WCOL  equ	$40	; WRITE COLLISION
+    186  10000 ????		00 10	    SPSR_MODF  equ	$10	; MODE-FAULT ERROR FLAG
+    187  10000 ????
+    188  10000 ????		00 2a	    SPDR       equ	REGS+$2A
+    189  10000 ????
+    190  10000 ????		00 2b	    BAUD       equ	REGS+$2B
+    191  10000 ????		00 80	    BAUD_TCLR  equ	$80	; 0
+    192  10000 ????		00 20	    BAUD_SCP1  equ	$20	; divide e by 1  3  4	 13
+    193  10000 ????		00 10	    BAUD_SCP0  equ	$10	;	      00 01 10  11
+    194  10000 ????		00 08	    BAUD_RCKB  equ	$08	; 0
+    195  10000 ????		00 04	    BAUD_SCR2  equ	$04	; divide prescaler out by 1,  2   4,.....128
+    196  10000 ????		00 02	    BAUD_SCR1  equ	$02	;
+    197  10000 ????		00 01	    BAUD_SCR0  equ	$01	; scr0,1,2 =	 000 001 010.....111
+    198  10000 ????		00 22	    BAUD_4800  equ	BAUD_SCP1|BAUD_SCR1
+    199  10000 ????		00 03	    BAUD_9600  equ	BAUD_SCR0|BAUD_SCR1
+    200  10000 ????		00 02	    BAUD_19200 equ	BAUD_SCR1
+    201  10000 ????
+    202  10000 ????
+    203  10000 ????		00 2c	    SCCR1      equ	REGS+$2C
+    204  10000 ????		00 80	    SCCR1_R8   equ	$80	; get the ninth bit here, if 'M' bit is set
+    205  10000 ????		00 40	    SCCR1_T8   equ	$40	; set this bit for the 9th tx bit if 'M' is set
+    206  10000 ????		00 10	    SCCR1_M    equ	$10	; 'M'
+    207  10000 ????		00 08	    SCCR1_WAKE equ	$08	; 0=idle line, 1=address mark
+    208  10000 ????
+    209  10000 ????		00 2d	    SCCR2      equ	REGS+$2D
+    210  10000 ????		00 80	    SCCR2_TIE  equ	$80	; Transmit interrupt enable
+    211  10000 ????		00 40	    SCCR2_TCIE equ	$40	; Transmit Complete interr en
+    212  10000 ????		00 20	    SCCR2_RIE  equ	$20	; Receiver Interrupt enable
+    213  10000 ????		00 10	    SCCR2_ILIE equ	$10	; Idle Line ''       ''
+    214  10000 ????		00 08	    SCCR2_TE   equ	$08	; tx enable
+    215  10000 ????		00 04	    SCCR2_RE   equ	$04	; rx """
+    216  10000 ????		00 02	    SCCR2_RWU  equ	$02	; wake up when set
+    217  10000 ????		00 01	    SCCR2_SBK  equ	$01	; send break
+    218  10000 ????
+    219  10000 ????
+    220  10000 ????		00 2e	    SCSR       equ	REGS+$2E
+    221  10000 ????		00 80	    SCSR_TDRE  equ	$80	; Transmit Data Register Empty
+    222  10000 ????		00 40	    SCSR_TC    equ	$40	; Transmit Complete
+    223  10000 ????		00 20	    SCSR_RDRF  equ	$20	; Receiver Data Ready
+    224  10000 ????		00 10	    SCSR_IDLE  equ	$10	; Idle Line Detect
+    225  10000 ????		00 08	    SCSR_OR    equ	$08	; overrun error
+    226  10000 ????		00 04	    SCSR_NF    equ	$04	; noise flag
+    227  10000 ????		00 02	    SCSR_FE    equ	$02	; framing error
+    228  10000 ????
+    229  10000 ????
+    230  10000 ????		00 2f	    SCDR       equ	REGS+$2F	; sc data reg
+    231  10000 ????
+    232  10000 ????		00 30	    ADCTL      equ	REGS+$30
+    233  10000 ????		00 80	    ADCTL_CCF  equ	$80	; Conversion complete, cleared on ADCTL write
+    234  10000 ????		00 20	    ADCTL_SCAN equ	$20	; Continuous scan mode, else single scan
+    235  10000 ????		00 10	    ADCTL_MULT equ	$10	; Scan all four channels or just one channel
+    236  10000 ????		00 08	    ADCTL_CD   equ	$08	;
+    237  10000 ????		00 04	    ADCTL_CC   equ	$04	;
+    238  10000 ????		00 02	    ADCTL_CB   equ	$02	;
+    239  10000 ????		00 01	    ADCTL_CA   equ	$01	;
+    240  10000 ????
+    241  10000 ????		00 31	    ADR1       equ	REGS+$31	; ADC register 1
+    242  10000 ????		00 32	    ADR2       equ	REGS+$32
+    243  10000 ????		00 33	    ADR3       equ	REGS+$33
+    244  10000 ????		00 34	    ADR4       equ	REGS+$34
+    245  10000 ????
+    246  10000 ????
+    247  10000 ????		00 35	    BPROT      equ	REGS+$35
+    248  10000 ????		00 10	    BPROT_PTCON equ	$10
+    249  10000 ????		00 08	    BPROT_BPRT3 equ	$08
+    250  10000 ????		00 04	    BPROT_BPRT2 equ	$04
+    251  10000 ????		00 02	    BPROT_BPRT1 equ	$02
+    252  10000 ????		00 01	    BPROT_BPRT0 equ	$01
+    253  10000 ????
+    254  10000 ????		00 38	    OPT2       equ	REGS+$38	; config options 2 register
+    255  10000 ????		00 80	    OPT2_GWOM  equ	$80
+    256  10000 ????		00 40	    OPT2_CWOM  equ	$40
+    257  10000 ????		00 20	    OPT2_CLK4X equ	$20
+    258  10000 ????
+    259  10000 ????		00 39	    OPTION     equ	REGS+$39
+    260  10000 ????		00 80	    OPTION_ADPU equ	$80	; A/D power
+    261  10000 ????		00 40	    OPTION_CSEL equ	$40
+    262  10000 ????		00 20	    OPTION_IRQE equ	$20	; IRQ edge sensitive enable, else level sens.
+    263  10000 ????		00 10	    OPTION_DLY equ	$10	; delay 4000 E clks after stop, else 4
+    264  10000 ????		00 08	    OPTION_CME equ	$08
+    265  10000 ????		00 02	    OPTION_CR1 equ	$02	; cop timer rates of E/2^15/(1,4,16,64)
+    266  10000 ????		00 01	    OPTION_CR0 equ	$01	; for 00,01,10,11
+    267  10000 ????
+    268  10000 ????
+    269  10000 ????		00 3a	    COPRST     equ	REGS+$3A
+    270  10000 ????
+    271  10000 ????						; EEPROM programming register.
+    272  10000 ????						;
+    273  10000 ????						; BYTE ROW	(only valid when erase bit is set)
+    274  10000 ????						;  0	 0	bulk erase
+    275  10000 ????						;  0	1	row erase
+    276  10000 ????						;  1	0	byte erase
+    277  10000 ????						;  1	1	byte erase
+    278  10000 ????						;
+    279  10000 ????						; erase sequence is:
+    280  10000 ????						;	+BYTE+ERASE+EELAT, write eeprom, +PGM, delay 10 ms,
+    281  10000 ????						;	-PGM-ERASE-EELAT
+    282  10000 ????						; program sequence is:
+    283  10000 ????						;	+EELAT, write eeprom, +PGM, delay 10 ms, -PGM-EELAT
+    284  10000 ????						;
+    285  10000 ????						; you do not need to program to zero before erasing to 1's.
+    286  10000 ????
+    287  10000 ????		00 3b	    PPROG      equ	REGS+$3B
+    288  10000 ????		00 80	    PPROG_ODD  equ	$80	; Factory reserved
+    289  10000 ????		00 40	    PPROG_EVEN equ	$40	; Factory reserved
+    290  10000 ????		00 10	    PPROG_BYTE equ	$10	; Byte erase mode
+    291  10000 ????		00 08	    PPROG_ROW  equ	$08	; Row erase mode
+    292  10000 ????		00 04	    PPROG_ERASE equ	$04	; Erase enable
+    293  10000 ????		00 02	    PPROG_EELAT equ	$02	; arm eeprom write (then write to eeprom)
+    294  10000 ????		00 01	    PPROG_EEPGM equ	$01	; apply programming voltage
+    295  10000 ????
+    296  10000 ????
+    297  10000 ????		00 3c	    HPRIO      equ	REGS+$3C
+    298  10000 ????		00 80	    HPRIO_RBOOT equ	$80	; Set in special test mode
+    299  10000 ????		00 40	    HPRIO_SMOD equ	$40	; ~MODB pin latched at reset
+    300  10000 ????		00 20	    HPRIO_MDA  equ	$20	; MODB pin latched at reset, can be clrd in
+    301  10000 ????						; special tes/tbootstrap mode ?
+    302  10000 ????		00 10	    HPRIO_IRV  equ	$10	; internal read visibility
+    303  10000 ????		00 08	    HPRIO_PSEL3 equ	$08	; Select highest priority interrupt, only
+    304  10000 ????		00 04	    HPRIO_PSEL2 equ	$04	; writable when interrupts are masked.
+    305  10000 ????		00 02	    HPRIO_PSEL1 equ	$02	;
+    306  10000 ????		00 01	    HPRIO_PSEL0 equ	$01	;
+    307  10000 ????
+    308  10000 ????
+    309  10000 ????		00 3d	    INIT       equ	REGS+$3D
+    310  10000 ????		00 80	    INIT_RAM3  equ	$80	; Internal ram base address in 4K chunks,
+    311  10000 ????		00 40	    INIT_RAM2  equ	$40	; default $0000 (0000)
+    312  10000 ????		00 20	    INIT_RAM1  equ	$20	;
+    313  10000 ????		00 10	    INIT_RAM0  equ	$10	;
+    314  10000 ????		00 08	    INIT_REG3  equ	$08	; Control register base address in 4K chunks,
+    315  10000 ????		00 04	    INIT_REG2  equ	$04	; default $1000 (0001)
+    316  10000 ????		00 02	    INIT_REG1  equ	$02	;
+    317  10000 ????		00 01	    INIT_REG0  equ	$01	;
+    318  10000 ????
+    319  10000 ????		00 3e	    TEST1      equ	REGS+$3E
+    320  10000 ????		00 80	    TEST1_TILOP equ	$80	; FACTORY TEST STUFF ONLY WHEN SMOD=1
+    321  10000 ????		00 20	    TEST1_OCCR equ	$20
+    322  10000 ????		00 10	    TEST1_CBYP equ	$10
+    323  10000 ????		00 08	    TEST1_DISR equ	$08
+    324  10000 ????		00 04	    TEST1_FCM  equ	$04
+    325  10000 ????		00 02	    TEST1_FCOP equ	$02
+    326  10000 ????		00 01	    TEST1_TCON equ	$01
+    327  10000 ????
+    328  10000 ????
+    329  10000 ????		00 3f	    CONFIG     equ	REGS+$3F
+    330  10000 ????		00 08	    CONFIG_NOSEC equ	$08	; no eeprom security
+    331  10000 ????		00 04	    CONFIG_NOCOP equ	$04	; no hardware watchdog
+    332  10000 ????		00 02	    CONFIG_ROMON equ	$02	; enable rom
+    333  10000 ????		00 01	    CONFIG_EEON equ	$01	; enable eeprom
+    334  10000 ????
+    335  10000 ????						; In bootstrap mode vectors go through ram
+    336  10000 ????						;
+    337  10000 ????
+    338  10000 ????		00 c4	    BsSCIJmp   equ	$C4
+    339  10000 ????		00 c7	    BsSPIJmp   equ	$C7
+    340  10000 ????		00 ca	    BsPAIJmp   equ	$CA
+    341  10000 ????		00 cd	    BsPAOVJmp  equ	$CD
+    342  10000 ????		00 d0	    BsTOVJmp   equ	$D0
+    343  10000 ????		00 d3	    BsOC5Jmp   equ	$D3
+    344  10000 ????		00 d6	    BsOC4Jmp   equ	$D6
+    345  10000 ????		00 d9	    BsOC3Jmp   equ	$D9
+    346  10000 ????		00 dc	    BsOC2Jmp   equ	$DC
+    347  10000 ????		00 df	    BsOC1Jmp   equ	$DF
+    348  10000 ????		00 e2	    BsIC3Jmp   equ	$E2
+    349  10000 ????		00 e5	    BsIC2Jmp   equ	$E5
+    350  10000 ????		00 e8	    BsIC1Jmp   equ	$E8
+    351  10000 ????		00 eb	    BOOTSTRAPORG equ	$EB	; bootstrap origin
+    352  10000 ????		00 eb	    BsRTIJmp   equ	$EB
+    353  10000 ????		00 ee	    BsIRQJmp   equ	$EE
+    354  10000 ????		00 f1	    BsXIRQJmp  equ	$F1
+    355  10000 ????		00 f4	    BsSWIJmp   equ	$F4
+    356  10000 ????		00 f7	    BsILLJmp   equ	$F7
+    357  10000 ????		00 fa	    BsCOPJmp   equ	$FA
+    358  10000 ????		00 fd	    BsCMJmp    equ	$FD
+    359  10000 ????
+    360  10000 ????				       processor	68hc11
+    361  10000 ????
+    362  10000 ????						;-----------------------------------------------------
+    363  10000 ????						;			RAM VARS		     -
+    364  10000 ????						;-----------------------------------------------------
+    365  10000 ????						;
+    366  10000 ????						; most/all ram variables can be accessed with direct
+    367  10000 ????						; addressing for the EEPROM version.
+    368  10000 ????
+    369 U03a0 ????				      seg.u	bss
+    370 U0060					      org	LORAMBEG
+    371 U0060
+    372 U0060		       00	   RTUConfig  ds.b	1	; RTU Flags reg, cleared on reset
+    373 U0061		       00	   BoardAddr  ds.b	1	; 1 byte board address
+    374 U0062		       00 00	   Counter1   ds.w	1	; 2 bytes counter input
+    375 U0064		       00 00	   Counter2   ds.w	1	; 2 bytes counter input
+    376 U0066		       00	   RTIRedCnt  ds.b	1	; real time interrupt red l.e.d. countdown
+    377 U0067		       00	   RTIGrnCnt  ds.b	1	; real time interrupt grn l.e.d. countdown
+    378 U0068		       00 00	   RTIWDog    ds.w	1	; 2 byte wdog ctr, reset by packet reception
+    379 U006a		       00	   RTIAvrCnt  ds.b	1	; 1 16 sample countdown
+    380 U006b
+    381 U006b							; note: packet size for ram-dl version must be smaller so
+    382 U006b							; program fits in ram
+    383 U006b
+    384 U006b					      ifconst	INEEPROM
+    385 U006b		       00 00 00 00*PacketBuf  ds.b	256+8	; maximum packet size plus slop
+    386 U0173				  -	      else
+    387 U0173				  -PacketBuf  ds.b	32+8	; maximum packet size plus slop in bootstrap
+    388 U0173					      eif
+    389 U0173
+    390 U0173							; note: MaxScanTable location hardwired by ioscan for normal
+    391 U0173							; operation
+    392 U0173							;
+    393 U0173
+    394 U0300					      org	HIRAMBEG
+    395 U0300
+    396 U0300		       00 00 00 00*MaxScanTable ds.b	96	; 16 channels x 3 (holdingregx1, accumulatorx2)
+    397 U0360		       00 00 00 00*Stack      ds.b	64	; Reserve 64 bytes for the stack
+    398 U03a0				   StackEnd   ds.b	0
+    399 U03a0
+    400 U03a0							;-----------------------------------------------------
+    401 U03a0							;			CODE SEGMENT		     -
+    402 U03a0							;-----------------------------------------------------
+    403 U03a0							;
+    404 U03a0							; For EEPROM version code starts at $FE00.  For RAM bootstrap
+    405 U03a0							; version code starts at zero from which we immediately jump
+    406 U03a0							; forward past all registers and ram variables
+    407 U03a0							;
+    408 U03a0
+    409  10000 ????				       seg	code
+    410  10000 ????
+    411  10000 ????				       ifconst	INEEPROM
+    412  fe00					      org	$FE00
+    413  fe00				  -	      else
+    414  fe00				  -	      org	$0000
+    415  fe00				  -	      jmp	Reset
+    416  fe00				  -	      org	BOOTSTRAPORG
+    417  fe00					      eif
+    418  fe00
+    419  fe00							;-----------------------------------------------------
+    420  fe00							;			ROM VARS		     -
+    421  fe00							;-----------------------------------------------------
+    422  fe00							;
+    423  fe00							; Calibration constants are at the beginning of the rom,
+    424  fe00							; consisting of two 16 bit base constants for analog channel
+    425  fe00							; 1 and two 8 bit constants for each of analog channels
+    426  fe00							; 2 through 7, two 8 bit constants for the two temp.
+    427  fe00							; sensors, two 8 bit constants for the board temp. sensor.
+    428  fe00							;
+    429  fe00							; The RTU will interpret these constants
+    430  fe00
+    431  fe00		       ff ff ff ff	      dc.w	$FFFF,$FFFF	; Mux channel 0, 4 and 20mA	AI01
+    432  fe04		       ff ff		      dc.b	$FF,$FF	; Mux channel 1 (delta)		AI02
+    433  fe06		       ff ff		      dc.b	$FF,$FF	; Mux channel 2 (delta)		AI03
+    434  fe08		       ff ff		      dc.b	$FF,$FF	; Mux channel 3 (delta)		AI04
+    435  fe0a		       ff ff		      dc.b	$FF,$FF	; Mux channel 4 (delta) (unused)
+    436  fe0c		       ff ff		      dc.b	$FF,$FF	; Mux channel 5 (delta)		AI05
+    437  fe0e		       ff ff		      dc.b	$FF,$FF	; Mux channel 6 (delta)		AI06
+    438  fe10		       ff ff		      dc.b	$FF,$FF	; Mux channel 7 (delta)		AI07
+    439  fe12		       ff ff		      dc.b	$FF,$FF	; External temp. sensor 1
+    440  fe14		       ff ff		      dc.b	$FF,$FF	; External temp. sensor 2
+    441  fe16		       ff ff		      dc.b	$FF,$FF	; On-Board temp. sensor
+    442  fe18
+    443  fe18							;-----------------------------------------------------
+    444  fe18							;			RESET			     -
+    445  fe18							;-----------------------------------------------------
+    446  fe18							;
+    447  fe18							; Platform reset.  Interrupts are disabled and the stack
+    448  fe18							; pointer is/becomes invalid.
+    449  fe18
+    450  fe18				   Reset      subroutine
+    451  fe18				   ResetCmd
+    452  fe18				   BadInt
+    453  fe18							; disable interrupts, setup protected control registers
+    454  fe18							;	INIT - relocate ram and hardware regs to 0
+    455  fe18							;	OPT2 - disable clk4x output (save power)
+    456  fe18							;	OPTION - enable ADC
+    457  fe18							;
+    458  fe18							; note: due to ram/regs overlap, first 96 bytes of ram
+    459  fe18							; is unaccessable.  For bootstrapped programs, the
+    460  fe18							; jmp to Reset becomes unaccessable after it is executed.
+    461  fe18
+    462  fe18		       0f		      sei
+    463  fe19		       4f		      clra		; .A = 0
+    464  fe1a		       b7 10 3d 	      staa	INIT-REGS+$1000	; map ram & regs to base address 0
+    465  fe1d		       97 38		      staa	OPT2	; disable clk4x & C,G wire-or modes
+    466  fe1f		       97 35		      staa	BPROT	; allow eeprom to be written
+    467  fe21		       c6 80		      ldab	#OPTION_ADPU	; enable ADC
+    468  fe23		       d7 39		      stab	OPTION
+    469  fe25
+    470  fe25							; SETUP PORTS AND DDRS
+    471  fe25							;
+    472  fe25							;	    DDR		DATA
+    473  fe25							; PORTA	 10000000    0xxxxxxx	(+24V power switch)
+    474  fe25							; PORTB  <OUTPUT>    11111111	(LED's)
+    475  fe25							; PORTC  00000000    xxxxxxxx
+    476  fe25							; PORTD  xx110000    xx00xxxx	 (~ss, sck)
+    477  fe25							; PORTE  <INPUT>     xxxxxxxx	(addr h, l, brdid, temp)
+    478  fe25							; PORTF  <OUTPUT>    00111111	(digout, LED's)
+    479  fe25							; PORTG  11111100    000000xx	(filter, mux sel, startconv,
+    480  fe25							;				digin)
+    481  fe25							; note: PD5 must be an output so as not to interfere with
+    482  fe25							; SPI ~SS hardware.
+    483  fe25							;
+    484  fe25							; NOTE: PORTA_24V is off (0) by default.  This is to prevent
+    485  fe25							; the RTU's isolated power supply from getting jerked around
+    486  fe25							; when several boards are in the system.  Analog and digital
+    487  fe25							; inputs will not be valid until the RTU turns on this line.
+    488  fe25							;
+    489  fe25							; NOTE: PORTD ~SS output must be set to 1 before configuring
+    490  fe25							; the SPI as a master (???)
+    491  fe25							;
+    492  fe25							; .A is still 0
+    493  fe25
+    494  fe25		       8e 00 09 	      lds	#DDRD
+    495  fe28		       c6 38		      ldab	#%00111000	; DDRD = 00111000
+    496  fe2a		       37		      pshb
+    497  fe2b		       37		      pshb		; PORTD= 00111000
+    498  fe2c		       36		      psha		; DDRC = 00000000
+    499  fe2d		       34		      des		; RESERVED06
+    500  fe2e		       c6 3f		      ldab	#$3F	; PORTF= 00111111
+    501  fe30		       37		      pshb
+    502  fe31		       c6 ff		      ldab	#$FF	; PORTB= 11111111
+    503  fe33		       37		      pshb
+    504  fe34		       c6 fc		      ldab	#%11111100	; DDRG = 11111100
+    505  fe36		       37		      pshb
+    506  fe37		       36		      psha		; PORTG= 0
+    507  fe38		       c6 80		      ldab	#PORTA_24V	; DDRA = PORTA_24V
+    508  fe3a		       37		      pshb
+    509  fe3b		       36		      psha		; PORTA= 0
+    510  fe3c
+    511  fe3c							; Setup remaining hardware, .A still 0
+    512  fe3c							;
+    513  fe3c							;	ADC	setup for continuous scan channels 4-7
+    514  fe3c							;	SCI	9600bps 8N1, IDLE wake detection
+    515  fe3c							;	SPI	Setup clock phase, etc..
+    516  fe3c
+    517  fe3c		       c6 34		      ldab	#ADCTL_MULT|ADCTL_SCAN|ADCTL_CC
+    518  fe3e		       d7 30		      stab	ADCTL
+    519  fe40
+    520  fe40		       97 2c		      staa	SCCR1
+    521  fe42		       c6 0c		      ldab	#SCCR2_TE|SCCR2_RE
+    522  fe44		       d7 2d		      stab	SCCR2
+    523  fe46		       c6 03		      ldab	#BAUD_9600
+    524  fe48		       d7 2b		      stab	BAUD
+    525  fe4a
+    526  fe4a							; SPI, .A still 0
+    527  fe4a							;
+    528  fe4a							; CPOL=0, CPHA=0, clkrate= E/2 (614KHz)
+    529  fe4a
+    530  fe4a		       c6 10		      ldab	#SPCR_MSTR	; make master, disable
+    531  fe4c		       d7 28		      stab	SPCR
+    532  fe4e		       14 28 40 	      bset	SPCR,SPCR_SPE	; enable
+    533  fe51
+    534  fe51							; ICR - Input capture registers
+    535  fe51							;
+    536  fe51							; Setup input capture registers for counter inputs and setup
+    537  fe51							; OC1 to handle system timing.
+    538  fe51							;
+    539  fe51
+    540  fe51		       14 21 15 	      bset	TCTL2,TCTL2_EDG1A|TCTL2_EDG2A|TCTL2_EDG3A
+    541  fe54		       14 22 86 	      bset	TMSK1,TMSK1_IC1I|TMSK1_IC2I|TMSK1_OC1I
+    542  fe57
+    543  fe57							; bootstrap interrupt vectors (.A still 0)
+    544  fe57							;
+    545  fe57							; When bootstrapping to ram, the 68HC11F1 implements pseudo
+    546  fe57							; vectors and we have to create a jump table for the vectors
+    547  fe57							; we use.
+    548  fe57
+    549  fe57				  -	      ifnconst	INEEPROM
+    550  fe57				  -	      ldab	#$7E	; JMP extended instruction
+    551  fe57				  -	      stab	BsOC1Jmp
+    552  fe57				  -	      stab	BsIC1Jmp
+    553  fe57				  -	      stab	BsIC2Jmp
+    554  fe57				  -	      ldx	#OC1Int	; address of OC1 interrupt
+    555  fe57				  -	      stx	BsOC1Jmp+1
+    556  fe57				  -	      ldx	#IC1Int
+    557  fe57				  -	      stx	BsIC1Jmp+1
+    558  fe57				  -	      ldx	#IC2Int
+    559  fe57				  -	      stx	BsIC2Jmp+1
+    560  fe57					      eif
+    561  fe57
+    562  fe57							; Setup stack and various ram variables, .A still 0
+    563  fe57							;
+    564  fe57							; We do not have to clear RTIWDog since it is reset by packet
+    565  fe57							; reception and the relays are off anyway before then.  We
+    566  fe57							; do not have to clear the red/grn count either because the
+    567  fe57							; l.e.d's are already off.
+    568  fe57							;
+    569  fe57
+    570  fe57		       8e 03 9f 	      lds	#StackEnd-1	; reset stack pointer
+    571  fe5a		       97 60		      staa	RTUConfig
+    572  fe5c		       97 6a		      staa	RTIAvrCnt
+    573  fe5e		       0e		      cli		; enable ints (note: stop disble is 1)
+    574  fe5f
+    575  fe5f							;-----------------------------------------------------
+    576  fe5f							;		  MAIN PACKET WAIT LOOP		     -
+    577  fe5f							;-----------------------------------------------------
+    578  fe5f							;
+    579  fe5f							; Wait for an incomming packet
+    580  fe5f							;
+    581  fe5f							; The RED led is lit when an error is detected
+    582  fe5f							;
+    583  fe5f							; The GRN led is lit whenever we receive a valid packet
+    584  fe5f							; whos address is for us.
+    585  fe5f
+    586  fe5f		       00 00	   PKT_LEN    equ	0
+    587  fe5f		       00 01	   PKT_ADR    equ	1
+    588  fe5f		       00 02	   PKT_CMD    equ	2
+    589  fe5f		       00 03	   PKT_DATA   equ	3
+    590  fe5f
+    591  fe5f					      subroutine
+    592  fe5f
+    593  fe5f				   WaitPacketRed
+    594  fe5f		       86 38		      ldaa	#56	; 3 seconds
+    595  fe61		       97 66		      staa	RTIRedCnt
+    596  fe63		       15 05 10 	      bclr	PORTF,PORTF_RED
+    597  fe66
+    598  fe66							; Wait for a packet.  We keep a running checksum while
+    599  fe66							; bringing in the packet and setup the loop such that
+    600  fe66							; .X will point to the CHK byte when done rather then
+    601  fe66							; one past the CHK byte.
+    602  fe66							;
+    603  fe66							;	AA
+    604  fe66							;	LEN		\
+    605  fe66							;	ADR		|
+    606  fe66							;	CMD		| LEN bytes
+    607  fe66							;	DATA[LEN-4]	|
+    608  fe66							;	CHK		/
+    609  fe66							;	55
+    610  fe66							;
+    611  fe66							; CHK does not include AA or 55.  CHK is formulated such
+    612  fe66							; that it all adds to zero.
+    613  fe66
+    614  fe66				   WaitPacket
+    615  fe66		       8d 70		      bsr	GetB	; get protocol/synch
+    616  fe68		       c1 aa		      cmpb	#$AA	; ignore if not $AA packet
+    617  fe6a		       26 f3		      bne	WaitPacketRed
+    618  fe6c		       4f		      clra		; checksum accumulation
+    619  fe6d		       ce 00 6a 	      ldx	#PacketBuf-1
+    620  fe70		       8d 66	   .1	      bsr	GetB	; get byte (first byte is length)
+    621  fe72		       08		      inx
+    622  fe73		       e7 00		      stab	0,x	; store
+    623  fe75		       1b		      aba		; accumulate checksum
+    624  fe76		       7a 00 6b 	      dec	PacketBuf
+    625  fe79		       26 f5		      bne	.1
+    626  fe7b		       4d		      tsta
+    627  fe7c		       26 e1		      bne	WaitPacketRed
+    628  fe7e		       8d 58		      bsr	GetB	; obtain endsynch and check
+    629  fe80		       c1 55		      cmpb	#$55
+    630  fe82		       26 db		      bne	WaitPacketRed
+    631  fe84							; check address
+    632  fe84		       96 6c		      ldaa	PacketBuf+PKT_ADR
+    633  fe86		       2b 04		      bmi	.10
+    634  fe88		       91 61		      cmpa	BoardAddr
+    635  fe8a		       26 da		      bne	WaitPacket
+    636  fe8c				   .10
+    637  fe8c							; Now have a valid packet, setup for return and
+    638  fe8c							; execute command
+    639  fe8c							;
+    640  fe8c
+    641  fe8c		       d6 6d		      ldab	PacketBuf+PKT_CMD
+    642  fe8e		       86 16		      ldaa	#22	; aprox set wdog 5 min (sto msb)
+    643  fe90		       97 68		      staa	RTIWDog
+    644  fe92
+    645  fe92		       ce fe e7 	      ldx	#CommandTable	; lookup the command
+    646  fe95		       c4 0e		      andb	#$0E	; force command to be valid
+    647  fe97		       3a		      abx
+    648  fe98		       ee 00		      ldx	0,x	; get pointer to command
+    649  fe9a
+    650  fe9a							; setup part of response
+    651  fe9a		       86 20		      ldaa	#$20
+    652  fe9c		       97 6c		      staa	PacketBuf+PKT_ADR
+    653  fe9e		       96 60		      ldaa	RTUConfig
+    654  fea0		       97 6d		      staa	PacketBuf+PKT_CMD
+    655  fea2
+    656  fea2		       ad 00		      jsr	0,x	; Execute the command
+    657  fea4		       8d 02		      bsr	TransmitPacket
+    658  fea6		       20 be		      bra	WaitPacket
+    659  fea8
+    660  fea8							; Upon completion transmit back .B bytes of data.. that is,
+    661  fea8							; a packet:
+    662  fea8							;    AA LEN ADR+$20 FLG DATA[.B] CHK $55	(LEN=.B+4)
+    663  fea8
+    664  fea8				   TransmitPacket
+    665  fea8		       86 09		      ldaa	#9	; set green led 0.5 sec
+    666  feaa		       97 67		      staa	RTIGrnCnt
+    667  feac		       15 05 20 	      bclr	PORTF,PORTF_GRN
+    668  feaf
+    669  feaf		       cb 04		      addb	#4
+    670  feb1		       d7 6b		      stab	PacketBuf+PKT_LEN
+    671  feb3		       ce 00 6b 	      ldx	#PacketBuf
+    672  feb6		       4f		      clra		; checksum
+    673  feb7		       15 2d 04 	      bclr	SCCR2,SCCR2_RE	; disable receiver
+    674  feba		       c6 aa		      ldab	#$AA	; sync
+    675  febc		       8d 22	   .110       bsr	SendB	; send loop, everything except checksum
+    676  febe		       e6 00		      ldab	0,x
+    677  fec0		       08		      inx
+    678  fec1		       10		      sba
+    679  fec2		       7a 00 6b 	      dec	PacketBuf+PKT_LEN
+    680  fec5		       26 f5		      bne	.110
+    681  fec7		       1b		      aba
+    682  fec8		       16		      tab		; send checksum
+    683  fec9		       8d 15		      bsr	SendB
+    684  fecb		       c6 55		      ldab	#$55
+    685  fecd		       8d 11		      bsr	SendB
+    686  fecf		       13 2e 40 fc .120       brclr	SCSR,SCSR_TC,.120
+    687  fed3		       14 2d 04 	      bset	SCCR2,SCCR2_RE	; reenable receiver
+    688  fed6		       39		      rts
+    689  fed7
+    690  fed7							; GETB - receive a character from the serial port
+    691  fed7							;
+    692  fed7
+    693  fed7					      subroutine
+    694  fed7		       3e	   GetBLoop   wai
+    695  fed8		       13 2e 20 fb GetB       brclr	SCSR,SCSR_RDRF,GetBLoop
+    696  fedc		       d6 2f		      ldab	SCDR
+    697  fede		       39		      rts
+    698  fedf
+    699  fedf							; SENDB - transmit a character to the serial port
+    700  fedf							;
+    701  fedf
+    702  fedf					      subroutine
+    703  fedf		       3e	   SendBLoop  wai
+    704  fee0		       13 2e 80 fb SendB      brclr	SCSR,SCSR_TDRE,SendBLoop
+    705  fee4		       d7 2f		      stab	SCDR
+    706  fee6		       39		      rts
+    707  fee7
+    708  fee7							;-----------------------------------------------------
+    709  fee7							;			COMMANDS
+    710  fee7							;-----------------------------------------------------
+    711  fee7							;
+    712  fee7							;  A command must return the response length in .B, 0
+    713  fee7							;  if no data (returns a packet with no data)
+    714  fee7							;
+    715  fee7							;  00	IDENTIFY
+    716  fee7							;  02	 READ BYTES
+    717  fee7							;  04	 WRITE BYTES
+    718  fee7							;  06	 PROGRAM EEPROM BYTE
+    719  fee7							;  08	 RESET
+    720  fee7							;  0A	 CONFIGURE
+    721  fee7							;  0C	 BAD CMD
+    722  fee7							;  0E	 BAD CMD
+    723  fee7
+    724  fee7				   CommandTable
+    725  fee7		       ff 01		      dc.w	IdentifyCmd
+    726  fee9		       ff 10		      dc.w	ReadBytesCmd
+    727  feeb		       ff 27		      dc.w	WriteBytesCmd
+    728  feed					      ifconst	INEEPROM
+    729  feed		       fe f7		      dc.w	BadCmd
+    730  feef				  -	      else
+    731  feef				  -	      dc.w	ProgramByteCmd
+    732  feef					      eif
+    733  feef		       fe 18		      dc.w	ResetCmd
+    734  fef1		       fe f9		      dc.w	ConfigureCmd
+    735  fef3		       fe f7		      dc.w	BadCmd
+    736  fef5		       fe f7		      dc.w	BadCmd
+    737  fef7
+    738  fef7							;  BADCMD
+    739  fef7							;
+    740  fef7							;  Bad command, simply ignore... return an empty packet
+    741  fef7
+    742  fef7				   BadCmd     subroutine
+    743  fef7		       5f		      clrb
+    744  fef8		       39		      rts
+    745  fef9
+    746  fef9							;  CONFIGURECMD
+    747  fef9							;
+    748  fef9							;  Configure an I/O board, copy data to RTUConfig and PORTA
+    749  fef9
+    750  fef9				   ConfigureCmd subroutine
+    751  fef9		       dc 6e		      ldd	PacketBuf+PKT_DATA
+    752  fefb		       97 60		      staa	RTUConfig
+    753  fefd		       d7 00		      stab	PORTA
+    754  feff		       5f		      clrb
+    755  ff00		       39		      rts
+    756  ff01
+    757  ff01							;   IDENTIFY	- identify board
+    758  ff01							;
+    759  ff01							;   returns board type, board address, board temp, board id
+    760  ff01							;
+    761  ff01							;   IdentifyUncCmd only identifies unconfigured boards
+    762  ff01
+    763  ff01					      subroutine
+    764  ff01				   IdentifyCmd
+    765  ff01		       86 01		      ldaa	#1
+    766  ff03		       97 6e		      staa	PacketBuf+PKT_DATA
+    767  ff05		       96 61		      ldaa	BoardAddr
+    768  ff07		       97 6f		      staa	PacketBuf+PKT_DATA+1
+    769  ff09		       dc 31		      ldd	ADR1
+    770  ff0b		       dd 70		      std	PacketBuf+PKT_DATA+2
+    771  ff0d		       c6 04		      ldab	#4
+    772  ff0f		       39		      rts
+    773  ff10
+    774  ff10							;   READ BYTES - read data bytes
+    775  ff10							;
+    776  ff10							;
+    777  ff10
+    778  ff10				   ReadBytesCmd subroutine
+    779  ff10		       de 6e		      ldx	PacketBuf+PKT_DATA	; source address
+    780  ff12		       18 ce 00 71	      ldy	#PacketBuf+PKT_DATA+3	; destination address
+    781  ff16		       5f	   memCpy     clrb
+    782  ff17		       a6 00	   memCpyLoop ldaa	0,x
+    783  ff19		       18 a7 00 	      staa	0,y
+    784  ff1c		       08		      inx
+    785  ff1d		       18 08		      iny
+    786  ff1f		       5c		      incb
+    787  ff20		       d1 70		      cmpb	PacketBuf+PKT_DATA+2
+    788  ff22		       26 f3		      bne	memCpyLoop
+    789  ff24		       cb 03		      addb	#3
+    790  ff26		       39		      rts
+    791  ff27
+    792  ff27							;   WRITE BYTES - write data bytes, written data returned
+    793  ff27							;
+    794  ff27
+    795  ff27				   WriteBytesCmd subroutine
+    796  ff27		       ce 00 71 	      ldx	#PacketBuf+PKT_DATA+3	; source address
+    797  ff2a		       18 de 6e 	      ldy	PacketBuf+PKT_DATA	; destination address
+    798  ff2d		       20 e7		      bra	memCpy
+    799  ff2f
+    800  ff2f				  -	      ifnconst	INEEPROM
+    801  ff2f				  -			;   PROGRAM BYTE - write one byte of data to eeprom
+    802  ff2f				  -			;
+    803  ff2f				  -			;   Command:	addr cmd ADRH ADRL LEN DATA[]
+    804  ff2f				  -			;   Response:	40+X err
+    805  ff2f				  -
+    806  ff2f				  -ProgramByteCmd subroutine
+    807  ff2f				  -	      ldx	PacketBuf+PKT_DATA	; destination address
+    808  ff2f				  -	      ldab	PacketBuf+PKT_DATA+2	; # of bytes to write
+    809  ff2f				  -	      ldy	#PacketBuf+PKT_DATA+3	; source address
+    810  ff2f				  -pbloop     pshb
+    811  ff2f				  -	      ldab	0,y
+    812  ff2f				  -	      bsr	eepromWrite
+    813  ff2f				  -	      pulb
+    814  ff2f				  -	      inx
+    815  ff2f				  -	      iny
+    816  ff2f				  -	      decb
+    817  ff2f				  -	      bne	pbloop
+    818  ff2f				  -			; clrb
+    819  ff2f				  -	      rts
+    820  ff2f				  -
+    821  ff2f				  -			; eepromWrite - write data in .B to eeprom address .X
+    822  ff2f				  -			;
+    823  ff2f				  -			; .B, .X left alone
+    824  ff2f				  -			;
+    825  ff2f				  -
+    826  ff2f				  -eepromWrite subroutine
+    827  ff2f				  -	      ldaa	#PPROG_BYTE|PPROG_ERASE|PPROG_EELAT
+    828  ff2f				  -	      bsr	.10
+    829  ff2f				  -	      ldaa	#PPROG_EELAT
+    830  ff2f				  -.10	      staa	PPROG
+    831  ff2f				  -	      stab	0,x
+    832  ff2f				  -	      bset	PPROG,PPROG_EEPGM
+    833  ff2f				  -
+    834  ff2f				  -	      pshb
+    835  ff2f				  -	      ldd	TCNT
+    836  ff2f				  -	      addd	#12228
+    837  ff2f				  -.11	      cpd	TCNT	; D-TCNT
+    838  ff2f				  -	      bpl	.11
+    839  ff2f				  -	      pulb
+    840  ff2f				  -
+    841  ff2f				  -	      clra
+    842  ff2f				  -	      staa	PPROG
+    843  ff2f				  -	      rts
+    844  ff2f				  -
+    845  ff2f					      eif
+    846  ff2f
+    847  ff2f
+    848  ff2f							;-----------------------------------------------------
+    849  ff2f							;		   COUNTER INTERRUPTS
+    850  ff2f							;-----------------------------------------------------
+    851  ff2f							;
+    852  ff2f							; IC1 - digital input counter 2
+    853  ff2f							; IC2 - digital input counter 1
+    854  ff2f
+    855  ff2f				   IC1Int
+    856  ff2f		       de 64		      ldx	Counter2
+    857  ff31		       08		      inx
+    858  ff32		       df 64		      stx	Counter2
+    859  ff34		       15 23 fb 	      bclr	TFLG1,<~TFLG1_IC1F
+    860  ff37		       3b		      rti
+    861  ff38
+    862  ff38				   IC2Int
+    863  ff38		       de 62		      ldx	Counter1
+    864  ff3a		       08		      inx
+    865  ff3b		       df 62		      stx	Counter1
+    866  ff3d		       15 23 fd 	      bclr	TFLG1,<~TFLG1_IC2F
+    867  ff40		       3b		      rti
+    868  ff41
+    869  ff41							;-----------------------------------------------------
+    870  ff41							;		     GET BOARD ADDRESS		     -
+    871  ff41							;-----------------------------------------------------
+    872  ff41							;
+    873  ff41							; GetBoardAddr - calculate board network address 00-0F
+    874  ff41							;		 and return in .B
+    875  ff41							;
+    876  ff41							;	ADR4 (msb) and ADR3 (lsb) contain the address.
+    877  ff41							;	Each A/D is valued as shown below.  We conver the
+    878  ff41							;	A/D value to a two bit address simply by multiplying
+    879  ff41							;	it by x3 and extracting the top two bits.  The
+    880  ff41							;	result is also flexible enough to allow variations in
+    881  ff41							;	ADC values.
+    882  ff41							;
+    883  ff41							;		**xxxxxx
+    884  ff41							;
+    885  ff41							; 00 x 3 =  00  00000000
+    886  ff41							; 1E x 3 =  5A  01011010
+    887  ff41							; 37 x 3 =  A5  10100101
+    888  ff41							; 4B x 3 =  E1  11100001
+    889  ff41
+    890  ff41				   GetBoardAddr subroutine
+    891  ff41		       5f		      clrb		; address accumulator
+    892  ff42		       96 34		      ldaa	ADR4
+    893  ff44		       8d 02		      bsr	oneOfFour
+    894  ff46		       96 33		      ldaa	ADR3
+    895  ff48				   oneOfFour
+    896  ff48		       37		      pshb
+    897  ff49		       16		      tab
+    898  ff4a		       48		      asla
+    899  ff4b		       1b		      aba
+    900  ff4c		       33		      pulb
+    901  ff4d
+    902  ff4d		       48		      asla
+    903  ff4e		       59		      rolb
+    904  ff4f		       48		      asla
+    905  ff50		       59		      rolb
+    906  ff51		       39		      rts
+    907  ff52
+    908  ff52							;-----------------------------------------------------
+    909  ff52							;		     OC1 INTERRUPT
+    910  ff52							;-----------------------------------------------------
+    911  ff52							;
+    912  ff52							; The OC1 interrupt is set to occur at 3840Hz (~260uS).  Each
+    913  ff52							; interrupt switches channel so each individual channel is
+    914  ff52							; effectively sampled at 240Hz.  256 samples are accumulated
+    915  ff52							; yielding a 20 bit sum which is normalized to 16 bits and
+    916  ff52							; transfered to another ram address for reading by the RTU.
+    917  ff52							;
+    918  ff52							; Working the math, you will also notice that 256 samples at
+    919  ff52							; 240 Hz winds up being an integral number of 60Hz cycles,
+    920  ff52							; therefore any 60Hz hum (and most harmonics of 60Hz) are
+    921  ff52							; automatically removed.
+    922  ff52							;
+    923  ff52							; The OC1 interrupt also serves the following functions:
+    924  ff52							;    * Break WAI instruction in main loop for serial poll
+    925  ff52							;    * Handle LEDs and watchdog countdown
+    926  ff52							;    * Ensure processor runs long enough for ADC to convert
+    927  ff52
+    928  ff52				   OC1Int     subroutine
+    929  ff52
+    930  ff52							; 1.2288MHzx320 (3840Hz) Max176 scan
+    931  ff52							;
+    932  ff52
+    933  ff52
+    934  ff52		       d6 02		      ldab	PORTG
+    935  ff54		       54		      lsrb
+    936  ff55		       54		      lsrb
+    937  ff56		       ce 03 00 	      ldx	#MaxScanTable	; +0 primary, +32 acclsb, +64 accmsb
+    938  ff59		       3a		      abx
+    939  ff5a		       8d 64		      bsr	ScanMax16	; fmt ssdddddd.ddddddxx
+    940  ff5c		       c4 fc		      andb	#$FC
+    941  ff5e		       58		      aslb
+    942  ff5f		       49		      rola
+    943  ff60		       58		      aslb
+    944  ff61		       49		      rola
+    945  ff62		       24 02		      bcc	.4	; if negative, msb is all 1's
+    946  ff64		       6a 40		      dec	64,x
+    947  ff66		       e3 20	   .4	      addd	32,x	; fmt dddddddd.dddd0000
+    948  ff68		       24 02		      bcc	.5	; carry
+    949  ff6a		       6c 40		      inc	64,x
+    950  ff6c		       7d 00 6a    .5	      tst	RTIAvrCnt
+    951  ff6f		       26 0c		      bne	.10	; fmt 0ddddddd.dddddddd.dddd0000
+    952  ff71		       58		      aslb		; cvt to dddddddd.dddddddd
+    953  ff72		       16		      tab
+    954  ff73		       59		      rolb
+    955  ff74		       a6 40		      ldaa	64,x
+    956  ff76		       49		      rola
+    957  ff77		       ed 00		      std	0,x
+    958  ff79		       4f		      clra		; setup to clear msb, lsb
+    959  ff7a		       5f		      clrb
+    960  ff7b		       a7 40		      staa	64,x
+    961  ff7d		       ed 20	   .10	      std	32,x
+    962  ff7f		       d6 02		      ldab	PORTG
+    963  ff81		       cb 08		      addb	#$08
+    964  ff83		       2a 07		      bpl	.20
+    965  ff85		       96 6a		      ldaa	RTIAvrCnt
+    966  ff87		       8b 02		      adda	#$02	; $10=16 samp/avr, $02=128 samp avr
+    967  ff89		       97 6a		      staa	RTIAvrCnt
+    968  ff8b		       5f		      clrb
+    969  ff8c		       d7 02	   .20	      stab	PORTG
+    970  ff8e
+    971  ff8e							; Setup for next interrupt
+    972  ff8e							;
+    973  ff8e							;
+    974  ff8e
+    975  ff8e		       15 23 7f 	      bclr	TFLG1,<~TFLG1_OC1F
+    976  ff91
+    977  ff91		       dc 16		      ldd	TOC1
+    978  ff93		       c3 01 40 	      addd	#320
+    979  ff96		       dd 16		      std	TOC1
+    980  ff98		       24 25		      bcc	.200
+    981  ff9a
+    982  ff9a							; x65536 (18.75 Hz) code
+    983  ff9a							;
+    984  ff9a
+    985  ff9a		       7a 00 66 	      dec	RTIRedCnt
+    986  ff9d		       26 03		      bne	.100
+    987  ff9f		       14 05 10 	      bset	PORTF,PORTF_RED
+    988  ffa2				   .100
+    989  ffa2		       7a 00 67 	      dec	RTIGrnCnt
+    990  ffa5		       26 03		      bne	.101
+    991  ffa7		       14 05 20 	      bset	PORTF,PORTF_GRN
+    992  ffaa				   .101
+    993  ffaa		       de 68		      ldx	RTIWDog
+    994  ffac		       09		      dex
+    995  ffad		       df 68		      stx	RTIWDog
+    996  ffaf		       27 08		      beq	.102r
+    997  ffb1				   .102
+    998  ffb1		       8d 8e		      bsr	GetBoardAddr	; obtain board address
+    999  ffb3		       d1 61		      cmpb	BoardAddr
+   1000  ffb5		       27 08		      beq	.103
+   1001  ffb7		       d7 61		      stab	BoardAddr
+   1002  ffb9				   .102r
+   1003  ffb9		       7f 00 60 	      clr	RTUConfig
+   1004  ffbc		       15 05 c0 	      bclr	PORTF,PORTF_DIGOUT1|PORTF_DIGOUT2
+   1005  ffbf				   .103
+   1006  ffbf
+   1007  ffbf							;
+   1008  ffbf							;
+   1009  ffbf
+   1010  ffbf				   .200
+   1011  ffbf		       3b		      rti
+   1012  ffc0
+   1013  ffc0							; SCANMAX16 - scan Max176
+   1014  ffc0							;
+   1015  ffc0							; This routine may not be interrupted due to sample-and-hold
+   1016  ffc0							; droop in the Max176.  We use the SPI to generate 16 clocks
+   1017  ffc0							; to the Max176 after the rising edge of strobe.  The falling
+   1018  ffc0							; edge of strobe must occur before the 12th bit and can occur
+   1019  ffc0							; as soon as the second bit.
+   1020  ffc0
+   1021  ffc0				   ScanMax16  subroutine
+   1022  ffc0		       14 02 04 	      bset	PORTG,PORTG_ADSTROBHI
+   1023  ffc3		       8d 06		      bsr	Get8B	; 13 from store
+   1024  ffc5		       8d 00		      bsr	Get8A	; 16 to load, 13 from store
+   1025  ffc7		       15 02 04    Get8A      bclr	PORTG,PORTG_ADSTROBHI	; 6
+   1026  ffca		       17		      tba		; 2
+   1027  ffcb		       7d 00 29    Get8B      tst	SPSR	; 3
+   1028  ffce		       d6 2a		      ldab	SPDR	; 3
+   1029  ffd0		       d7 2a		      stab	SPDR	; 3
+   1030  ffd2		       48		      asla		; 2
+   1031  ffd3		       48		      asla		; 2
+   1032  ffd4		       47		      asra		; 2
+   1033  ffd5		       47		      asra		; 2
+   1034  ffd6		       39		      rts		; 5
+   1035  ffd7
+   1036  ffd7							;-----------------------------------------------------
+   1037  ffd7							;		    INTERRUPT VECTORS		     -
+   1038  ffd7							;-----------------------------------------------------
+   1039  ffd7							;
+   1040  ffd7							; Interrupt Vectors
+   1041  ffd7							;
+   1042  ffd7							; note: if we need the space we can use some of this space
+   1043  ffd7							; for code (for those interrupt vectors we do not use)
+   1044  ffd7
+   1045  ffd7					      ifconst	INEEPROM
+   1046  ffe8					      org	$FFD6+9*2
+   1047  ffe8
+   1048  ffe8							;;dc.w	BadInt		; SCI serial
+   1049  ffe8							;;dc.w	BadInt		; SPIE
+   1050  ffe8							;;dc.w	BadInt		; PAII Pulse Accumulator
+   1051  ffe8							;;dc.w	BadInt		; PAOVI Pulse Accumulator Overflow
+   1052  ffe8							;;dc.w	BadInt		; TOI Timer overflow
+   1053  ffe8							;;dc.w	BadInt		; OC5
+   1054  ffe8							;;dc.w	BadInt		; OC4
+   1055  ffe8							;;dc.w	BadInt		; OC3
+   1056  ffe8							;;dc.w	BadInt		; OC2
+   1057  ffe8		       ff 52		      dc.w	OC1Int	; OC1
+   1058  ffea		       fe 18		      dc.w	BadInt	; IC3
+   1059  ffec		       ff 38		      dc.w	IC2Int	; IC2
+   1060  ffee		       ff 2f		      dc.w	IC1Int	; IC1
+   1061  fff0
+   1062  fff0		       fe 18		      dc.w	BadInt	; RTI Realtime interrupt
+   1063  fff2		       fe 18		      dc.w	BadInt	; IRQ
+   1064  fff4		       fe 18		      dc.w	BadInt	; XIRQ
+   1065  fff6		       fe 18		      dc.w	BadInt	; SWI
+   1066  fff8		       fe 18		      dc.w	Reset	; Illegal OpCode Trap
+   1067  fffa		       fe 18		      dc.w	Reset	; COP failure (reset)
+   1068  fffc		       fe 18		      dc.w	Reset	; Clock Monitor Failure
+   1069  fffe		       fe 18		      dc.w	Reset	; RESET
+   1070  10000
+   1071  10000					       eif
+   1072  10000

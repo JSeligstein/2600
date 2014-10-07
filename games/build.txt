@@ -1,0 +1,1 @@
+dasm kernel1.6502 -lkernel1.txt -f3 -v5 -okernel1.bin -I/Users/joel/dasm-2.20.11-20140304/machines/atari2600/

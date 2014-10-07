@@ -1,0 +1,280 @@
+------- FILE suitef8.asm LEVEL 1 PASS 1
+      1  0000 ????						; Fairchild F8 test suite for DASM
+      2  0000 ????						; 2004 by Thomas Mathys
+      3  0000 ????				      processor	f8
+      4  0000 ????
+      5  0000 ????	       00 02	   TWO	      =	2
+      6  0000 ????
+      7  0000					      org	0
+      8  0000				   start
+      9  0000
+     10  0000		       8e		      adc		; 8e
+     11  0001		       24 f8		      ai	$f8	; 24 f8
+     12  0003		       88		      am		; 88
+     13  0004		       89		      amd		; 89
+     14  0005
+     15  0005		       c0		      as	start	; c0
+     16  0006		       c1		      as	start+1	; c1
+     17  0007		       c2		      as	TWO	; c2
+     18  0008		       c3		      as	3	; c3
+     19  0009		       c4		      as	4	; c4
+     20  000a		       c5		      as	5	; c5
+     21  000b		       c6		      as	2*[1+2]	; c6
+     22  000c		       c7		      as	7	; c7
+     23  000d		       c8		      as	(2+2)*2	; c8
+     24  000e		       c9		      as	9	; c9
+     25  000f		       c9		      as	j	; c9
+     26  0010		       ca		      as	$a	; ca
+     27  0011		       ca		      as	hu	; ca
+     28  0012		       cb		      as	11	; cb
+     29  0013		       cb		      as	hl	; cb
+     30  0014		       cc		      as	s	; cc
+     31  0015		       cc		      as	(is)	; cc
+     32  0016		       cd		      as	i	; cd
+     33  0017		       cd		      as	(is)+	; cd
+     34  0018		       ce		      as	d	; ce
+     35  0019		       ce		      as	(is)-	; ce
+     36  001a
+     37  001a		       d0		      asd	start	; d0
+     38  001b		       d1		      asd	start+1	; d1
+     39  001c		       d2		      asd	TWO	; d2
+     40  001d		       d3		      asd	3	; d3
+     41  001e		       d4		      asd	4	; d4
+     42  001f		       d5		      asd	5	; d5
+     43  0020		       d6		      asd	2*[1+2]	; d6
+     44  0021		       d7		      asd	7	; d7
+     45  0022		       d8		      asd	(2+2)*2	; d8
+     46  0023		       d9		      asd	9	; d9
+     47  0024		       d9		      asd	j	; d9
+     48  0025		       da		      asd	$a	; da
+     49  0026		       da		      asd	hu	; da
+     50  0027		       db		      asd	11	; db
+     51  0028		       db		      asd	hl	; db
+     52  0029		       dc		      asd	s	; dc
+     53  002a		       dc		      asd	(is)	; dc
+     54  002b		       dd		      asd	i	; dd
+     55  002c		       dd		      asd	(is)+	; dd
+     56  002d		       de		      asd	d	; de
+     57  002e		       de		      asd	(is)-	; de
+     58  002f
+     59  002f		       82 ff		      bc	.	; 82 ff
+     60  0031		       9c ff		      bf	12,.	; 9c ff
+     61  0033		       91 ff		      bm	.	; 91 ff
+     62  0035		       92 ff		      bnc	.	; 92 ff
+     63  0037		       98 ff		      bno	.	; 98 ff
+     64  0039		       94 ff		      bnz	.	; 94 ff
+     65  003b		       81 ff		      bp	.	; 81 ff
+     66  003d		       90 ff		      br	.	; 90 ff
+     67  003f		       8f ff		      br7	.	; 8f ff
+     68  0041		       85 ff		      bt	5,.	; 85 ff
+     69  0043		       84 ff		      bz	.	; 84 ff
+     70  0045
+     71  0045		       25 3f		      ci	4096/64-1	; 25 3f
+     72  0047		       70		      clr		; 70
+     73  0048		       8d		      cm		; 8d
+     74  0049		       18		      com		; 18
+     75  004a		       2a 00 02 	      dci	TWO	; 2a 00 02
+     76  004d		       2a 12 34 	      dci	$1234	; 2a 12 34
+     77  0050		       1a		      di		; 1a
+     78  0051
+     79  0051		       30		      ds	start	; 30
+     80  0052		       31		      ds	start+1	; 31
+     81  0053		       32		      ds	TWO	; 32
+     82  0054		       33		      ds	3	; 33
+     83  0055		       34		      ds	4	; 34
+     84  0056		       35		      ds	5	; 35
+     85  0057		       36		      ds	2*[1+2]	; 36
+     86  0058		       37		      ds	7	; 37
+     87  0059		       38		      ds	(2+2)*2	; 38
+     88  005a		       39		      ds	9	; 39
+     89  005b		       39		      ds	j	; 39
+     90  005c		       3a		      ds	$a	; 3a
+     91  005d		       3a		      ds	hu	; 3a
+     92  005e		       3b		      ds	11	; 3b
+     93  005f		       3b		      ds	hl	; 3b
+     94  0060		       3c		      ds	s	; 3c
+     95  0061		       3c		      ds	(is)	; 3c
+     96  0062		       3d		      ds	i	; 3d
+     97  0063		       3d		      ds	(is)+	; 3d
+     98  0064		       3e		      ds	d	; 3e
+     99  0065		       3e		      ds	(is)-	; 3e
+    100  0066
+    101  0066		       1b		      ei		; 1b
+    102  0067		       26 02		      in	TWO	; 26 02
+    103  0069		       26 ff		      in	16*16-1	; 26 ff
+    104  006b		       1f		      inc		; 1f
+    105  006c		       a0		      ins	5*3-15	; a0
+    106  006d		       af		      ins	15+start	; af
+    107  006e		       29 12 34 	      jmp	$1234	; 29 12 34
+    108  0071		       20 02		      li	TWO	; 20 02
+    109  0073		       77		      lis	%111	; 77
+    110  0074		       6f		      lisl	(TWO+TWO)*TWO-1	; 6f
+    111  0075		       64		      lisu	4	; 64
+    112  0076		       16		      lm		; 16
+    113  0077		       19		      lnk		; 19
+    114  0078
+    115  0078		       50		      lr	start,a	; 50
+    116  0079		       51		      lr	start+1,a	; 51
+    117  007a		       52		      lr	TWO,a	; 52
+    118  007b		       53		      lr	3,a	; 53
+    119  007c		       54		      lr	4,a	; 54
+    120  007d		       55		      lr	5,a	; 55
+    121  007e		       56		      lr	2*[1+2],a	; 56
+    122  007f		       57		      lr	7,a	; 57
+    123  0080		       58		      lr	(2+2)*2,a	; 58
+    124  0081		       59		      lr	9,a	; 59
+    125  0082		       59		      lr	j,a	; 59
+    126  0083		       5a		      lr	$a,a	; 5a
+    127  0084		       5a		      lr	hu,a	; 5a
+    128  0085		       5b		      lr	11,a	; 5b
+    129  0086		       5b		      lr	hl,a	; 5b
+    130  0087		       5c		      lr	s,a	; 5c
+    131  0088		       5c		      lr	(is),a	; 5c
+    132  0089		       5d		      lr	i,a	; 5d
+    133  008a		       5d		      lr	(is)+,a	; 5d
+    134  008b		       5e		      lr	d,a	; 5e
+    135  008c		       5e		      lr	(is)-,a	; 5e
+    136  008d
+    137  008d		       40		      lr	a,start	; 40
+    138  008e		       41		      lr	a,start+1	; 41
+    139  008f		       42		      lr	a,TWO	; 42
+    140  0090		       43		      lr	a,3	; 43
+    141  0091		       44		      lr	a,4	; 44
+    142  0092		       45		      lr	a,5	; 45
+    143  0093		       46		      lr	a,2*[1+2]	; 46
+    144  0094		       47		      lr	a,7	; 47
+    145  0095		       48		      lr	a,(2+2)*2	; 48
+    146  0096		       49		      lr	a,9	; 49
+    147  0097		       49		      lr	a,j	; 49
+    148  0098		       4a		      lr	a,$a	; 4a
+    149  0099		       4a		      lr	a,hu	; 4a
+    150  009a		       4b		      lr	a,11	; 4b
+    151  009b		       4b		      lr	a,hl	; 4b
+    152  009c		       4c		      lr	a,s	; 4c
+    153  009d		       4c		      lr	a,(is)	; 4c
+    154  009e		       4d		      lr	a,i	; 4d
+    155  009f		       4d		      lr	a,(is)+	; 4d
+    156  00a0		       4e		      lr	a,d	; 4e
+    157  00a1		       4e		      lr	a,(is)-	; 4e
+    158  00a2
+    159  00a2		       00		      lr	a,ku	; 00
+    160  00a3		       01		      lr	a,kl	; 01
+    161  00a4		       02		      lr	a,qu	; 02
+    162  00a5		       03		      lr	a,ql	; 03
+    163  00a6		       04		      lr	ku,a	; 04
+    164  00a7		       05		      lr	kl,a	; 05
+    165  00a8		       06		      lr	qu,a	; 06
+    166  00a9		       07		      lr	ql,a	; 07
+    167  00aa		       11		      lr	h,dc0	; 11
+    168  00ab		       11		      lr	h,dc	; 11
+    169  00ac		       0e		      lr	q,dc0	; 0e
+    170  00ad		       0e		      lr	q,dc	; 0e
+    171  00ae		       10		      lr	dc0,h	; 10
+    172  00af		       10		      lr	dc,h	; 10
+    173  00b0		       0f		      lr	dc0,q	; 0f
+    174  00b1		       0f		      lr	dc,q	; 0f
+    175  00b2		       08		      lr	k,pc1	; 08
+    176  00b3		       08		      lr	k,p	; 08
+    177  00b4		       09		      lr	pc1,k	; 09
+    178  00b5		       09		      lr	p,k	; 09
+    179  00b6		       0d		      lr	pc0,q	; 0d
+    180  00b7		       0d		      lr	p0,q	; 0d
+    181  00b8		       0a		      lr	a,is	; 0a
+    182  00b9		       0b		      lr	is,a	; 0b
+    183  00ba		       1d		      lr	w,j	; 1d
+    184  00bb		       1d		      lr	w,(TWO+1)*3	; 1d
+    185  00bc		       1e		      lr	9,w	; 1e
+    186  00bd		       1e		      lr	j,w	; 1e
+    187  00be
+    188  00be		       21 81		      ni	%10000001	; 21 81
+    189  00c0		       8a		      nm		; 8a
+    190  00c1		       2b		      nop		; 2b
+    191  00c2
+    192  00c2		       f0		      ns	start	; f0
+    193  00c3		       f1		      ns	start+1	; f1
+    194  00c4		       f2		      ns	TWO	; f2
+    195  00c5		       f3		      ns	3	; f3
+    196  00c6		       f4		      ns	4	; f4
+    197  00c7		       f5		      ns	5	; f5
+    198  00c8		       f6		      ns	2*[1+2]	; f6
+    199  00c9		       f7		      ns	7	; f7
+    200  00ca		       f8		      ns	(2+2)*2	; f8
+    201  00cb		       f9		      ns	9	; f9
+    202  00cc		       f9		      ns	j	; f9
+    203  00cd		       fa		      ns	$a	; fa
+    204  00ce		       fa		      ns	hu	; fa
+    205  00cf		       fb		      ns	11	; fb
+    206  00d0		       fb		      ns	hl	; fb
+    207  00d1		       fc		      ns	s	; fc
+    208  00d2		       fc		      ns	(is)	; fc
+    209  00d3		       fd		      ns	i	; fd
+    210  00d4		       fd		      ns	(is)+	; fd
+    211  00d5		       fe		      ns	d	; fe
+    212  00d6		       fe		      ns	(is)-	; fe
+    213  00d7
+    214  00d7		       22 80		      oi	(TWO+start)*64	; 22 80
+    215  00d9		       8b		      om		; 8b
+    216  00da
+    217  00da		       27 02		      out	TWO	; 27 02
+    218  00dc		       27 ff		      out	16*16-1	; 27 ff
+    219  00de		       b0		      outs	5*3-15	; b0
+    220  00df		       bf		      outs	15+start	; bf
+    221  00e0
+    222  00e0		       28 00 00 	      pi	start	; 28 00 00
+    223  00e3		       28 12 34 	      pi	$1234	; 28 12 34
+    224  00e6		       0c		      pk		; 0c
+    225  00e7		       1c		      pop		; 1c
+    226  00e8		       13		      sl	start+1	; 13
+    227  00e9		       15		      sl	TWO+TWO	; 15
+    228  00ea		       12		      sr	1	; 12
+    229  00eb		       14		      sr	3+1	; 14
+    230  00ec		       17		      st		; 17
+    231  00ed		       2c		      xdc		; 2c
+    232  00ee		       23 40		      xi	64	; 23 40
+    233  00f0		       8c		      xm		; 8c
+    234  00f1
+    235  00f1		       e0		      xs	start	; e0
+    236  00f2		       e1		      xs	start+1	; e1
+    237  00f3		       e2		      xs	TWO	; e2
+    238  00f4		       e3		      xs	3	; e3
+    239  00f5		       e4		      xs	4	; e4
+    240  00f6		       e5		      xs	5	; e5
+    241  00f7		       e6		      xs	2*[1+2]	; e6
+    242  00f8		       e7		      xs	7	; e7
+    243  00f9		       e8		      xs	(2+2)*2	; e8
+    244  00fa		       e9		      xs	9	; e9
+    245  00fb		       e9		      xs	j	; e9
+    246  00fc		       ea		      xs	$a	; ea
+    247  00fd		       ea		      xs	hu	; ea
+    248  00fe		       eb		      xs	11	; ab
+    249  00ff		       eb		      xs	hl	; eb
+    250  0100		       ec		      xs	s	; ec
+    251  0101		       ec		      xs	(is)	; ec
+    252  0102		       ed		      xs	i	; ed
+    253  0103		       ed		      xs	(is)+	; ed
+    254  0104		       ee		      xs	d	; ee
+    255  0105		       ee		      xs	(is)-	; ee
+    256  0106
+    257  0106		       ec		      xs	12	; ec
+    258  0107		       ed		      xs	13	; ed
+    259  0108		       ee		      xs	14	; ee
+    260  0109
+    261  0109		       00		      dc.b	0	; 00
+    262  010a		       12 34		      dc.w	$1234	; 12 34
+    263  010c		       de ad be ef	      dc.l	$deadbeef	; de ad be ef
+    264  0110
+    265  0110		       00		      db.b	0	; 00
+    266  0111		       12 34		      dw.w	$1234	; 12 34
+    267  0113		       de ad be ef	      dd.l	$deadbeef	; de ad be ef
+    268  0117
+    269  0117		       00		      byte.b	0	; 00
+    270  0118		       12 34		      word.w	$1234	; 12 34
+    271  011a		       de ad be ef	      long.l	$deadbeef	; de ad be ef
+    272  011e
+    273  011e		       00		      .byte.b	0	; 00
+    274  011f		       12 34		      .word.w	$1234	; 12 34
+    275  0121		       de ad be ef	      .long.l	$deadbeef	; de ad be ef
+    276  0125
+    277  0125		       33 33 33 33	      res.b	4, $33	; 33 33 33 33
+    278  0129		       12 34 12 34	      res.w	2, $1234	; 12 34 12 34
+    279  012d		       de ad be ef*	      res.l	2, $deadbeef	; de ad be ef de ad be ef

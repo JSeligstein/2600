@@ -1,0 +1,226 @@
+------- FILE suite68705.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????				      processor	68705
+      3  0000 ????
+      4  0000					      org	0
+      5  0000		       a9 0a		      adc	#10
+      6  0002		       b9 0a		      adc	10
+      7  0004		       c9 03 e8 	      adc	1000
+      8  0007		       f9		      adc	,x
+      9  0008		       e9 01		      adc	1,x
+     10  000a		       d9 03 e8 	      adc	1000,x
+     11  000d		       ab 0a		      add	#10
+     12  000f		       bb 0a		      add	10
+     13  0011		       cb 03 e8 	      add	1000
+     14  0014		       fb		      add	,x
+     15  0015		       eb 01		      add	1,x
+     16  0017		       db 03 e8 	      add	1000,x
+     17  001a
+     18  001a		       a4 0a		      and	#10
+     19  001c		       b4 0a		      and	10
+     20  001e		       c4 03 e8 	      and	1000
+     21  0021		       f4		      and	,x
+     22  0022		       e4 01		      and	1,x
+     23  0024		       d4 03 e8 	      and	1000,x
+     24  0027
+     25  0027		       48		      asla
+     26  0028		       58		      aslx
+     27  0029		       38 0a		      asl	10
+     28  002b		       78		      asl	,x
+     29  002c		       68 0a		      asl	10,x
+     30  002e
+     31  002e		       47		      asra
+     32  002f		       57		      asrx
+     33  0030		       37 0a		      asr	10
+     34  0032		       77		      asr	,x
+     35  0033		       67 0a		      asr	10,x
+     36  0035
+     37  0035		       24 fe		      bcc	.
+     38  0037		       13 17		      bclr	1,23
+     39  0039		       25 fe		      bcs	.
+     40  003b		       27 fe		      beq	.
+     41  003d		       28 fe		      bhcc	.
+     42  003f		       29 fe		      bhcs	.
+     43  0041		       22 fe		      bhi	.
+     44  0043		       24 fe		      bhs	.
+     45  0045		       2f fe		      bih	.
+     46  0047		       2e fe		      bil	.
+     47  0049
+     48  0049		       a5 0a		      bit	#10
+     49  004b		       b5 0a		      bit	10
+     50  004d		       c5 03 e8 	      bit	1000
+     51  0050		       f5		      bit	,x
+     52  0051		       e5 01		      bit	1,x
+     53  0053		       d5 03 e8 	      bit	1000,x
+     54  0056
+     55  0056		       25 fe		      blo	.
+     56  0058		       23 fe		      bls	.
+     57  005a		       2c fe		      bmc	.
+     58  005c		       2b fe		      bmi	.
+     59  005e		       2d fe		      bms	.
+     60  0060		       26 fe		      bne	.
+     61  0062		       2a fe		      bpl	.
+     62  0064		       20 fe		      bra	.
+     63  0066		       21 fe		      brn	.
+     64  0068		       03 0a fd 	      brclr	1,10,.
+     65  006b		       02 0a fd 	      brset	1,10,.
+     66  006e		       12 0a		      bset	1,10
+     67  0070		       ad fe		      bsr	.
+     68  0072
+     69  0072		       98		      clc
+     70  0073		       9a		      cli
+     71  0074
+     72  0074		       4f		      clra
+     73  0075		       5f		      clrx
+     74  0076		       3f 0a		      clr	10
+     75  0078		       7f		      clr	,x
+     76  0079		       6f 0a		      clr	10,x
+     77  007b
+     78  007b		       a1 0a		      cmp	#10
+     79  007d		       b1 0a		      cmp	10
+     80  007f		       c1 03 e8 	      cmp	1000
+     81  0082		       f1		      cmp	,x
+     82  0083		       e1 01		      cmp	1,x
+     83  0085		       d1 03 e8 	      cmp	1000,x
+     84  0088
+     85  0088		       43		      coma
+     86  0089		       53		      comx
+     87  008a		       33 0a		      com	10
+     88  008c		       73		      com	,x
+     89  008d		       63 0a		      com	10,x
+     90  008f
+     91  008f		       a3 0a		      cpx	#10
+     92  0091		       b3 0a		      cpx	10
+     93  0093		       c3 03 e8 	      cpx	1000
+     94  0096		       f3		      cpx	,x
+     95  0097		       e3 0a		      cpx	10,x
+     96  0099		       d3 03 e8 	      cpx	1000,x
+     97  009c
+     98  009c		       4a		      deca
+     99  009d		       5a		      decx
+    100  009e		       3a 0a		      dec	10
+    101  00a0		       7a		      dec	,x
+    102  00a1		       6a 0a		      dec	10,x
+    103  00a3
+    104  00a3		       a8 0a		      eor	#10
+    105  00a5		       b8 0a		      eor	10
+    106  00a7		       c8 03 e8 	      eor	1000
+    107  00aa		       f8		      eor	,x
+    108  00ab		       e8 0a		      eor	10,x
+    109  00ad		       d8 03 e8 	      eor	1000,x
+    110  00b0
+    111  00b0		       4c		      inca
+    112  00b1		       5c		      incx
+    113  00b2		       3c 0a		      inc	10
+    114  00b4		       7c		      inc	,x
+    115  00b5		       6c 0a		      inc	10,x
+    116  00b7
+    117  00b7		       bc 0a		      jmp	10
+    118  00b9		       cc 03 e8 	      jmp	1000
+    119  00bc		       fc		      jmp	,x
+    120  00bd		       ec 0a		      jmp	10,x
+    121  00bf		       dc 03 e8 	      jmp	1000,x
+    122  00c2
+    123  00c2		       bd 0a		      jsr	10
+    124  00c4		       cd 03 e8 	      jsr	1000
+    125  00c7		       fd		      jsr	,x
+    126  00c8		       ed 0a		      jsr	10,x
+    127  00ca		       dd 03 e8 	      jsr	1000,x
+    128  00cd
+    129  00cd		       a6 0a		      lda	#10
+    130  00cf		       b6 0a		      lda	10
+    131  00d1		       c6 03 e8 	      lda	1000
+    132  00d4		       f6		      lda	,x
+    133  00d5		       e6 0a		      lda	10,x
+    134  00d7		       d6 03 e8 	      lda	1000,x
+    135  00da
+    136  00da		       ae 0a		      ldx	#10
+    137  00dc		       be 0a		      ldx	10
+    138  00de		       ce 03 e8 	      ldx	1000
+    139  00e1		       fe		      ldx	,x
+    140  00e2		       ee 0a		      ldx	10,x
+    141  00e4		       de 03 e8 	      ldx	1000,x
+    142  00e7
+    143  00e7		       48		      lsla
+    144  00e8		       58		      lslx
+    145  00e9		       38 0a		      lsl	10
+    146  00eb		       78		      lsl	,x
+    147  00ec		       68 0a		      lsl	10,x
+    148  00ee
+    149  00ee		       44		      lsra
+    150  00ef		       54		      lsrx
+    151  00f0		       34 0a		      lsr	10
+    152  00f2		       74		      lsr	,x
+    153  00f3		       64 0a		      lsr	10,x
+    154  00f5
+    155  00f5		       40		      nega
+    156  00f6		       50		      negx
+    157  00f7		       30 0a		      neg	10
+    158  00f9		       70		      neg	,x
+    159  00fa		       60 0a		      neg	10,x
+    160  00fc
+    161  00fc		       9d		      nop
+    162  00fd
+    163  00fd		       aa 0a		      ora	#10
+    164  00ff		       ba 0a		      ora	10
+    165  0101		       ca 03 e8 	      ora	1000
+    166  0104		       fa		      ora	,x
+    167  0105		       ea 0a		      ora	10,x
+    168  0107		       da 03 e8 	      ora	1000,x
+    169  010a
+    170  010a		       49		      rola
+    171  010b		       59		      rolx
+    172  010c		       39 0a		      rol	10
+    173  010e		       79		      rol	,x
+    174  010f		       69 0a		      rol	10,x
+    175  0111
+    176  0111		       46		      rora
+    177  0112		       56		      rorx
+    178  0113		       36 0a		      ror	10
+    179  0115		       76		      ror	,x
+    180  0116		       66 0a		      ror	10,x
+    181  0118
+    182  0118		       9c		      rsp
+    183  0119		       80		      rti
+    184  011a		       81		      rts
+    185  011b
+    186  011b		       a2 0a		      sbc	#10
+    187  011d		       b2 0a		      sbc	10
+    188  011f		       c2 03 e8 	      sbc	1000
+    189  0122		       f2		      sbc	,x
+    190  0123		       e2 0a		      sbc	10,x
+    191  0125		       d2 03 e8 	      sbc	1000,x
+    192  0128
+    193  0128		       99		      sec
+    194  0129		       9b		      sei
+    195  012a
+    196  012a		       b7 0a		      sta	10
+    197  012c		       c7 03 e8 	      sta	1000
+    198  012f		       f7		      sta	,x
+    199  0130		       e7 0a		      sta	10,x
+    200  0132		       d7 03 e8 	      sta	1000,x
+    201  0135
+    202  0135		       bf 0a		      stx	10
+    203  0137		       cf 03 e8 	      stx	1000
+    204  013a		       ff		      stx	,x
+    205  013b		       ef 0a		      stx	10,x
+    206  013d		       df 03 e8 	      stx	1000,x
+    207  0140
+    208  0140		       a0 0a		      sub	#10
+    209  0142		       b0 0a		      sub	10
+    210  0144		       c0 03 e8 	      sub	1000
+    211  0147		       f0		      sub	,x
+    212  0148		       e0 0a		      sub	10,x
+    213  014a		       d0 03 e8 	      sub	1000,x
+    214  014d
+    215  014d		       83		      swi
+    216  014e		       97		      tax
+    217  014f
+    218  014f		       4d		      tsta
+    219  0150		       5d		      tstx
+    220  0151		       3d 0a		      tst	10
+    221  0153		       7d		      tst	,x
+    222  0154		       6d 0a		      tst	10,x
+    223  0156
+    224  0156		       9f		      txa
+    225  0157

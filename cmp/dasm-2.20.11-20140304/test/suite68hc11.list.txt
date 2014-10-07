@@ -1,0 +1,360 @@
+------- FILE suite68hc11.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????
+      3  0000 ????						;   TEST ADDRESSING MODES
+      4  0000 ????
+      5  0000 ????				      processor	68HC11
+      6  0000 ????
+      7  0000					      org	0
+      8  0000
+      9  0000		       1b		      aba
+     10  0001		       3a		      abx
+     11  0002		       18 3a		      aby
+     12  0004		       89 01		      adca	#1
+     13  0006		       99 01		      adca	1
+     14  0008		       b9 03 e8 	      adca	1000
+     15  000b		       a9 01		      adca	1,x
+     16  000d		       18 a9 01 	      adca	1,y
+     17  0010		       c9 01		      adcb	#1
+     18  0012		       d9 01		      adcb	1
+     19  0014		       f9 03 e8 	      adcb	1000
+     20  0017		       e9 01		      adcb	1,x
+     21  0019		       18 e9 01 	      adcb	1,y
+     22  001c		       8b 01		      adda	#1
+     23  001e		       9b 01		      adda	1
+     24  0020		       bb 03 e8 	      adda	1000
+     25  0023		       ab 01		      adda	1,x
+     26  0025		       18 ab 01 	      adda	1,y
+     27  0028		       cb 01		      addb	#1
+     28  002a		       db 01		      addb	1
+     29  002c		       fb 03 e8 	      addb	1000
+     30  002f		       eb 01		      addb	1,x
+     31  0031		       18 eb 01 	      addb	1,y
+     32  0034		       c3 03 e8 	      addd	#1000
+     33  0037		       d3 01		      addd	1
+     34  0039		       f3 03 e8 	      addd	1000
+     35  003c		       e3 01		      addd	1,x
+     36  003e		       18 e3 01 	      addd	1,y
+     37  0041		       84 01		      anda	#1
+     38  0043		       94 01		      anda	1
+     39  0045		       b4 03 e8 	      anda	1000
+     40  0048		       a4 01		      anda	1,x
+     41  004a		       18 a4 01 	      anda	1,y
+     42  004d		       c4 01		      andb	#1
+     43  004f		       d4 01		      andb	1
+     44  0051		       f4 03 e8 	      andb	1000
+     45  0054		       e4 01		      andb	1,x
+     46  0056		       18 e4 01 	      andb	1,y
+     47  0059		       48		      asla
+     48  005a		       58		      aslb
+     49  005b		       78 00 01 	      asl	1	;extended
+     50  005e		       78 03 e8 	      asl	1000
+     51  0061		       68 01		      asl	1,x
+     52  0063		       18 68 01 	      asl	1,y
+     53  0066		       05		      asld
+     54  0067		       47		      asra
+     55  0068		       57		      asrb
+     56  0069		       77 00 01 	      asr	1	;extended
+     57  006c		       77 03 e8 	      asr	1000
+     58  006f		       67 01		      asr	1,x
+     59  0071		       18 67 01 	      asr	1,y
+     60  0074		       24 fe		      bcc	.
+     61  0076		       15 01 11 	      bclr	1, $11
+     62  0079		       1d 01 22 	      bclr	1,x ,$22
+     63  007c		       18 1d 01 33	      bclr	1,y ,$33
+     64  0080		       25 fe		      bcs	.
+     65  0082		       27 fe		      beq	.
+     66  0084		       2c fe		      bge	.
+     67  0086		       2e fe		      bgt	.
+     68  0088		       22 fe		      bhi	.
+     69  008a		       24 fe		      bhs	.
+     70  008c		       85 01		      bita	#1
+     71  008e		       95 01		      bita	1
+     72  0090		       b5 03 e8 	      bita	1000
+     73  0093		       a5 01		      bita	1,x
+     74  0095		       18 a5 01 	      bita	1,y
+     75  0098		       c5 01		      bitb	#1
+     76  009a		       d5 01		      bitb	1
+     77  009c		       f5 03 e8 	      bitb	1000
+     78  009f		       e5 01		      bitb	1,x
+     79  00a1		       18 e5 01 	      bitb	1,y
+     80  00a4		       2f fe		      ble	.
+     81  00a6		       25 fe		      blo	.
+     82  00a8		       23 fe		      bls	.
+     83  00aa		       2d fe		      blt	.
+     84  00ac		       2b fe		      bmi	.
+     85  00ae		       26 fe		      bne	.
+     86  00b0		       2a fe		      bpl	.
+     87  00b2		       20 fe		      bra	.
+     88  00b4		       13 01 11 fc	      brclr	1, $11, .	; br??? direct-location, mask, branch-to
+     89  00b8		       1f 01 22 fc	      brclr	1,x , $22, .
+     90  00bc		       18 1f 01 33*	      brclr	1,y , $33, .
+     91  00c1		       21 fe		      brn	.
+     92  00c3		       12 01 11 fc	      brset	1, $11, .
+     93  00c7		       1e 01 22 fc	      brset	1,x , $22, .
+     94  00cb		       18 1e 01 33*	      brset	1,y , $33, .
+     95  00d0		       14 01 11 	      bset	1, $11
+     96  00d3		       1c 01 22 	      bset	1,x, $22
+     97  00d6		       18 1c 01 33	      bset	1,y, $33
+     98  00da		       8d fe		      bsr	.
+     99  00dc		       28 fe		      bvc	.
+    100  00de		       29 fe		      bvs	.
+    101  00e0		       11		      cba
+    102  00e1		       0c		      clc
+    103  00e2		       0e		      cli
+    104  00e3		       4f		      clra
+    105  00e4		       5f		      clrb
+    106  00e5		       7f 00 01 	      clr	1	;  extended
+    107  00e8		       7f 03 e8 	      clr	1000
+    108  00eb		       6f 01		      clr	1,x
+    109  00ed		       18 6f 01 	      clr	1,y
+    110  00f0		       0a		      clv
+    111  00f1		       81 01		      cmpa	#1
+    112  00f3		       91 01		      cmpa	1
+    113  00f5		       b1 03 e8 	      cmpa	1000
+    114  00f8		       a1 01		      cmpa	1,x
+    115  00fa		       18 a1 01 	      cmpa	1,y
+    116  00fd		       c1 01		      cmpb	#1
+    117  00ff		       d1 01		      cmpb	1
+    118  0101		       f1 03 e8 	      cmpb	1000
+    119  0104		       e1 01		      cmpb	1,x
+    120  0106		       18 e1 01 	      cmpb	1,y
+    121  0109		       43		      coma
+    122  010a		       53		      comb
+    123  010b		       73 00 01 	      com	1	;	extended
+    124  010e		       73 03 e8 	      com	1000
+    125  0111		       63 01		      com	1,x
+    126  0113		       18 63 01 	      com	1,y
+    127  0116		       1a 83 00 01	      cpd	#1	;	16 bits
+    128  011a		       1a 83 03 e8	      cpd	#1000
+    129  011e		       1a 93 01 	      cpd	1
+    130  0121		       1a b3 03 e8	      cpd	1000
+    131  0125		       1a a3 01 	      cpd	1,x
+    132  0128		       cd a3 01 	      cpd	1,y
+    133  012b		       8c 00 01 	      cpx	#1	;	16 bits
+    134  012e		       8c 03 e8 	      cpx	#1000
+    135  0131		       9c 01		      cpx	1
+    136  0133		       bc 03 e8 	      cpx	1000
+    137  0136		       ac 01		      cpx	1,x
+    138  0138		       cd ac 01 	      cpx	1,y
+    139  013b		       18 8c 00 01	      cpy	#1	;	16 bits
+    140  013f		       18 8c 03 e8	      cpy	#1000
+    141  0143		       18 9c 01 	      cpy	1
+    142  0146		       18 bc 03 e8	      cpy	1000
+    143  014a		       1a ac 01 	      cpy	1,x
+    144  014d		       18 ac 01 	      cpy	1,y
+    145  0150		       19		      daa
+    146  0151		       4a		      deca
+    147  0152		       5a		      decb
+    148  0153		       7a 00 01 	      dec	1	;	extended
+    149  0156		       7a 03 e8 	      dec	1000
+    150  0159		       6a 01		      dec	1,x
+    151  015b		       18 6a 01 	      dec	1,y
+    152  015e		       34		      des
+    153  015f		       09		      dex
+    154  0160		       18 09		      dey
+    155  0162		       88 01		      eora	#1
+    156  0164		       98 01		      eora	1
+    157  0166		       b8 03 e8 	      eora	1000
+    158  0169		       a8 01		      eora	1,x
+    159  016b		       18 a8 01 	      eora	1,y
+    160  016e		       c8 01		      eorb	#1
+    161  0170		       d8 01		      eorb	1
+    162  0172		       f8 03 e8 	      eorb	1000
+    163  0175		       e8 01		      eorb	1,x
+    164  0177		       18 e8 01 	      eorb	1,y
+    165  017a		       03		      fdiv
+    166  017b		       02		      idiv
+    167  017c		       4c		      inca
+    168  017d		       5c		      incb
+    169  017e		       7c 00 01 	      inc	1	;extended
+    170  0181		       7c 03 e8 	      inc	1000
+    171  0184		       6c 01		      inc	1,x
+    172  0186		       18 6c 01 	      inc	1,y
+    173  0189		       31		      ins
+    174  018a		       08		      inx
+    175  018b		       18 08		      iny
+    176  018d		       7e 00 01 	      jmp	1	;extended
+    177  0190		       7e 03 e8 	      jmp	1000
+    178  0193		       6e 01		      jmp	1,x
+    179  0195		       18 6e 01 	      jmp	1,y
+    180  0198		       9d 01		      jsr	1
+    181  019a		       bd 03 e8 	      jsr	1000
+    182  019d		       ad 01		      jsr	1,x
+    183  019f		       18 ad 01 	      jsr	1,y
+    184  01a2		       86 01		      ldaa	#1
+    185  01a4		       96 01		      ldaa	1
+    186  01a6		       b6 03 e8 	      ldaa	1000
+    187  01a9		       a6 01		      ldaa	1,x
+    188  01ab		       18 a6 01 	      ldaa	1,y
+    189  01ae		       c6 01		      ldab	#1
+    190  01b0		       d6 01		      ldab	1
+    191  01b2		       f6 03 e8 	      ldab	1000
+    192  01b5		       e6 01		      ldab	1,x
+    193  01b7		       18 e6 01 	      ldab	1,y
+    194  01ba		       cc 00 01 	      ldd	#1	;16 bits
+    195  01bd		       cc 03 e8 	      ldd	#1000
+    196  01c0		       dc 01		      ldd	1
+    197  01c2		       fc 03 e8 	      ldd	1000
+    198  01c5		       ec 01		      ldd	1,x
+    199  01c7		       18 ec 01 	      ldd	1,y
+    200  01ca		       8e 00 01 	      lds	#1	;16 bits
+    201  01cd		       8e 03 e8 	      lds	#1000
+    202  01d0		       9e 01		      lds	1
+    203  01d2		       be 03 e8 	      lds	1000
+    204  01d5		       ae 01		      lds	1,x
+    205  01d7		       18 ae 01 	      lds	1,y
+    206  01da		       ce 00 01 	      ldx	#1	;16 bits
+    207  01dd		       ce 03 e8 	      ldx	#1000
+    208  01e0		       de 01		      ldx	1
+    209  01e2		       fe 03 e8 	      ldx	1000
+    210  01e5		       ee 01		      ldx	1,x
+    211  01e7		       cd ee 01 	      ldx	1,y
+    212  01ea		       18 ce 00 01	      ldy	#1	;16 bits
+    213  01ee		       18 ce 03 e8	      ldy	#1000
+    214  01f2		       18 de 01 	      ldy	1
+    215  01f5		       18 fe 03 e8	      ldy	1000
+    216  01f9		       1a ee 01 	      ldy	1,x
+    217  01fc		       18 ee 01 	      ldy	1,y
+    218  01ff		       48		      lsla
+    219  0200		       58		      lslb
+    220  0201		       78 00 01 	      lsl	1	;extended
+    221  0204		       78 03 e8 	      lsl	1000
+    222  0207		       68 01		      lsl	1,x
+    223  0209		       18 68 01 	      lsl	1,y
+    224  020c		       05		      lsld
+    225  020d		       44		      lsra
+    226  020e		       54		      lsrb
+    227  020f		       74 00 01 	      lsr	1	;extended
+    228  0212		       74 03 e8 	      lsr	1000
+    229  0215		       64 01		      lsr	1,x
+    230  0217		       18 64 01 	      lsr	1,y
+    231  021a		       04		      lsrd
+    232  021b		       3d		      mul
+    233  021c		       40		      nega
+    234  021d		       50		      negb
+    235  021e		       70 00 01 	      neg	1	;extended
+    236  0221		       70 03 e8 	      neg	1000
+    237  0224		       60 01		      neg	1,x
+    238  0226		       18 60 01 	      neg	1,y
+    239  0229		       01		      nop
+    240  022a		       8a 01		      oraa	#1
+    241  022c		       9a 01		      oraa	1
+    242  022e		       ba 03 e8 	      oraa	1000
+    243  0231		       aa 01		      oraa	1,x
+    244  0233		       18 aa 01 	      oraa	1,y
+    245  0236		       ca 01		      orab	#1
+    246  0238		       da 01		      orab	1
+    247  023a		       fa 03 e8 	      orab	1000
+    248  023d		       ea 01		      orab	1,x
+    249  023f		       18 ea 01 	      orab	1,y
+    250  0242		       36		      psha
+    251  0243		       37		      pshb
+    252  0244		       3c		      pshx
+    253  0245		       18 3c		      pshy
+    254  0247		       32		      pula
+    255  0248		       33		      pulb
+    256  0249		       38		      pulx
+    257  024a		       18 38		      puly
+    258  024c		       49		      rola
+    259  024d		       59		      rolb
+    260  024e		       79 00 01 	      rol	1	;extended
+    261  0251		       79 03 e8 	      rol	1000
+    262  0254		       69 01		      rol	1,x
+    263  0256		       18 69 01 	      rol	1,y
+    264  0259		       46		      rora
+    265  025a		       56		      rorb
+    266  025b		       76 00 01 	      ror	1	;extended
+    267  025e		       76 03 e8 	      ror	1000
+    268  0261		       66 01		      ror	1,x
+    269  0263		       18 66 01 	      ror	1,y
+    270  0266		       3b		      rti
+    271  0267		       39		      rts
+    272  0268		       10		      sba
+    273  0269		       82 01		      sbca	#1
+    274  026b		       92 01		      sbca	1
+    275  026d		       b2 03 e8 	      sbca	1000
+    276  0270		       a2 01		      sbca	1,x
+    277  0272		       18 a2 01 	      sbca	1,y
+    278  0275		       c2 01		      sbcb	#1
+    279  0277		       d2 01		      sbcb	1
+    280  0279		       f2 03 e8 	      sbcb	1000
+    281  027c		       e2 01		      sbcb	1,x
+    282  027e		       18 e2 01 	      sbcb	1,y
+    283  0281		       0d		      sec
+    284  0282		       0f		      sei
+    285  0283		       0b		      sev
+    286  0284		       97 01		      staa	1
+    287  0286		       b7 03 e8 	      staa	1000
+    288  0289		       a7 01		      staa	1,x
+    289  028b		       18 a7 01 	      staa	1,y
+    290  028e		       d7 01		      stab	1
+    291  0290		       f7 03 e8 	      stab	1000
+    292  0293		       e7 01		      stab	1,x
+    293  0295		       18 e7 01 	      stab	1,y
+    294  0298		       dd 01		      std	1
+    295  029a		       fd 03 e8 	      std	1000
+    296  029d		       ed 01		      std	1,x
+    297  029f		       18 ed 01 	      std	1,y
+    298  02a2		       cf		      stop
+    299  02a3		       9f 01		      sts	1
+    300  02a5		       bf 03 e8 	      sts	1000
+    301  02a8		       af 01		      sts	1,x
+    302  02aa		       18 af 01 	      sts	1,y
+    303  02ad		       df 01		      stx	1
+    304  02af		       ff 03 e8 	      stx	1000
+    305  02b2		       ef 01		      stx	1,x
+    306  02b4		       cd ef 01 	      stx	1,y
+    307  02b7		       18 df 01 	      sty	1
+    308  02ba		       18 ff 03 e8	      sty	1000
+    309  02be		       1a ef 01 	      sty	1,x
+    310  02c1		       18 ef 01 	      sty	1,y
+    311  02c4		       80 01		      suba	#1
+    312  02c6		       90 01		      suba	1
+    313  02c8		       b0 03 e8 	      suba	1000
+    314  02cb		       a0 01		      suba	1,x
+    315  02cd		       18 a0 01 	      suba	1,y
+    316  02d0		       c0 01		      subb	#1
+    317  02d2		       d0 01		      subb	1
+    318  02d4		       f0 03 e8 	      subb	1000
+    319  02d7		       e0 01		      subb	1,x
+    320  02d9		       18 e0 01 	      subb	1,y
+    321  02dc		       83 00 01 	      subd	#1	;extended
+    322  02df		       83 03 e8 	      subd	#1000
+    323  02e2		       93 01		      subd	1
+    324  02e4		       b3 03 e8 	      subd	1000
+    325  02e7		       a3 01		      subd	1,x
+    326  02e9		       18 a3 01 	      subd	1,y
+    327  02ec		       3f		      swi
+    328  02ed		       16		      tab
+    329  02ee		       06		      tap
+    330  02ef		       17		      tba
+    331  02f0		       00		      test
+    332  02f1		       07		      tpa
+    333  02f2		       4d		      tsta
+    334  02f3		       5d		      tstb
+    335  02f4		       7d 00 01 	      tst	1	;extended
+    336  02f7		       7d 03 e8 	      tst	1000
+    337  02fa		       6d 01		      tst	1,x
+    338  02fc		       18 6d 01 	      tst	1,y
+    339  02ff		       30		      tsx
+    340  0300		       18 30		      tsy
+    341  0302		       35		      txs
+    342  0303		       18 35		      tys
+    343  0305		       3e		      wai
+    344  0306		       8f		      xgdx
+    345  0307		       18 8f		      xgdy
+    346  0309
+    347  0309
+    348  0309
+    349  0309
+    350  0309
+    351  0309
+    352  0309
+    353  0309
+    354  0309
+    355  0309
+    356  0309
+    357  0309
+    358  0309
+    359  0309

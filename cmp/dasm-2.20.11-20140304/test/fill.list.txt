@@ -1,0 +1,24 @@
+------- FILE fill.asm LEVEL 1 PASS 1
+      1  0000 ????						; $Id: fill.asm 145 2008-04-12 16:12:23Z phf $
+      2  0000 ????						;
+      3  0000 ????						; Test various directives that "fill" memory.
+      4  0000 ????						;
+      5  0000 ????						; This came about because Dennis Debro posted about .align not
+      6  0000 ????						; doing the right thing to the Stella list. Thomas Mathys was
+      7  0000 ????						; able to trace this to v_align, which uses the first value
+      8  0000 ????						; instead of the second as the actual fill byte. Fixed as of
+      9  0000 ????						; release 2.20.12 I hope. :-)
+     10  0000 ????						;
+     11  0000 ????						; Peter H. Froehlich
+     12  0000 ????						; phf at acm dot org
+     13  0000 ????
+     14  0000 ????				      .processor	6502
+     15  0000					      .org	0
+     16  0000
+     17  0000							; .ds fills with $a5 as required, works
+     18  0000		       a5 a5 a5 a5*	      .ds	33, $a5	; always filled $a5
+     19  0021							; .align fills with *align* value prior to 2.20.12
+     20  0040		       f5 f5 f5 f5*	      .align	64, $f5	; filled $40 <2.20.11, fills $f5 now
+     21  0100		       5f 5f 5f 5f*	      .align	256, $5f	; filled $0 <2.20.11, fills $5f now
+     22  0100
+     23  0100					      .end

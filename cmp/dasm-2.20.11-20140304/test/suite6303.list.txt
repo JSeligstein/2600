@@ -1,0 +1,236 @@
+------- FILE suite6303.asm LEVEL 1 PASS 1
+      1  0000 ????
+      2  0000 ????				      processor	hd6303
+      3  0000					      org	0
+      4  0000
+      5  0000		       8b 0a		      adda	#10	;   8B 0A
+      6  0002		       9b 0a		      adda	10	;   9B 0A
+      7  0004		       ab 0a		      adda	10,x	;   AB 0A
+      8  0006		       bb 03 e8 	      adda	1000	;   BB 03 E8
+      9  0009		       cb 0a		      addb	#10	;   CB 0A
+     10  000b		       db 0a		      addb	10	;   DB 0A
+     11  000d		       eb 0a		      addb	10,x	;   EB 0A
+     12  000f		       fb 03 e8 	      addb	1000	;   FB 03 E8
+     13  0012		       c3 03 e8 	      addd	#1000	;   C3 03 E8
+     14  0015		       d3 0a		      addd	10	;   D3 0A
+     15  0017		       e3 0a		      addd	10,x	;   E3 0A
+     16  0019		       f3 03 e8 	      addd	1000	;   F3 03 E8
+     17  001c		       1b		      aba		;   1B
+     18  001d		       89 0a		      adca	#10	;   89 0A
+     19  001f		       99 0a		      adca	10	;   99 0A
+     20  0021		       a9 0a		      adca	10,x	;   A9 0A
+     21  0023		       b9 03 e8 	      adca	1000	;   B9 03 E8
+     22  0026		       c9 0a		      adcb	#10	;   C9
+     23  0028		       d9 0a		      adcb	10	;   D9
+     24  002a		       e9 0a		      adcb	10,x	;   E9
+     25  002c		       f9 03 e8 	      adcb	1000	;   F9 03 E8
+     26  002f		       84 0a		      anda	#10	;   84 0A
+     27  0031		       94 0a		      anda	10	;   94 0A
+     28  0033		       a4 0a		      anda	10,x	;   A4 0A
+     29  0035		       b4 03 e8 	      anda	1000	;   B4 03 E8
+     30  0038		       c4 0a		      andb	#10	;   C4 0A
+     31  003a		       d4 0a		      andb	10	;   D4 0A
+     32  003c		       e4 0a		      andb	10,x	;   E4 0A
+     33  003e		       f4 03 e8 	      andb	1000	;   F4 03 E8
+     34  0041		       85 0a		      bita	#10	;   85 0A
+     35  0043		       95 0a		      bita	10	;   95 0A
+     36  0045		       a5 0a		      bita	10,x	;   A5 0A
+     37  0047		       b5 03 e8 	      bita	1000	;   B5 03 E8
+     38  004a		       c5 0a		      bitb	#10	;   C5 0A
+     39  004c		       d5 0a		      bitb	10	;   D5 0A
+     40  004e		       e5 0a		      bitb	10,x	;   E5 0A
+     41  0050		       f5 03 e8 	      bitb	1000	;   F5 03 E8
+     42  0053		       6f 0a		      clr	10,x	;   6F 0A
+     43  0055		       7f 03 e8 	      clr	1000	;   7F 03 E8
+     44  0058		       4f		      clra		;   4F
+     45  0059		       5f		      clrb		;   5F
+     46  005a		       81 0a		      cmpa	#10	;   81 0A
+     47  005c		       91 0a		      cmpa	10	;   91 0A
+     48  005e		       a1 0a		      cmpa	10,x	;   A1 0A
+     49  0060		       b1 03 e8 	      cmpa	1000	;   B1 03 E8
+     50  0063		       c1 0a		      cmpb	#10	;   C1 0A
+     51  0065		       d1 0a		      cmpb	10	;   D1 0A
+     52  0067		       e1 0a		      cmpb	10,x	;   E1 0A
+     53  0069		       f1 03 e8 	      cmpb	1000	;   F1 03 E8
+     54  006c		       11		      cba		;   11
+     55  006d		       63 0a		      com	10,x	;   63 0A
+     56  006f		       73 03 e8 	      com	1000	;   73 03 E8
+     57  0072		       43		      coma		;   43
+     58  0073		       53		      comb		;   53
+     59  0074		       60 0a		      neg	10,x	;   60 0A
+     60  0076		       70 03 e8 	      neg	1000	;   70 03 E8
+     61  0079		       40		      nega		;   40
+     62  007a		       50		      negb		;   50
+     63  007b		       19		      daa		;   19
+     64  007c		       6a 0a		      dec	10,x	;   6A 0A
+     65  007e		       7a 03 e8 	      dec	1000	;   7A 03 E8
+     66  0081		       4a		      deca		;   4A
+     67  0082		       5a		      decb		;   5A
+     68  0083		       88 0a		      eora	#10	;   88 0A
+     69  0085		       98 0a		      eora	10	;   98 0A
+     70  0087		       a8 0a		      eora	10,x	;   A8 0A
+     71  0089		       b8 03 e8 	      eora	1000	;   B8 03 E8
+     72  008c		       c8 0a		      eorb	#10	;   C8 0A
+     73  008e		       d8 0a		      eorb	10	;   D8 0A
+     74  0090		       e8 0a		      eorb	10,x	;   E8 0A
+     75  0092		       f8 03 e8 	      eorb	1000	;   F8 03 E8
+     76  0095		       6c 0a		      inc	10,x	;   6C 0A
+     77  0097		       7c 03 e8 	      inc	1000	;   7C 03 E8
+     78  009a		       4c		      inca		;   4C
+     79  009b		       5c		      incb		;   5C
+     80  009c		       86 0a		      ldaa	#10	;   86 0A
+     81  009e		       96 0a		      ldaa	10	;   96 0A
+     82  00a0		       a6 0a		      ldaa	10,x	;   A6 0A
+     83  00a2		       b6 03 e8 	      ldaa	1000	;   B6 03 E8
+     84  00a5		       c6 0a		      ldab	#10	;   C6 0A
+     85  00a7		       d6 0a		      ldab	10	;   D6 0A
+     86  00a9		       e6 0a		      ldab	10,x	;   E6 0A
+     87  00ab		       f6 03 e8 	      ldab	1000	;   F6 03 E8
+     88  00ae		       cc 03 e8 	      ldd	#1000	;   CC 03 E8
+     89  00b1		       dc 0a		      ldd	10	;   DC 0A
+     90  00b3		       ec 0a		      ldd	10,x	;   EC 0A
+     91  00b5		       fc 03 e8 	      ldd	1000	;   FC 03 E8
+     92  00b8		       3d		      mul		;   3D
+     93  00b9		       8a 0a		      oraa	#10	;   8A 0A
+     94  00bb		       9a 0a		      oraa	10	;   9A 0A
+     95  00bd		       aa 0a		      oraa	10,x	;   AA 0A
+     96  00bf		       ba 03 e8 	      oraa	1000	;   BA 03 E8
+     97  00c2		       ca 0a		      orab	#10	;   CA 0A
+     98  00c4		       da 0a		      orab	10	;   DA 0A
+     99  00c6		       ea 0a		      orab	10,x	;   EA 0A
+    100  00c8		       fa 03 e8 	      orab	1000	;   FA 03 E8
+    101  00cb		       36		      psha		;   36
+    102  00cc		       37		      pshb		;   37
+    103  00cd		       32		      pula		;   32
+    104  00ce		       33		      pulb		;   33
+    105  00cf		       69 0a		      rol	10,x	;   69 0A
+    106  00d1		       79 03 e8 	      rol	1000	;   79 03 E8
+    107  00d4		       49		      rola		;   49
+    108  00d5		       59		      rolb		;   59
+    109  00d6		       66 0a		      ror	10,x	;   66 0A
+    110  00d8		       76 03 e8 	      ror	1000	;   76 03 E8
+    111  00db		       46		      rora		;   46
+    112  00dc		       56		      rorb		;   56
+    113  00dd		       68 0a		      asl	10,x	;   68 0A
+    114  00df		       78 03 e8 	      asl	1000	;   78 03 E8
+    115  00e2		       48		      asla		;   48
+    116  00e3		       58		      aslb		;   58
+    117  00e4		       05		      asld		;   05
+    118  00e5		       67 0a		      asr	10,x	;   67 0A
+    119  00e7		       77 03 e8 	      asr	1000	;   77 03 E8
+    120  00ea		       47		      asra		;   47
+    121  00eb		       57		      asrb		;   57
+    122  00ec		       64 0a		      lsr	10,x	;   64 0A
+    123  00ee		       74 03 e8 	      lsr	1000	;   74 03 E8
+    124  00f1		       44		      lsra		;   44
+    125  00f2		       54		      lsrb		;   54
+    126  00f3		       04		      lsrd		;   04
+    127  00f4		       97 0a		      staa	10	;   97 0A
+    128  00f6		       a7 0a		      staa	10,x	;   A7 0A
+    129  00f8		       b7 03 e8 	      staa	1000	;   B7 03 E8
+    130  00fb		       d7 0a		      stab	10	;   D7 0A
+    131  00fd		       e7 0a		      stab	10,x	;   E7 0A
+    132  00ff		       f7 03 e8 	      stab	1000	;   F7 03 E8
+    133  0102		       dd 0a		      std	10	;   DD 0A
+    134  0104		       ed 0a		      std	10,x	;   ED 0A
+    135  0106		       fd 03 e8 	      std	1000	;   FD 03 E8
+    136  0109		       80 0a		      suba	#10	;   80 0A
+    137  010b		       90 0a		      suba	10	;   90 0A
+    138  010d		       a0 0a		      suba	10,x	;   A0 0A
+    139  010f		       b0 03 e8 	      suba	1000	;   B0 03 E8
+    140  0112		       c0 0a		      subb	#10	;   C0 0A
+    141  0114		       d0 0a		      subb	10	;   D0 0A
+    142  0116		       e0 0a		      subb	10,x	;   E0 0A
+    143  0118		       f0 03 e8 	      subb	1000	;   F0 03 E8
+    144  011b		       83 03 e8 	      subd	#1000	;   83 03 E8
+    145  011e		       93 0a		      subd	10	;   93 0A
+    146  0120		       a3 0a		      subd	10,x	;   A3 0A
+    147  0122		       b3 03 e8 	      subd	1000	;   B3 03 E8
+    148  0125		       10		      sba		;   10
+    149  0126		       82 0a		      sbca	#10	;   82 0A
+    150  0128		       92 0a		      sbca	10	;   92 0A
+    151  012a		       a2 0a		      sbca	10,x	;   A2 0A
+    152  012c		       b2 03 e8 	      sbca	1000	;   B2 03 E8
+    153  012f		       c2 0a		      sbcb	#10	;   C2 0A
+    154  0131		       d2 0a		      sbcb	10	;   D2 0A
+    155  0133		       e2 0a		      sbcb	10,x	;   E2 0A
+    156  0135		       f2 03 e8 	      sbcb	1000	;   F2 03 E8
+    157  0138		       16		      tab		;   16
+    158  0139		       17		      tba		;   17
+    159  013a		       6d 0a		      tst	10,x	;   6D 0A
+    160  013c		       7d 03 e8 	      tst	1000	;   7D 03 E8
+    161  013f		       4d		      tsta		;   4D
+    162  0140		       5d		      tstb		;   5D
+    163  0141		       71 0a		      aim	10	;   71 0A
+    164  0143		       61 0a		      aim	10,x	;   61 0A
+    165  0145		       72 0a		      oim	10	;   72 0A
+    166  0147		       62 0a		      oim	10,x	;   62 0A
+    167  0149		       75 0a		      eim	10	;   75 0A
+    168  014b		       65 0a		      eim	10,x	;   65 0A
+    169  014d		       7b 0a		      tim	10	;   7B 0A
+    170  014f		       6b 0a		      tim	10,x	;   6B 0A
+    171  0151		       8c 03 e8 	      cpx	#1000	;   8C 03 E8
+    172  0154		       9c 0a		      cpx	10	;   9C 0A
+    173  0156		       ac 0a		      cpx	10,x	;   AC 0A
+    174  0158		       bc 03 e8 	      cpx	1000	;   BC 03 E8
+    175  015b		       09		      dex		;   09
+    176  015c		       34		      des		;   34
+    177  015d		       08		      inx		;   08
+    178  015e		       31		      ins		;   31
+    179  015f		       ce 03 e8 	      ldx	#1000	;   CE 03 E8
+    180  0162		       de 0a		      ldx	10	;   DE 0A
+    181  0164		       ee 0a		      ldx	10,x	;   EE 0A
+    182  0166		       fe 03 e8 	      ldx	1000	;   FE 03 E8
+    183  0169		       8e 03 e8 	      lds	#1000	;   8E 03 E8
+    184  016c		       9e 0a		      lds	10	;   9E 0A
+    185  016e		       ae 0a		      lds	10,x	;   AE 0A
+    186  0170		       be 03 e8 	      lds	1000	;   BE 03 E8
+    187  0173		       df 0a		      stx	10	;   DF 0A
+    188  0175		       ef 0a		      stx	10,x	;   EF 0A
+    189  0177		       ff 03 e8 	      stx	1000	;   FF 03 E8
+    190  017a		       9f 0a		      sts	10	;   9F 0A
+    191  017c		       af 0a		      sts	10,x	;   AF 0A
+    192  017e		       bf 03 e8 	      sts	1000	;   BF 03 E8
+    193  0181		       35		      txs		;   35
+    194  0182		       30		      tsx		;   30
+    195  0183		       3a		      abx		;   3A
+    196  0184		       3c		      pshx		;   3C
+    197  0185		       38		      pulx		;   38
+    198  0186		       18		      xgdx		;   18
+    199  0187		       20 fe		      bra	.	;   20 FE
+    200  0189		       21 fe		      brn	.	;   21 FE
+    201  018b		       24 fe		      bcc	.	;   24 FE
+    202  018d		       25 fe		      bcs	.	;   25 FE
+    203  018f		       27 fe		      beq	.	;   27 FE
+    204  0191		       2c fe		      bge	.	;   2C FE
+    205  0193		       2e fe		      bgt	.	;   2E FE
+    206  0195		       22 fe		      bhi	.	;   22 FE
+    207  0197		       2f fe		      ble	.	;   2F FE
+    208  0199		       23 fe		      bls	.	;   23 FE
+    209  019b		       2d fe		      blt	.	;   2D FE
+    210  019d		       2b fe		      bmi	.	;   2B FE
+    211  019f		       26 fe		      bne	.	;   26 FE
+    212  01a1		       28 fe		      bvc	.	;   28 FE
+    213  01a3		       29 fe		      bvs	.	;   29 FE
+    214  01a5		       2a fe		      bpl	.	;   2A FE
+    215  01a7		       8d fe		      bsr	.	;   8D FE
+    216  01a9		       6e 0a		      jmp	10,x	;   6E 0A
+    217  01ab		       7e 03 e8 	      jmp	1000	;   7E 03 E8
+    218  01ae		       9d 0a		      jsr	10	;   9D 0A
+    219  01b0		       ad 0a		      jsr	10,x	;   AD 0A
+    220  01b2		       bd 03 e8 	      jsr	1000	;   BD 03 E8
+    221  01b5		       01		      nop		;   01
+    222  01b6		       3b		      rti		;   3B
+    223  01b7		       39		      rts		;   39
+    224  01b8		       3f		      swi		;   3F
+    225  01b9		       3e		      wai		;   3E
+    226  01ba		       1a		      slp		;   1A
+    227  01bb		       0c		      clc		;   0C
+    228  01bc		       0e		      cli		;   0E
+    229  01bd		       0a		      clv		;   0A
+    230  01be		       0d		      sec		;   0D
+    231  01bf		       0f		      sei		;   0F
+    232  01c0		       0b		      sev		;   0B
+    233  01c1		       06		      tap		;   06
+    234  01c2		       07		      tpa		;   07
+    235  01c3
