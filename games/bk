@@ -1,0 +1,20 @@
+#!/usr/bin/php
+<?php
+
+if ($argc != 2) {
+    echo "usage: ".$argv[0]." kernel #";
+    return;
+}
+
+$kernel = $argv[1];
+
+$cmd = '/Users/joel/code/2600/cmp/dasm-2.20.11-20140304/bin/dasm'
+     . ' kernel'.$kernel.'.6502'
+     . ' -lkernel'.$kernel.'.txt'
+     . ' -f3'
+     . ' -v5'
+     . ' -okernel'.$kernel.'.bin'
+     . ' -I/Users/joel/code/2600/cmp/dasm-2.20.11-20140304/machines/atari2600/';
+
+passthru($cmd);
+

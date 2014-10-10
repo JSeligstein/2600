@@ -14,10 +14,12 @@
 // Little Endian architecture
 
 uint16_t pc;    // program counter
-uint8_t acc;    // accumulator
-uint8_t rx, ry; // registers
+int8_t acc;     // accumulator
+uint8_t rx, ry; // index registers
 int8_t sp;      // stack pointer
 uint8_t zf;     // zero flag
+uint8_t cf;     // carry flag
+uint8_t sf;     // sign flag
 int8_t sr;      // status register
 
 unsigned char *memory;
@@ -51,7 +53,9 @@ inline void write_memory(uint16_t addr, unsigned char data) {
 
 inline int core_cycle(int cycles_to_execute) {
     unsigned char opcode;
+
     uint16_t addr;
+    int8_t subres;
 
     int cycles_left = cycles_to_execute;
     while (cycles_left > 0) {
@@ -60,6 +64,7 @@ inline int core_cycle(int cycles_to_execute) {
         pc++;
 
         //printf("pc: %x, opcode: %x\n", pc-1, opcode);
+        //sleep(1);
 
         switch (opcode) {
             case STY_84:
@@ -92,6 +97,14 @@ inline int core_cycle(int cycles_to_execute) {
                 cycles_left -= 2;
                 break;
 
+            case STA_95:
+                // zero-page, x
+                addr = memory[pc]+rx;
+                write_memory(addr, acc);
+                pc++;
+                cycles_left -= 4;
+                break;
+
             case LDY_A0:
                 ry = memory[pc];
                 zf = !ry;
@@ -106,11 +119,76 @@ inline int core_cycle(int cycles_to_execute) {
                 cycles_left -= 2;
                 break;
 
+            case LDA_A5:
+                // zero-page
+                addr = memory[pc];
+                acc = memory[addr];
+                zf = !acc;
+                pc++;
+                cycles_left -= 3;
+                break;
+
             case LDA_A9:
                 acc = memory[pc];
                 zf = !acc;
                 pc++;
                 cycles_left -= 2;
+                break;
+
+            case CPY_C0:
+                zf = (memory[pc] == ry);
+                pc++;
+                cycles_left -= 2;
+                break;
+
+            case INY_C8:
+                ry++;
+                zf = !ry;
+                cycles_left -= 2;
+                break;
+
+            case BNE_D0:
+                // todo: page boundaries?
+                if (zf) {
+                    cycles_left -= 2;
+                    pc++;
+                } else {
+                    if (memory[pc] & 0x80) {
+                        pc -= (0xff - memory[pc]);
+                    } else {
+                        // we've already incremented pc, so jump forward fewer
+                        pc += memory[pc] - 1 ;
+                    }
+                    cycles_left -= 3;
+                }
+                break;
+
+            case CPX_E0:
+                subres = rx - memory[pc];
+                if (subres == 0) {
+                    zf = 1;
+                    cf = 1;
+                    sf = 0;
+                } else if (subres > 0) {
+                    cf = 1;
+                    zf = 0;
+                    sf = 0;
+                } else {
+                    cf = 0;
+                    zf = 0;
+                    sf = 1;
+                }
+                pc++;
+                cycles_left -= 2;
+                break;
+
+            case INC_E6:
+                // zero-page
+                addr = memory[pc];
+                memory[addr]++;
+                zf = !memory[addr];
+                pc++;
+                cycles_left -= 5;
                 break;
 
             case INX_E8:
@@ -131,6 +209,7 @@ inline int core_cycle(int cycles_to_execute) {
 
             default:
                 printf("Unknown opcode: %x\n", opcode);
+                exit(1);
                 return cycles_to_execute-cycles_left;
                 break;
         }
@@ -144,7 +223,7 @@ void core() {
     while (1) {
         cycles_executed = core_cycle(1);
         for (; cycles_executed; cycles_executed--) {
-            tia_process_cycle();
+            //tia_process_cycle();
         }
     }
 }
@@ -153,6 +232,8 @@ void reset() {
     // 5th bit is unused in 6502 and must be a 1
     sr = 0x20;
     zf = 0;
+    cf = 0;
+    sf = 0;
     sp = 0xff;
     pc = (memory[0xFFFD] << 8) | memory[0xFFFFC];
     acc = 0;
@@ -176,7 +257,11 @@ int main(int argc, char **argv) {
     memory = (unsigned char *)malloc(65536);
 
     reset();
-    readRom((char *)"/Users/joel/code/2600/games/kernel1.bin");
+    if (argc == 2) {
+        readRom(argv[1]);
+    } else {
+        readRom((char *)"/Users/joel/code/2600/games/kernel14.5.bin");
+    }
     pc = 0xf000;
     tia_start(memory);
     core();

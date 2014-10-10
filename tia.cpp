@@ -2,14 +2,24 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <time.h>
 #include "CImg.h"
 
 #include "tia.h"
 
+/*
+
+RANDOM NOTES:
+
+Playfield is 40 units wide and 4 clocks per pixel
+
+*/
+
+
 using namespace cimg_library;
 
 unsigned char *program_memory;
-unsigned char *tmemory;
+unsigned char *tia_memory;
 int tia_started = 0;
 pthread_t tia_threads[3];
 const int TIA_THREAD_EXEC = 0;
@@ -38,6 +48,26 @@ uint8_t tia_fvblank_top = 0;
 uint8_t tia_fvblank_bottom = 0;
 uint8_t tia_fvsync = 0;
 uint8_t tia_fcolubk = 0;
+
+// tracking framerate
+const int TIA_FRAMERATE_MAX_SAMPLES = 20;
+int tia_tickidx = 0;
+int tia_ticksum = 0;
+int *tia_ticklist;
+clock_t tia_framestart;
+clock_t tia_frameend;
+
+double tia_framerate(int newtick) {
+    tia_ticksum -= tia_ticklist[tia_tickidx];
+    tia_ticksum += newtick;
+    tia_ticklist[tia_tickidx] = newtick;
+    tia_tickidx++;
+    if (tia_tickidx == TIA_FRAMERATE_MAX_SAMPLES) {
+        tia_tickidx = 0;
+    }
+
+    return((double)tia_ticksum/TIA_FRAMERATE_MAX_SAMPLES);
+}
 
 void *tia_exec_thread(void *param) {
     //printf("exec thread started \n");
@@ -143,12 +173,10 @@ inline const uint32_t* ntsc_color(uint8_t byte) {
     // luminosity is first 4 bits followed by hue's 4 bits
     // luminosity comes in pairs of two
     // ntsc_colors is a big array running one hue at a time
-
     int x = (byte & 0xf) / 2;
     int y = (byte & 0xf0) >> 4;
-    //const uint32_t *color = ntsc_colors[y * 8 + x];
-
-    const uint32_t *color = ntsc_colors[((byte & 0xf0) >> 4) * 8 + ((byte & 0xf) /2)];
+    const uint32_t *color = ntsc_colors[y * 8 + x];
+    //const uint32_t *color = ntsc_colors[((byte & 0xf0) >> 4) * 8 + ((byte & 0xf) /2)];
     return color;
 }
 
@@ -156,17 +184,90 @@ void tia_colubk_set() {
     tia_fcolubk = 1;
 }
 
+
+int abc = 0, def = 0;
 inline uint8_t tia_process_cycle() {
     uint8_t ret = 0xff;
 
-    // run 3 pixels
-    if (tia_fcolubk) {
-        int idx = tia_scanline * ntsc_width + tia_scanline_x;
-        const uint32_t *color = ntsc_color(tmemory[idx]);
-        tmemory[idx] = program_memory[TIA_COLUBK];
-        tia_image->draw_point(tia_scanline_x * 3, tia_scanline, color);
-        tia_image->draw_point(tia_scanline_x * 3 + 1, tia_scanline, color);
-        tia_image->draw_point(tia_scanline_x * 3 + 2, tia_scanline, color);
+    const uint32_t *color = NULL;
+    uint8_t flag;
+
+    // first check if there's a playfield active
+
+    if (tia_scanline_x < 68) {
+        // no pf
+    } else if (tia_scanline_x < 84) {
+        // left side pf0... reversed high nibble
+        flag = ((tia_scanline_x-68) / 4)+4;
+        if (program_memory[TIA_PF0] & (1 << flag)) {
+            color = ntsc_color(program_memory[TIA_COLUPF]);
+        }
+    } else if (tia_scanline_x < 116) {
+        // left side pf1
+        flag = (115-tia_scanline_x) / 4;
+        if (program_memory[TIA_PF1] & (1 << flag)) {
+            color = ntsc_color(program_memory[TIA_COLUPF]);
+        }
+    } else if (tia_scanline_x < 148) {
+        // left side pf2 ... reverseed
+        flag = 7-((147-tia_scanline_x) / 4);
+        if (program_memory[TIA_PF2] & (1 << flag)) {
+            color = ntsc_color(program_memory[TIA_COLUPF]);
+        }
+    } else {
+        // check for mirroring
+        if (program_memory[TIA_CTRLPF] & TIA_MIRROR_BIT) {
+            if (tia_scanline_x < 180) {
+                // right side pf2 mirrored
+                flag = ((179-tia_scanline_x) / 4);
+                if (program_memory[TIA_PF2] & (1 << flag)) {
+                    color = ntsc_color(program_memory[TIA_COLUPF]);
+                }
+            } else if (tia_scanline_x < 212) {
+                // right side pf1 mirrored
+                flag = 7 - ((211-tia_scanline_x)/4);
+                if (program_memory[TIA_PF1] & (1 << flag)) {
+                    color = ntsc_color(program_memory[TIA_COLUPF]);
+                }
+            } else {
+                // right side pf0 mirrored
+                flag = 7-((tia_scanline_x-212) / 4);
+                if (program_memory[TIA_PF0] & (1 << flag)) {
+                    color = ntsc_color(program_memory[TIA_COLUPF]);
+                }
+            }
+        } else {
+            if (tia_scanline_x < 164) {
+                // right side pf0 (non-mirrored) ... reversed high nibble
+                flag = ((tia_scanline_x-148) / 4)+4;
+                if (program_memory[TIA_PF0] & (1 << flag)) {
+                    color = ntsc_color(program_memory[TIA_COLUPF]);
+                }
+            } else if (tia_scanline_x < 196) {
+                // right side pf1 (non-mirrored)
+                flag = (195-tia_scanline_x) / 4;
+                if (program_memory[TIA_PF1] & (1 << flag)) {
+                    color = ntsc_color(program_memory[TIA_COLUPF]);
+                }
+            } else { 
+                // right side pf2 (non-mirrored)
+                flag = 7-(227-tia_scanline_x) / 4;
+                if (program_memory[TIA_PF2] & (1 << flag)) {
+                    color = ntsc_color(program_memory[TIA_COLUPF]);
+                }
+            }
+        }
+    }
+
+    if (color == NULL && tia_fcolubk) {
+        color = ntsc_color(program_memory[TIA_COLUBK]);
+    }
+
+    if (color != NULL) {
+        uint32_t midx = (tia_scanline * ntsc_width + tia_scanline_x) * 3;
+        tia_memory[midx] = color[0];
+        tia_memory[midx+1] = color[1];
+        tia_memory[midx+2] = color[2];
     }
 
     tia_scanline_x++;
@@ -177,13 +278,33 @@ inline uint8_t tia_process_cycle() {
 
         if (tia_scanline >= ntsc_height) {
             tia_scanline = 0;
+
+            tia_frameend = clock();
+            float diff = (((float)tia_frameend - (float)tia_framestart) / CLOCKS_PER_SEC  ) * 1000;   
+            double avg = tia_framerate((int)diff);
+            #ifdef TIA_PRINT_FRAME_COUNT
+            printf("frame time: %d, framerate: %f\n", (int)diff, 1000.0/avg);
+            #endif
+            tia_framestart = tia_frameend;
+            
         }
     }
 
     tia_process_flags();
 
     if (tia_scanline_x == 0 && tia_scanline == 232) {
-        tia_image->draw_rectangle(68*3, 39, (ntsc_width*3)-1, ntsc_height-30, ntsc_outline_color, 1, 0xffffffff);
+        int idx = 0;
+        for (int cy = 0; cy < ntsc_height; cy++) {
+            for (int cx = 0; cx < ntsc_width; cx++) {
+                (*tia_image)(cx, cy, 0) = tia_memory[idx++];
+                (*tia_image)(cx, cy, 1) = tia_memory[idx++];
+                (*tia_image)(cx, cy, 2) = tia_memory[idx++];
+            }
+        }
+
+        tia_image->draw_rectangle(67, 39, ntsc_width, ntsc_height-29,
+                                  ntsc_outline_color, 1, 0xffffffff);
+
         tia_display->display(*tia_image);
         tia_display->show();
     }
@@ -202,8 +323,13 @@ int tia_start(unsigned char *pmem) {
     tia_scanline_x = 0;
     tia_process_flags();
 
-    tmemory = (unsigned char *)malloc(ntsc_width*ntsc_height*2);
-    tia_image = new CImg<unsigned char>(ntsc_width*3, ntsc_height, 1,3, 0);
+    tia_ticksum = 0;
+    tia_ticklist = (int *)calloc(TIA_FRAMERATE_MAX_SAMPLES, sizeof(int));
+    tia_framestart = clock();
+    
+    tia_memory = (unsigned char *)malloc(ntsc_width*ntsc_height*3);
+    //tia_image = new CImg<unsigned char>(ntsc_width*3, ntsc_height, 1,3, 0);
+    tia_image = new CImg<unsigned char>(ntsc_width, ntsc_height, 1,3, 0);
     tia_display = new CImgDisplay(*tia_image, "TIA");
     tia_display->show();
 
