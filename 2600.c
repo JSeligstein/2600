@@ -24,7 +24,6 @@ int8_t sr;      // status register
 
 unsigned char *memory;
 
-
 // $0000 - $007F   TIA registers (128 bytes)
 // $0080 - $00FF   RAM
 // $0200 - $02FF   RIOT registers
@@ -35,195 +34,191 @@ void cleanup() {
 }
 
 
-inline void write_memory(uint16_t addr, unsigned char data) {
+inline uint8_t write_memory(uint16_t addr, unsigned char data) {
     memory[addr] = data;
     if (addr < 0x1000) {
-        // special addresses
-        if (addr == TIA_WSYNC) {
-            tia_process_until(TIA_WSYNC);
-        } else if (addr == TIA_VSYNC) {
-            tia_process_until(TIA_VSYNC);
-        } else if (addr == TIA_VBLANK) {
-            tia_process_until(TIA_VBLANK);
-        } else if (addr == TIA_COLUBK) {
-            tia_colubk_set();
-        }
+        return tia_write_memory(addr, data);
+    } else {
+        return 0;
     }
 }
 
-inline int core_cycle(int cycles_to_execute) {
+inline int core_cycle() {
     unsigned char opcode;
 
     uint16_t addr;
     int8_t subres;
 
-    int cycles_left = cycles_to_execute;
-    while (cycles_left > 0) {
-        //printf("core_cycle\n");
-        opcode = memory[pc];
-        pc++;
+    //printf("core_cycle\n");
+    opcode = memory[pc];
+    pc++;
 
-        //printf("pc: %x, opcode: %x\n", pc-1, opcode);
-        //sleep(1);
+    //printf("pc: %x, opcode: %x\n", pc-1, opcode);
+    //sleep(1);
+    uint8_t cycles_executed = 0;
+    uint8_t tia_waited = 0;
+        
+    switch (opcode) {
+        case STY_84:
+            // zero-paged
+            addr = memory[pc];
+            tia_waited = write_memory(addr, ry);
+            pc++;
+            cycles_executed = 3;
+            break;
 
-        switch (opcode) {
-            case STY_84:
-                // zero-paged
-                addr = memory[pc];
-                write_memory(addr, ry);
+        case STA_85:
+            // zero-paged
+            addr = memory[pc];
+            tia_waited = write_memory(addr, acc);
+            pc++;
+            cycles_executed = 3;
+            break;
+
+        case STX_86:
+            // zero-paged
+            addr = memory[pc];
+            tia_waited = write_memory(addr, rx);
+            pc++;
+            cycles_executed = 3;
+            break;
+
+       case DEY_88:
+            ry--;
+            zf = !ry;
+            cycles_executed = 2;
+            break;
+
+       case STA_95:
+            // zero-page, x
+            addr = memory[pc]+rx;
+            tia_waited = write_memory(addr, acc);
+            pc++;
+            cycles_executed = 4;
+            break;
+
+       case LDY_A0:
+            ry = memory[pc];
+            zf = !ry;
+            pc++;
+            cycles_executed = 2;
+            break;
+
+       case LDX_A2:
+            rx = memory[pc];
+            zf = !rx;
+            pc++;
+            cycles_executed = 2;
+            break;
+
+       case LDA_A5:
+            // zero-page
+            addr = memory[pc];
+            acc = memory[addr];
+            zf = !acc;
+            pc++;
+            cycles_executed = 3;
+            break;
+
+       case LDA_A9:
+            acc = memory[pc];
+            zf = !acc;
+            pc++;
+            cycles_executed = 2;
+            break;
+
+       case CPY_C0:
+            zf = (memory[pc] == ry);
+            pc++;
+            cycles_executed = 2;
+            break;
+
+       case INY_C8:
+            ry++;
+            zf = !ry;
+            cycles_executed = 2;
+            break;
+
+       case BNE_D0:
+            // todo: page boundaries?
+            if (zf) {
+                cycles_executed = 2;
                 pc++;
-                cycles_left -= 3;
-                break;
-
-            case STA_85:
-                // zero-paged
-                addr = memory[pc];
-                write_memory(addr, acc);
-                pc++;
-                cycles_left -= 3;
-                break;
-
-            case STX_86:
-                // zero-paged
-                addr = memory[pc];
-                write_memory(addr, rx);
-                pc++;
-                cycles_left -= 3;
-                break;
-
-            case DEY_88:
-                ry--;
-                zf = !ry;
-                cycles_left -= 2;
-                break;
-
-            case STA_95:
-                // zero-page, x
-                addr = memory[pc]+rx;
-                write_memory(addr, acc);
-                pc++;
-                cycles_left -= 4;
-                break;
-
-            case LDY_A0:
-                ry = memory[pc];
-                zf = !ry;
-                pc++;
-                cycles_left -= 2;
-                break;
-
-            case LDX_A2:
-                rx = memory[pc];
-                zf = !rx;
-                pc++;
-                cycles_left -= 2;
-                break;
-
-            case LDA_A5:
-                // zero-page
-                addr = memory[pc];
-                acc = memory[addr];
-                zf = !acc;
-                pc++;
-                cycles_left -= 3;
-                break;
-
-            case LDA_A9:
-                acc = memory[pc];
-                zf = !acc;
-                pc++;
-                cycles_left -= 2;
-                break;
-
-            case CPY_C0:
-                zf = (memory[pc] == ry);
-                pc++;
-                cycles_left -= 2;
-                break;
-
-            case INY_C8:
-                ry++;
-                zf = !ry;
-                cycles_left -= 2;
-                break;
-
-            case BNE_D0:
-                // todo: page boundaries?
-                if (zf) {
-                    cycles_left -= 2;
-                    pc++;
+            } else {
+                if (memory[pc] & 0x80) {
+                    pc -= (0xff - memory[pc]);
                 } else {
-                    if (memory[pc] & 0x80) {
-                        pc -= (0xff - memory[pc]);
-                    } else {
-                        pc += memory[pc] + 1;
-                    }
-                    cycles_left -= 3;
+                    pc += memory[pc] + 1;
                 }
-                break;
+                cycles_executed = 3;
+            }
+            break;
 
-            case CPX_E0:
-                subres = rx - memory[pc];
-                if (subres == 0) {
-                    zf = 1;
-                    cf = 1;
-                    sf = 0;
-                } else if (subres > 0) {
-                    cf = 1;
-                    zf = 0;
-                    sf = 0;
-                } else {
-                    cf = 0;
-                    zf = 0;
-                    sf = 1;
-                }
-                pc++;
-                cycles_left -= 2;
-                break;
+       case CPX_E0:
+            subres = rx - memory[pc];
+            if (subres == 0) {
+                zf = 1;
+                cf = 1;
+                sf = 0;
+            } else if (subres > 0) {
+                cf = 1;
+                zf = 0;
+                sf = 0;
+            } else {
+                cf = 0;
+                zf = 0;
+                sf = 1;
+            }
+            pc++;
+            cycles_executed = 2;
+            break;
 
-            case INC_E6:
-                // zero-page
-                addr = memory[pc];
-                memory[addr]++;
-                zf = !memory[addr];
-                pc++;
-                cycles_left -= 5;
-                break;
+       case INC_E6:
+            // zero-page
+            addr = memory[pc];
+            memory[addr]++;
+            zf = !memory[addr];
+            pc++;
+            cycles_executed = 5;
+            break;
 
-            case INX_E8:
-                rx++;
-                zf = !rx;
-                cycles_left -= 2;
-                break;
+       case INX_E8:
+            rx++;
+            zf = !rx;
+            cycles_executed = 2;
+            break;
 
-            case NOP_EA:
-                cycles_left -= 2;
-                break;
+       case NOP_EA:
+            cycles_executed = 2;
+            break;
 
-            case JMP_4C:
-                pc = (memory[pc+1] << 8) | memory[pc];
-                //printf("jumping to %x\n", pc);
-                cycles_left -= 3;
-                break;
+       case JMP_4C:
+            pc = (memory[pc+1] << 8) | memory[pc];
+            //printf("jumping to %x\n", pc);
+            cycles_executed = 3;
+            break;
 
-            default:
-                printf("Unknown opcode: %x\n", opcode);
-                exit(1);
-                return cycles_to_execute-cycles_left;
-                break;
+       default:
+            printf("Unknown opcode: %x\n", opcode);
+            exit(1);
+            break;
+    }
+
+    if (!tia_waited) {
+        for (; cycles_executed; cycles_executed--) {
+            tia_process_cycle();
+            tia_process_cycle();
+            tia_process_cycle();
         }
     }
 
-    return cycles_to_execute - cycles_left;
+    return cycles_executed;
 }
 
 void core() {
     int cycles_executed;
     while (1) {
-        cycles_executed = core_cycle(1);
-        for (; cycles_executed; cycles_executed--) {
-            //tia_process_cycle();
-        }
+        cycles_executed = core_cycle();
     }
 }
 

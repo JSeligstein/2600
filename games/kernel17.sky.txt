@@ -1,0 +1,1275 @@
+------- FILE kernel17.sky.6502 LEVEL 1 PASS 1
+      1  0000 ????						; '2600 for Newbies
+      2  0000 ????						; Session 15 - Playfield Continued
+      3  0000 ????						; This kernel draws a simple box around the screen border
+      4  0000 ????						; Introduces playfield reflection
+      5  0000 ????				      processor	6502
+------- FILE vcs.h LEVEL 2 PASS 1
+      0  0000 ????				      include	"vcs.h"
+      1  0000 ????						; VCS.H
+      2  0000 ????						; Version 1.05, 13/November/2003
+      3  0000 ????
+      4  0000 ????	       00 69	   VERSION_VCS =	105
+      5  0000 ????
+      6  0000 ????						; THIS IS A PRELIMINARY RELEASE OF *THE* "STANDARD" VCS.H
+      7  0000 ????						; THIS FILE IS EXPLICITLY SUPPORTED AS A DASM-PREFERRED COMPANION FILE
+      8  0000 ????						; PLEASE DO *NOT* REDISTRIBUTE THIS FILE!
+      9  0000 ????						;
+     10  0000 ????						; This file defines hardware registers and memory mapping for the
+     11  0000 ????						; Atari 2600. It is distributed as a companion machine-specific support package
+     12  0000 ????						; for the DASM compiler. Updates to this file, DASM, and associated tools are
+     13  0000 ????						; available at at http://www.atari2600.org/dasm
+     14  0000 ????						;
+     15  0000 ????						; Many thanks to the original author(s) of this file, and to everyone who has
+     16  0000 ????						; contributed to understanding the Atari 2600.  If you take issue with the
+     17  0000 ????						; contents, or naming of registers, please write to me (atari2600@taswegian.com)
+     18  0000 ????						; with your views.  Please contribute, if you think you can improve this
+     19  0000 ????						; file!
+     20  0000 ????						;
+     21  0000 ????						; Latest Revisions...
+     22  0000 ????						; 1.05  13/NOV/2003	  - Correction to 1.04 - now functions as requested by MR.
+     23  0000 ????						;			  - Added VERSION_VCS equate (which will reflect 100x version #)
+     24  0000 ????						;			    This will allow conditional code to verify VCS.H being
+     25  0000 ????						;			    used for code assembly.
+     26  0000 ????						; 1.04  12/NOV/2003	 Added TIA_BASE_WRITE_ADDRESS and TIA_BASE_READ_ADDRESS for
+     27  0000 ????						;			 convenient disassembly/reassembly compatibility for hardware
+     28  0000 ????						;			 mirrored reading/writing differences.	This is more a
+     29  0000 ????						;			 readability issue, and binary compatibility with disassembled
+     30  0000 ????						;			 and reassembled sources.  Per Manuel Rotschkar's suggestion.
+     31  0000 ????						; 1.03  12/MAY/2003	 Added SEG segment at end of file to fix old-code compatibility
+     32  0000 ????						;			 which was broken by the use of segments in this file, as
+     33  0000 ????						;			 reported by Manuel Polik on [stella] 11/MAY/2003
+     34  0000 ????						; 1.02  22/MAR/2003	 Added TIMINT($285)
+     35  0000 ????						; 1.01				Constant offset added to allow use for 3F-style bankswitching
+     36  0000 ????						;						 - define TIA_BASE_ADDRESS as $40 for Tigervision carts, otherwise
+     37  0000 ????						;						   it is safe to leave it undefined, and the base address will
+     38  0000 ????						;						   be set to 0.  Thanks to Eckhard Stolberg for the suggestion.
+     39  0000 ????						;			    Note, may use -DLABEL=EXPRESSION to define TIA_BASE_ADDRESS
+     40  0000 ????						;			  - register definitions are now generated through assignment
+     41  0000 ????						;			    in uninitialised segments.	This allows a changeable base
+     42  0000 ????						;			    address architecture.
+     43  0000 ????						; 1.0	22/MAR/2003		Initial release
+     44  0000 ????
+     45  0000 ????
+     46  0000 ????						;-------------------------------------------------------------------------------
+     47  0000 ????
+     48  0000 ????						; TIA_BASE_ADDRESS
+     49  0000 ????						; The TIA_BASE_ADDRESS defines the base address of access to TIA registers.
+     50  0000 ????						; Normally 0, the base address should (externally, before including this file)
+     51  0000 ????						; be set to $40 when creating 3F-bankswitched (and other?) cartridges.
+     52  0000 ????						; The reason is that this bankswitching scheme treats any access to locations
+     53  0000 ????						; < $40 as a bankswitch.
+     54  0000 ????
+     55  0000 ????				      IFNCONST	TIA_BASE_ADDRESS
+     56  0000 ????	       00 00	   TIA_BASE_ADDRESS =	0
+     57  0000 ????				      ENDIF
+     58  0000 ????
+     59  0000 ????						; Note: The address may be defined on the command-line using the -D switch, eg:
+     60  0000 ????						; dasm.exe code.asm -DTIA_BASE_ADDRESS=$40 -f3 -v5 -ocode.bin
+     61  0000 ????						; *OR* by declaring the label before including this file, eg:
+     62  0000 ????						; TIA_BASE_ADDRESS = $40
+     63  0000 ????						;   include "vcs.h"
+     64  0000 ????
+     65  0000 ????						; Alternate read/write address capability - allows for some disassembly compatibility
+     66  0000 ????						; usage ; to allow reassembly to binary perfect copies).  This is essentially catering
+     67  0000 ????						; for the mirrored ROM hardware registers.
+     68  0000 ????
+     69  0000 ????						; Usage: As per above, define the TIA_BASE_READ_ADDRESS and/or TIA_BASE_WRITE_ADDRESS
+     70  0000 ????						; using the -D command-line switch, as required.  If the addresses are not defined,
+     71  0000 ????						; they defaut to the TIA_BASE_ADDRESS.
+     72  0000 ????
+     73  0000 ????				      IFNCONST	TIA_BASE_READ_ADDRESS
+     74  0000 ????	       00 00	   TIA_BASE_READ_ADDRESS =	TIA_BASE_ADDRESS
+     75  0000 ????				      ENDIF
+     76  0000 ????
+     77  0000 ????				      IFNCONST	TIA_BASE_WRITE_ADDRESS
+     78  0000 ????	       00 00	   TIA_BASE_WRITE_ADDRESS =	TIA_BASE_ADDRESS
+     79  0000 ????				      ENDIF
+     80  0000 ????
+     81  0000 ????						;-------------------------------------------------------------------------------
+     82  0000 ????
+     83 U0000 ????				      SEG.U	TIA_REGISTERS_WRITE
+     84 U0000					      ORG	TIA_BASE_WRITE_ADDRESS
+     85 U0000
+     86 U0000							; DO NOT CHANGE THE RELATIVE ORDERING OF REGISTERS!
+     87 U0000
+     88 U0000		       00	   VSYNC      ds	1	; $00	 0000 00x0   Vertical Sync Set-Clear
+     89 U0001		       00	   VBLANK     ds	1	; $01	 xx00 00x0   Vertical Blank Set-Clear
+     90 U0002		       00	   WSYNC      ds	1	; $02	 ---- ----   Wait for Horizontal Blank
+     91 U0003		       00	   RSYNC      ds	1	; $03	 ---- ----   Reset Horizontal Sync Counter
+     92 U0004		       00	   NUSIZ0     ds	1	; $04	 00xx 0xxx   Number-Size player/missle 0
+     93 U0005		       00	   NUSIZ1     ds	1	; $05	 00xx 0xxx   Number-Size player/missle 1
+     94 U0006		       00	   COLUP0     ds	1	; $06	 xxxx xxx0   Color-Luminance Player 0
+     95 U0007		       00	   COLUP1     ds	1	; $07	 xxxx xxx0   Color-Luminance Player 1
+     96 U0008		       00	   COLUPF     ds	1	; $08	 xxxx xxx0   Color-Luminance Playfield
+     97 U0009		       00	   COLUBK     ds	1	; $09	 xxxx xxx0   Color-Luminance Background
+     98 U000a		       00	   CTRLPF     ds	1	; $0A	 00xx 0xxx   Control Playfield, Ball, Collisions
+     99 U000b		       00	   REFP0      ds	1	; $0B	 0000 x000   Reflection Player 0
+    100 U000c		       00	   REFP1      ds	1	; $0C	 0000 x000   Reflection Player 1
+    101 U000d		       00	   PF0	      ds	1	; $0D	 xxxx 0000   Playfield Register Byte 0
+    102 U000e		       00	   PF1	      ds	1	; $0E	 xxxx xxxx   Playfield Register Byte 1
+    103 U000f		       00	   PF2	      ds	1	; $0F	 xxxx xxxx   Playfield Register Byte 2
+    104 U0010		       00	   RESP0      ds	1	; $10	 ---- ----   Reset Player 0
+    105 U0011		       00	   RESP1      ds	1	; $11	 ---- ----   Reset Player 1
+    106 U0012		       00	   RESM0      ds	1	; $12	 ---- ----   Reset Missle 0
+    107 U0013		       00	   RESM1      ds	1	; $13	 ---- ----   Reset Missle 1
+    108 U0014		       00	   RESBL      ds	1	; $14	 ---- ----   Reset Ball
+    109 U0015		       00	   AUDC0      ds	1	; $15	 0000 xxxx   Audio Control 0
+    110 U0016		       00	   AUDC1      ds	1	; $16	 0000 xxxx   Audio Control 1
+    111 U0017		       00	   AUDF0      ds	1	; $17	 000x xxxx   Audio Frequency 0
+    112 U0018		       00	   AUDF1      ds	1	; $18	 000x xxxx   Audio Frequency 1
+    113 U0019		       00	   AUDV0      ds	1	; $19	 0000 xxxx   Audio Volume 0
+    114 U001a		       00	   AUDV1      ds	1	; $1A	 0000 xxxx   Audio Volume 1
+    115 U001b		       00	   GRP0       ds	1	; $1B	 xxxx xxxx   Graphics Register Player 0
+    116 U001c		       00	   GRP1       ds	1	; $1C	 xxxx xxxx   Graphics Register Player 1
+    117 U001d		       00	   ENAM0      ds	1	; $1D	 0000 00x0   Graphics Enable Missle 0
+    118 U001e		       00	   ENAM1      ds	1	; $1E	 0000 00x0   Graphics Enable Missle 1
+    119 U001f		       00	   ENABL      ds	1	; $1F	 0000 00x0   Graphics Enable Ball
+    120 U0020		       00	   HMP0       ds	1	; $20	 xxxx 0000   Horizontal Motion Player 0
+    121 U0021		       00	   HMP1       ds	1	; $21	 xxxx 0000   Horizontal Motion Player 1
+    122 U0022		       00	   HMM0       ds	1	; $22	 xxxx 0000   Horizontal Motion Missle 0
+    123 U0023		       00	   HMM1       ds	1	; $23	 xxxx 0000   Horizontal Motion Missle 1
+    124 U0024		       00	   HMBL       ds	1	; $24	 xxxx 0000   Horizontal Motion Ball
+    125 U0025		       00	   VDELP0     ds	1	; $25	 0000 000x   Vertical Delay Player 0
+    126 U0026		       00	   VDELP1     ds	1	; $26	 0000 000x   Vertical Delay Player 1
+    127 U0027		       00	   VDELBL     ds	1	; $27	 0000 000x   Vertical Delay Ball
+    128 U0028		       00	   RESMP0     ds	1	; $28	 0000 00x0   Reset Missle 0 to Player 0
+    129 U0029		       00	   RESMP1     ds	1	; $29	 0000 00x0   Reset Missle 1 to Player 1
+    130 U002a		       00	   HMOVE      ds	1	; $2A	 ---- ----   Apply Horizontal Motion
+    131 U002b		       00	   HMCLR      ds	1	; $2B	 ---- ----   Clear Horizontal Move Registers
+    132 U002c		       00	   CXCLR      ds	1	; $2C	 ---- ----   Clear Collision Latches
+    133 U002d
+    134 U002d							;-------------------------------------------------------------------------------
+    135 U002d
+    136 U0000 ????				      SEG.U	TIA_REGISTERS_READ
+    137 U0000					      ORG	TIA_BASE_READ_ADDRESS
+    138 U0000
+    139 U0000							;											bit 7	 bit 6
+    140 U0000		       00	   CXM0P      ds	1	; $00	     xx00 0000	     Read Collision  M0-P1   M0-P0
+    141 U0001		       00	   CXM1P      ds	1	; $01	     xx00 0000			     M1-P0   M1-P1
+    142 U0002		       00	   CXP0FB     ds	1	; $02	     xx00 0000			     P0-PF   P0-BL
+    143 U0003		       00	   CXP1FB     ds	1	; $03	     xx00 0000			     P1-PF   P1-BL
+    144 U0004		       00	   CXM0FB     ds	1	; $04	     xx00 0000			     M0-PF   M0-BL
+    145 U0005		       00	   CXM1FB     ds	1	; $05	     xx00 0000			     M1-PF   M1-BL
+    146 U0006		       00	   CXBLPF     ds	1	; $06	     x000 0000			     BL-PF   -----
+    147 U0007		       00	   CXPPMM     ds	1	; $07	     xx00 0000			     P0-P1   M0-M1
+    148 U0008		       00	   INPT0      ds	1	; $08	     x000 0000	     Read Pot Port 0
+    149 U0009		       00	   INPT1      ds	1	; $09	     x000 0000	     Read Pot Port 1
+    150 U000a		       00	   INPT2      ds	1	; $0A	     x000 0000	     Read Pot Port 2
+    151 U000b		       00	   INPT3      ds	1	; $0B	     x000 0000	     Read Pot Port 3
+    152 U000c		       00	   INPT4      ds	1	; $0C		x000 0000	 Read Input (Trigger) 0
+    153 U000d		       00	   INPT5      ds	1	; $0D		x000 0000	 Read Input (Trigger) 1
+    154 U000e
+    155 U000e							;-------------------------------------------------------------------------------
+    156 U000e
+    157 U0000 ????				      SEG.U	RIOT
+    158 U0280					      ORG	$280
+    159 U0280
+    160 U0280							; RIOT MEMORY MAP
+    161 U0280
+    162 U0280		       00	   SWCHA      ds	1	; $280      Port A data register for joysticks:
+    163 U0281							;			Bits 4-7 for player 1.  Bits 0-3 for player 2.
+    164 U0281
+    165 U0281		       00	   SWACNT     ds	1	; $281      Port A data direction register (DDR)
+    166 U0282		       00	   SWCHB      ds	1	; $282		Port B data (console switches)
+    167 U0283		       00	   SWBCNT     ds	1	; $283      Port B DDR
+    168 U0284		       00	   INTIM      ds	1	; $284		Timer output
+    169 U0285
+    170 U0285		       00	   TIMINT     ds	1	; $285
+    171 U0286
+    172 U0286							; Unused/undefined registers ($285-$294)
+    173 U0286
+    174 U0286		       00		      ds	1	; $286
+    175 U0287		       00		      ds	1	; $287
+    176 U0288		       00		      ds	1	; $288
+    177 U0289		       00		      ds	1	; $289
+    178 U028a		       00		      ds	1	; $28A
+    179 U028b		       00		      ds	1	; $28B
+    180 U028c		       00		      ds	1	; $28C
+    181 U028d		       00		      ds	1	; $28D
+    182 U028e		       00		      ds	1	; $28E
+    183 U028f		       00		      ds	1	; $28F
+    184 U0290		       00		      ds	1	; $290
+    185 U0291		       00		      ds	1	; $291
+    186 U0292		       00		      ds	1	; $292
+    187 U0293		       00		      ds	1	; $293
+    188 U0294
+    189 U0294		       00	   TIM1T      ds	1	; $294		set 1 clock interval
+    190 U0295		       00	   TIM8T      ds	1	; $295      set 8 clock interval
+    191 U0296		       00	   TIM64T     ds	1	; $296      set 64 clock interval
+    192 U0297		       00	   T1024T     ds	1	; $297      set 1024 clock interval
+    193 U0298
+    194 U0298							;-------------------------------------------------------------------------------
+    195 U0298							; The following required for back-compatibility with code which does not use
+    196 U0298							; segments.
+    197 U0298
+    198  0000 ????				      SEG
+    199  0000 ????
+    200  0000 ????						; EOF
+------- FILE kernel17.sky.6502
+------- FILE macro.h LEVEL 2 PASS 1
+      0  0000 ????				      include	"macro.h"
+      1  0000 ????						; MACRO.H
+      2  0000 ????						; Version 1.06, 3/SEPTEMBER/2004
+      3  0000 ????
+      4  0000 ????	       00 6a	   VERSION_MACRO =	106
+      5  0000 ????
+      6  0000 ????						;
+      7  0000 ????						; THIS FILE IS EXPLICITLY SUPPORTED AS A DASM-PREFERRED COMPANION FILE
+      8  0000 ????						; PLEASE DO *NOT* REDISTRIBUTE MODIFIED VERSIONS OF THIS FILE!
+      9  0000 ????						;
+     10  0000 ????						; This file defines DASM macros useful for development for the Atari 2600.
+     11  0000 ????						; It is distributed as a companion machine-specific support package
+     12  0000 ????						; for the DASM compiler. Updates to this file, DASM, and associated tools are
+     13  0000 ????						; available at at http://www.atari2600.org/dasm
+     14  0000 ????						;
+     15  0000 ????						; Many thanks to the people who have contributed.  If you take issue with the
+     16  0000 ????						; contents, or would like to add something, please write to me
+     17  0000 ????						; (atari2600@taswegian.com) with your contribution.
+     18  0000 ????						;
+     19  0000 ????						; Latest Revisions...
+     20  0000 ????						;
+     21  0000 ????						; 1.06  03/SEP/2004	 - nice revision of VERTICAL_BLANK (Edwin Blink)
+     22  0000 ????						; 1.05  14/NOV/2003	 - Added VERSION_MACRO equate (which will reflect 100x version #)
+     23  0000 ????						;			   This will allow conditional code to verify MACRO.H being
+     24  0000 ????						;			   used for code assembly.
+     25  0000 ????						; 1.04  13/NOV/2003	 - SET_POINTER macro added (16-bit address load)
+     26  0000 ????						;
+     27  0000 ????						; 1.03  23/JUN/2003	 - CLEAN_START macro added - clears TIA, RAM, registers
+     28  0000 ????						;
+     29  0000 ????						; 1.02  14/JUN/2003	 - VERTICAL_SYNC macro added
+     30  0000 ????						;			   (standardised macro for vertical synch code)
+     31  0000 ????						; 1.01  22/MAR/2003	 - SLEEP macro added.
+     32  0000 ????						;			 - NO_ILLEGAL_OPCODES switch implemented
+     33  0000 ????						; 1.0	22/MAR/2003		Initial release
+     34  0000 ????
+     35  0000 ????						; Note: These macros use illegal opcodes.  To disable illegal opcode usage,
+     36  0000 ????						;   define the symbol NO_ILLEGAL_OPCODES (-DNO_ILLEGAL_OPCODES=1 on command-line).
+     37  0000 ????						;   If you do not allow illegal opcode usage, you must include this file
+     38  0000 ????						;   *after* including VCS.H (as the non-illegal opcodes access hardware
+     39  0000 ????						;   registers and require them to be defined first).
+     40  0000 ????
+     41  0000 ????						; Available macros...
+     42  0000 ????						;   SLEEP n		 - sleep for n cycles
+     43  0000 ????						;   VERTICAL_SYNC	 - correct 3 scanline vertical synch code
+     44  0000 ????						;   CLEAN_START	 - set machine to known state on startup
+     45  0000 ????						;   SET_POINTER	 - load a 16-bit absolute to a 16-bit variable
+     46  0000 ????
+     47  0000 ????						;-------------------------------------------------------------------------------
+     48  0000 ????						; SLEEP duration
+     49  0000 ????						; Original author: Thomas Jentzsch
+     50  0000 ????						; Inserts code which takes the specified number of cycles to execute.	This is
+     51  0000 ????						; useful for code where precise timing is required.
+     52  0000 ????						; ILLEGAL-OPCODE VERSION DOES NOT AFFECT FLAGS OR REGISTERS.
+     53  0000 ????						; LEGAL OPCODE VERSION MAY AFFECT FLAGS
+     54  0000 ????						; Uses illegal opcode (DASM 2.20.01 onwards).
+     55  0000 ????
+     56  0000 ????				      MAC	sleep
+     57  0000 ????			   .CYCLES    SET	{1}
+     58  0000 ????
+     59  0000 ????				      IF	.CYCLES < 2
+     60  0000 ????				      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+     61  0000 ????				      ERR
+     62  0000 ????				      ENDIF
+     63  0000 ????
+     64  0000 ????				      IF	.CYCLES & 1
+     65  0000 ????				      IFNCONST	NO_ILLEGAL_OPCODES
+     66  0000 ????				      nop	0
+     67  0000 ????				      ELSE
+     68  0000 ????				      bit	VSYNC
+     69  0000 ????				      ENDIF
+     70  0000 ????			   .CYCLES    SET	.CYCLES - 3
+     71  0000 ????				      ENDIF
+     72  0000 ????
+     73  0000 ????				      REPEAT	.CYCLES / 2
+     74  0000 ????				      nop
+     75  0000 ????				      REPEND
+     76  0000 ????				      ENDM		;usage: SLEEP n (n>1)
+     77  0000 ????
+     78  0000 ????						;-------------------------------------------------------------------------------
+     79  0000 ????						; VERTICAL_SYNC
+     80  0000 ????						; revised version by Edwin Blink -- saves bytes!
+     81  0000 ????						; Inserts the code required for a proper 3 scanline vertical sync sequence
+     82  0000 ????						; Note: Alters the accumulator
+     83  0000 ????
+     84  0000 ????						; OUT: A = 0
+     85  0000 ????
+     86  0000 ????				      MAC	vertical_sync
+     87  0000 ????				      lda	#%1110	; each '1' bits generate a VSYNC ON line (bits 1..3)
+     88  0000 ????			   .VSLP1     sta	WSYNC	; 1st '0' bit resets Vsync, 2nd '0' bit exit loop
+     89  0000 ????				      sta	VSYNC
+     90  0000 ????				      lsr
+     91  0000 ????				      bne	.VSLP1	; branch until VYSNC has been reset
+     92  0000 ????				      ENDM
+     93  0000 ????
+     94  0000 ????						;-------------------------------------------------------------------------------
+     95  0000 ????						; CLEAN_START
+     96  0000 ????						; Original author: Andrew Davie
+     97  0000 ????						; Standardised start-up code, clears stack, all TIA registers and RAM to 0
+     98  0000 ????						; Sets stack pointer to $FF, and all registers to 0
+     99  0000 ????						; Sets decimal mode off, sets interrupt flag (kind of un-necessary)
+    100  0000 ????						; Use as very first section of code on boot (ie: at reset)
+    101  0000 ????						; Code written to minimise total ROM usage - uses weird 6502 knowledge :)
+    102  0000 ????
+    103  0000 ????				      MAC	clean_start
+    104  0000 ????				      sei
+    105  0000 ????				      cld
+    106  0000 ????
+    107  0000 ????				      ldx	#0
+    108  0000 ????				      txa
+    109  0000 ????				      tay
+    110  0000 ????			   .CLEAR_STACK dex
+    111  0000 ????				      txs
+    112  0000 ????				      pha
+    113  0000 ????				      bne	.CLEAR_STACK	; SP=$FF, X = A = Y = 0
+    114  0000 ????
+    115  0000 ????				      ENDM
+    116  0000 ????
+    117  0000 ????						;-------------------------------------------------------
+    118  0000 ????						; SET_POINTER
+    119  0000 ????						; Original author: Manuel Rotschkar
+    120  0000 ????						;
+    121  0000 ????						; Sets a 2 byte RAM pointer to an absolute address.
+    122  0000 ????						;
+    123  0000 ????						; Usage: SET_POINTER pointer, address
+    124  0000 ????						; Example: SET_POINTER SpritePTR, SpriteData
+    125  0000 ????						;
+    126  0000 ????						; Note: Alters the accumulator, NZ flags
+    127  0000 ????						; IN 1: 2 byte RAM location reserved for pointer
+    128  0000 ????						; IN 2: absolute address
+    129  0000 ????
+    130  0000 ????				      MAC	set_pointer
+    131  0000 ????			   .POINTER   SET	{1}
+    132  0000 ????			   .ADDRESS   SET	{2}
+    133  0000 ????
+    134  0000 ????				      LDA	#<.ADDRESS	; Get Lowbyte of Address
+    135  0000 ????				      STA	.POINTER	; Store in pointer
+    136  0000 ????				      LDA	#>.ADDRESS	; Get Hibyte of Address
+    137  0000 ????				      STA	.POINTER+1	; Store in pointer+1
+    138  0000 ????
+    139  0000 ????				      ENDM
+    140  0000 ????
+    141  0000 ????						;-------------------------------------------------------
+    142  0000 ????						; BOUNDARY byte#
+    143  0000 ????						; Original author: Denis Debro (borrowed from Bob Smith / Thomas)
+    144  0000 ????						;
+    145  0000 ????						; Push data to a certain position inside a page and keep count of how
+    146  0000 ????						; many free bytes the programmer will have.
+    147  0000 ????						;
+    148  0000 ????						; eg: BOUNDARY 5    ; position at byte #5 in page
+    149  0000 ????
+    150  0000 ????			   .FREE_BYTES SET	0
+    151  0000 ????				      MAC	boundary
+    152  0000 ????				      REPEAT	256
+    153  0000 ????				      IF	<. % {1} = 0
+    154  0000 ????				      MEXIT
+    155  0000 ????				      ELSE
+    156  0000 ????			   .FREE_BYTES SET	.FREE_BYTES + 1
+    157  0000 ????				      .byte	$00
+    158  0000 ????				      ENDIF
+    159  0000 ????				      REPEND
+    160  0000 ????				      ENDM
+    161  0000 ????
+    162  0000 ????
+    163  0000 ????						; EOF
+------- FILE kernel17.sky.6502
+      8  0000 ????						;------------------------------------------------------------------------------
+      9  0000 ????				      SEG
+     10  f000					      ORG	$F000
+     11  f000				   Reset
+     12  f000							; Clear RAM and all TIA registers
+     13  f000		       a2 00		      ldx	#0
+     14  f002		       a9 00		      lda	#0
+     15  f004		       95 00	   Clear      sta	0,x
+     16  f006		       e8		      inx
+     17  f007		       d0 fb		      bne	Clear
+     18  f009							;------------------------------------------------
+     19  f009							; Once-only initialisation...
+     20  f009		       a9 45		      lda	#$45
+     21  f00b		       85 08		      sta	COLUPF	; set the playfield colour
+     22  f00d		       a9 01		      lda	#%00000001
+     23  f00f		       85 0a		      sta	CTRLPF	; reflect playfield
+     24  f011							;------------------------------------------------
+     25  f011				   StartOfFrame
+     26  f011							; Start of new frame
+     27  f011							; Start of vertical blank processing
+     28  f011		       a9 00		      lda	#%00000000
+     29  f013		       85 0a		      sta	CTRLPF	; copy playfield
+     30  f015		       a9 ae		      lda	#$AE
+     31  f017		       85 09		      sta	COLUBK	; set the background color (sky)
+     32  f019		       a9 00		      lda	#0
+     33  f01b		       85 01		      sta	VBLANK
+     34  f01d		       a9 02		      lda	#2
+     35  f01f		       85 00		      sta	VSYNC
+     36  f021		       85 02		      sta	WSYNC
+     37  f023		       85 02		      sta	WSYNC
+     38  f025		       85 02		      sta	WSYNC	; 3 scanlines of VSYNC signal
+     39  f027		       a9 00		      lda	#0
+     40  f029		       85 00		      sta	VSYNC
+     41  f02b							;------------------------------------------------------------------
+     42  f02b							; 37 scanlines of vertical blank...
+     43  f02b		       a2 00		      ldx	#0
+     44  f02d				   VerticalBlank
+     45  f02d		       85 02		      sta	WSYNC
+     46  f02f		       e8		      inx
+     47  f030		       e0 25		      cpx	#37
+     48  f032		       d0 f9		      bne	VerticalBlank
+     49  f034							;------------------------------------------------------------------
+     50  f034							; Do 192 scanlines of color-changing (our picture)
+     51  f034		       a2 00		      ldx	#0	; this counts our scanline number
+     52  f036							;--------------------------------------------------------------------------
+     53  f036				   TopSkyLines
+     54  f036		       85 02		      sta	WSYNC
+     55  f038		       a9 0a		      lda	#$0A
+     56  f03a		       85 08		      sta	COLUPF	; set playfield color (cloud)
+     57  f03c		       a9 e0		      lda	#%11100000
+     58  f03e		       85 0d		      sta	PF0	; write graphics for PF0(a) - cloud
+     59  f040		       a9 c0		      lda	#%11000000
+     60  f042		       85 0e		      sta	PF1	; write graphics for PF1(a) - cloud
+     61  f044		       a9 00		      lda	#0
+     62  f046		       85 0f		      sta	PF2	; zero out graphics for PF2(a)
+      0  f048					      SLEEP	12
+      1  f048				   .CYCLES    SET	12
+      2  f048
+      3  f048				  -	      IF	.CYCLES < 2
+      4  f048				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f048				  -	      ERR
+      6  f048					      ENDIF
+      7  f048
+      8  f048				  -	      IF	.CYCLES & 1
+      9  f048				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f048				  -	      nop	0
+     11  f048				  -	      ELSE
+     12  f048				  -	      bit	VSYNC
+     13  f048				  -	      ENDIF
+     14  f048				  -.CYCLES    SET	.CYCLES - 3
+     15  f048					      ENDIF
+     16  f048
+     17  f048					      REPEAT	.CYCLES / 2
+     18  f048		       ea		      nop
+     17  f048					      REPEND
+     18  f049		       ea		      nop
+     17  f049					      REPEND
+     18  f04a		       ea		      nop
+     17  f04a					      REPEND
+     18  f04b		       ea		      nop
+     17  f04b					      REPEND
+     18  f04c		       ea		      nop
+     17  f04c					      REPEND
+     18  f04d		       ea		      nop
+     19  f04e					      REPEND
+     64  f04e		       a9 00		      lda	#0
+     65  f050		       85 0d		      sta	PF0
+      0  f052					      SLEEP	8
+      1  f052				   .CYCLES    SET	8
+      2  f052
+      3  f052				  -	      IF	.CYCLES < 2
+      4  f052				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f052				  -	      ERR
+      6  f052					      ENDIF
+      7  f052
+      8  f052				  -	      IF	.CYCLES & 1
+      9  f052				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f052				  -	      nop	0
+     11  f052				  -	      ELSE
+     12  f052				  -	      bit	VSYNC
+     13  f052				  -	      ENDIF
+     14  f052				  -.CYCLES    SET	.CYCLES - 3
+     15  f052					      ENDIF
+     16  f052
+     17  f052					      REPEAT	.CYCLES / 2
+     18  f052		       ea		      nop
+     17  f052					      REPEND
+     18  f053		       ea		      nop
+     17  f053					      REPEND
+     18  f054		       ea		      nop
+     17  f054					      REPEND
+     18  f055		       ea		      nop
+     19  f056					      REPEND
+     67  f056		       a9 00		      lda	#0
+     68  f058		       85 0e		      sta	PF1
+     69  f05a		       a9 1e		      lda	#$1E
+     70  f05c		       85 08		      sta	COLUPF	; set playfield color (sun)
+     71  f05e		       ea		      nop
+     72  f05f		       a9 60		      lda	#%01100000
+     73  f061		       85 0f		      sta	PF2
+     74  f063		       e8		      inx
+     75  f064		       e0 04		      cpx	#4	; are we at line 4?
+     76  f066		       d0 ce		      bne	TopSkyLines	; No, so do another
+     77  f068							;--------------------------------------------------------------------------
+     78  f068				   MidSkyLines
+     79  f068		       85 02		      sta	WSYNC
+     80  f06a		       a9 0a		      lda	#$0A
+     81  f06c		       85 08		      sta	COLUPF	; set playfield color (cloud)
+     82  f06e		       a9 f0		      lda	#%11110000
+     83  f070		       85 0d		      sta	PF0
+     84  f072		       a9 e0		      lda	#%11100000
+     85  f074		       85 0e		      sta	PF1
+     86  f076		       a9 00		      lda	#0
+     87  f078		       85 0f		      sta	PF2
+      0  f07a					      SLEEP	12
+      1  f07a				   .CYCLES    SET	12
+      2  f07a
+      3  f07a				  -	      IF	.CYCLES < 2
+      4  f07a				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f07a				  -	      ERR
+      6  f07a					      ENDIF
+      7  f07a
+      8  f07a				  -	      IF	.CYCLES & 1
+      9  f07a				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f07a				  -	      nop	0
+     11  f07a				  -	      ELSE
+     12  f07a				  -	      bit	VSYNC
+     13  f07a				  -	      ENDIF
+     14  f07a				  -.CYCLES    SET	.CYCLES - 3
+     15  f07a					      ENDIF
+     16  f07a
+     17  f07a					      REPEAT	.CYCLES / 2
+     18  f07a		       ea		      nop
+     17  f07a					      REPEND
+     18  f07b		       ea		      nop
+     17  f07b					      REPEND
+     18  f07c		       ea		      nop
+     17  f07c					      REPEND
+     18  f07d		       ea		      nop
+     17  f07d					      REPEND
+     18  f07e		       ea		      nop
+     17  f07e					      REPEND
+     18  f07f		       ea		      nop
+     19  f080					      REPEND
+     89  f080		       a9 00		      lda	#0
+     90  f082		       85 0d		      sta	PF0
+      0  f084					      SLEEP	8
+      1  f084				   .CYCLES    SET	8
+      2  f084
+      3  f084				  -	      IF	.CYCLES < 2
+      4  f084				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f084				  -	      ERR
+      6  f084					      ENDIF
+      7  f084
+      8  f084				  -	      IF	.CYCLES & 1
+      9  f084				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f084				  -	      nop	0
+     11  f084				  -	      ELSE
+     12  f084				  -	      bit	VSYNC
+     13  f084				  -	      ENDIF
+     14  f084				  -.CYCLES    SET	.CYCLES - 3
+     15  f084					      ENDIF
+     16  f084
+     17  f084					      REPEAT	.CYCLES / 2
+     18  f084		       ea		      nop
+     17  f084					      REPEND
+     18  f085		       ea		      nop
+     17  f085					      REPEND
+     18  f086		       ea		      nop
+     17  f086					      REPEND
+     18  f087		       ea		      nop
+     19  f088					      REPEND
+     92  f088		       a9 00		      lda	#0
+     93  f08a		       85 0e		      sta	PF1
+     94  f08c		       a9 1e		      lda	#$1E
+     95  f08e		       85 08		      sta	COLUPF	; set playfield color (sun)
+     96  f090		       ea		      nop
+     97  f091		       a9 f0		      lda	#%11110000
+     98  f093		       85 0f		      sta	PF2
+     99  f095		       e8		      inx
+    100  f096		       e0 0e		      cpx	#14	; are we at line 14?
+    101  f098		       d0 ce		      bne	MidSkyLines	; No, so do another
+    102  f09a							;--------------------------------------------------------------------------
+    103  f09a				   LastSkyLines
+    104  f09a		       85 02		      sta	WSYNC
+    105  f09c		       a9 0a		      lda	#$0A
+    106  f09e		       85 08		      sta	COLUPF	; set playfield color (cloud)
+    107  f0a0		       a9 60		      lda	#%01100000
+    108  f0a2		       85 0d		      sta	PF0
+    109  f0a4		       a9 c0		      lda	#%11000000
+    110  f0a6		       85 0e		      sta	PF1
+    111  f0a8		       a9 00		      lda	#0
+    112  f0aa		       85 0f		      sta	PF2
+      0  f0ac					      SLEEP	12
+      1  f0ac				   .CYCLES    SET	12
+      2  f0ac
+      3  f0ac				  -	      IF	.CYCLES < 2
+      4  f0ac				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f0ac				  -	      ERR
+      6  f0ac					      ENDIF
+      7  f0ac
+      8  f0ac				  -	      IF	.CYCLES & 1
+      9  f0ac				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f0ac				  -	      nop	0
+     11  f0ac				  -	      ELSE
+     12  f0ac				  -	      bit	VSYNC
+     13  f0ac				  -	      ENDIF
+     14  f0ac				  -.CYCLES    SET	.CYCLES - 3
+     15  f0ac					      ENDIF
+     16  f0ac
+     17  f0ac					      REPEAT	.CYCLES / 2
+     18  f0ac		       ea		      nop
+     17  f0ac					      REPEND
+     18  f0ad		       ea		      nop
+     17  f0ad					      REPEND
+     18  f0ae		       ea		      nop
+     17  f0ae					      REPEND
+     18  f0af		       ea		      nop
+     17  f0af					      REPEND
+     18  f0b0		       ea		      nop
+     17  f0b0					      REPEND
+     18  f0b1		       ea		      nop
+     19  f0b2					      REPEND
+    114  f0b2		       a9 00		      lda	#0
+    115  f0b4		       85 0d		      sta	PF0
+      0  f0b6					      SLEEP	8
+      1  f0b6				   .CYCLES    SET	8
+      2  f0b6
+      3  f0b6				  -	      IF	.CYCLES < 2
+      4  f0b6				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f0b6				  -	      ERR
+      6  f0b6					      ENDIF
+      7  f0b6
+      8  f0b6				  -	      IF	.CYCLES & 1
+      9  f0b6				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f0b6				  -	      nop	0
+     11  f0b6				  -	      ELSE
+     12  f0b6				  -	      bit	VSYNC
+     13  f0b6				  -	      ENDIF
+     14  f0b6				  -.CYCLES    SET	.CYCLES - 3
+     15  f0b6					      ENDIF
+     16  f0b6
+     17  f0b6					      REPEAT	.CYCLES / 2
+     18  f0b6		       ea		      nop
+     17  f0b6					      REPEND
+     18  f0b7		       ea		      nop
+     17  f0b7					      REPEND
+     18  f0b8		       ea		      nop
+     17  f0b8					      REPEND
+     18  f0b9		       ea		      nop
+     19  f0ba					      REPEND
+    117  f0ba		       a9 00		      lda	#0
+    118  f0bc		       85 0e		      sta	PF1
+    119  f0be		       a9 1e		      lda	#$1E
+    120  f0c0		       85 08		      sta	COLUPF	; set playfield color (sun)
+    121  f0c2		       ea		      nop
+    122  f0c3		       a9 60		      lda	#%01100000
+    123  f0c5		       85 0f		      sta	PF2
+    124  f0c7		       e8		      inx
+    125  f0c8		       e0 12		      cpx	#18	; are we at line 18?
+    126  f0ca		       d0 ce		      bne	LastSkyLines	; No, so do another
+    127  f0cc							;--------------------------------------------------------------------------
+    128  f0cc		       a9 00		      lda	#0	; PF0 is mirrored <--- direction, low
+    129  f0ce							; 4 bits ignored
+    130  f0ce		       85 0d		      sta	PF0
+    131  f0d0		       85 0e		      sta	PF1
+    132  f0d2		       85 0f		      sta	PF2
+    133  f0d4				   MiddleLines
+    134  f0d4		       85 02		      sta	WSYNC
+    135  f0d6		       e8		      inx
+    136  f0d7		       e0 8c		      cpx	#140
+    137  f0d9		       d0 f9		      bne	MiddleLines
+    138  f0db		       85 02		      sta	WSYNC
+    139  f0dd		       a9 c6		      lda	#$C6
+    140  f0df		       85 08		      sta	COLUPF	; set playfield color (tree leaves)
+      0  f0e1					      SLEEP	50
+      1  f0e1				   .CYCLES    SET	50
+      2  f0e1
+      3  f0e1				  -	      IF	.CYCLES < 2
+      4  f0e1				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f0e1				  -	      ERR
+      6  f0e1					      ENDIF
+      7  f0e1
+      8  f0e1				  -	      IF	.CYCLES & 1
+      9  f0e1				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f0e1				  -	      nop	0
+     11  f0e1				  -	      ELSE
+     12  f0e1				  -	      bit	VSYNC
+     13  f0e1				  -	      ENDIF
+     14  f0e1				  -.CYCLES    SET	.CYCLES - 3
+     15  f0e1					      ENDIF
+     16  f0e1
+     17  f0e1					      REPEAT	.CYCLES / 2
+     18  f0e1		       ea		      nop
+     17  f0e1					      REPEND
+     18  f0e2		       ea		      nop
+     17  f0e2					      REPEND
+     18  f0e3		       ea		      nop
+     17  f0e3					      REPEND
+     18  f0e4		       ea		      nop
+     17  f0e4					      REPEND
+     18  f0e5		       ea		      nop
+     17  f0e5					      REPEND
+     18  f0e6		       ea		      nop
+     17  f0e6					      REPEND
+     18  f0e7		       ea		      nop
+     17  f0e7					      REPEND
+     18  f0e8		       ea		      nop
+     17  f0e8					      REPEND
+     18  f0e9		       ea		      nop
+     17  f0e9					      REPEND
+     18  f0ea		       ea		      nop
+     17  f0ea					      REPEND
+     18  f0eb		       ea		      nop
+     17  f0eb					      REPEND
+     18  f0ec		       ea		      nop
+     17  f0ec					      REPEND
+     18  f0ed		       ea		      nop
+     17  f0ed					      REPEND
+     18  f0ee		       ea		      nop
+     17  f0ee					      REPEND
+     18  f0ef		       ea		      nop
+     17  f0ef					      REPEND
+     18  f0f0		       ea		      nop
+     17  f0f0					      REPEND
+     18  f0f1		       ea		      nop
+     17  f0f1					      REPEND
+     18  f0f2		       ea		      nop
+     17  f0f2					      REPEND
+     18  f0f3		       ea		      nop
+     17  f0f3					      REPEND
+     18  f0f4		       ea		      nop
+     17  f0f4					      REPEND
+     18  f0f5		       ea		      nop
+     17  f0f5					      REPEND
+     18  f0f6		       ea		      nop
+     17  f0f6					      REPEND
+     18  f0f7		       ea		      nop
+     17  f0f7					      REPEND
+     18  f0f8		       ea		      nop
+     17  f0f8					      REPEND
+     18  f0f9		       ea		      nop
+     19  f0fa					      REPEND
+    142  f0fa		       a9 10		      lda	#%00010000
+    143  f0fc		       85 0f		      sta	PF2	; set graphics for right side leaves
+    144  f0fe		       e8		      inx
+    145  f0ff							;--------------------------------------------------------------------------
+    146  f0ff				   Leaf1stLines
+    147  f0ff		       85 02		      sta	WSYNC
+    148  f101		       a9 00		      lda	#0
+    149  f103		       85 0f		      sta	PF2	; clear left side
+      0  f105					      SLEEP	50
+      1  f105				   .CYCLES    SET	50
+      2  f105
+      3  f105				  -	      IF	.CYCLES < 2
+      4  f105				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f105				  -	      ERR
+      6  f105					      ENDIF
+      7  f105
+      8  f105				  -	      IF	.CYCLES & 1
+      9  f105				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f105				  -	      nop	0
+     11  f105				  -	      ELSE
+     12  f105				  -	      bit	VSYNC
+     13  f105				  -	      ENDIF
+     14  f105				  -.CYCLES    SET	.CYCLES - 3
+     15  f105					      ENDIF
+     16  f105
+     17  f105					      REPEAT	.CYCLES / 2
+     18  f105		       ea		      nop
+     17  f105					      REPEND
+     18  f106		       ea		      nop
+     17  f106					      REPEND
+     18  f107		       ea		      nop
+     17  f107					      REPEND
+     18  f108		       ea		      nop
+     17  f108					      REPEND
+     18  f109		       ea		      nop
+     17  f109					      REPEND
+     18  f10a		       ea		      nop
+     17  f10a					      REPEND
+     18  f10b		       ea		      nop
+     17  f10b					      REPEND
+     18  f10c		       ea		      nop
+     17  f10c					      REPEND
+     18  f10d		       ea		      nop
+     17  f10d					      REPEND
+     18  f10e		       ea		      nop
+     17  f10e					      REPEND
+     18  f10f		       ea		      nop
+     17  f10f					      REPEND
+     18  f110		       ea		      nop
+     17  f110					      REPEND
+     18  f111		       ea		      nop
+     17  f111					      REPEND
+     18  f112		       ea		      nop
+     17  f112					      REPEND
+     18  f113		       ea		      nop
+     17  f113					      REPEND
+     18  f114		       ea		      nop
+     17  f114					      REPEND
+     18  f115		       ea		      nop
+     17  f115					      REPEND
+     18  f116		       ea		      nop
+     17  f116					      REPEND
+     18  f117		       ea		      nop
+     17  f117					      REPEND
+     18  f118		       ea		      nop
+     17  f118					      REPEND
+     18  f119		       ea		      nop
+     17  f119					      REPEND
+     18  f11a		       ea		      nop
+     17  f11a					      REPEND
+     18  f11b		       ea		      nop
+     17  f11b					      REPEND
+     18  f11c		       ea		      nop
+     17  f11c					      REPEND
+     18  f11d		       ea		      nop
+     19  f11e					      REPEND
+    151  f11e		       a9 10		      lda	#%00010000
+    152  f120		       85 0f		      sta	PF2	; write graphics for PF2(b) - right side leaves
+    153  f122		       e8		      inx
+    154  f123		       e0 95		      cpx	#149	; are we at line 149?
+    155  f125		       d0 d8		      bne	Leaf1stLines	; No, so do another
+    156  f127							;--------------------------------------------------------------------------
+    157  f127				   Leaf2ndLines
+    158  f127		       85 02		      sta	WSYNC
+    159  f129		       a9 80		      lda	#%10000000
+    160  f12b		       85 0d		      sta	PF0	; write graphics for PF0(a) - left side tree leaves
+    161  f12d		       a9 00		      lda	#0
+    162  f12f		       85 0e		      sta	PF1	; zero out graphics for PF1(a and b)
+    163  f131		       85 0f		      sta	PF2	; zero out graphics for PF2(a)
+      0  f133					      SLEEP	18
+      1  f133				   .CYCLES    SET	18
+      2  f133
+      3  f133				  -	      IF	.CYCLES < 2
+      4  f133				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f133				  -	      ERR
+      6  f133					      ENDIF
+      7  f133
+      8  f133				  -	      IF	.CYCLES & 1
+      9  f133				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f133				  -	      nop	0
+     11  f133				  -	      ELSE
+     12  f133				  -	      bit	VSYNC
+     13  f133				  -	      ENDIF
+     14  f133				  -.CYCLES    SET	.CYCLES - 3
+     15  f133					      ENDIF
+     16  f133
+     17  f133					      REPEAT	.CYCLES / 2
+     18  f133		       ea		      nop
+     17  f133					      REPEND
+     18  f134		       ea		      nop
+     17  f134					      REPEND
+     18  f135		       ea		      nop
+     17  f135					      REPEND
+     18  f136		       ea		      nop
+     17  f136					      REPEND
+     18  f137		       ea		      nop
+     17  f137					      REPEND
+     18  f138		       ea		      nop
+     17  f138					      REPEND
+     18  f139		       ea		      nop
+     17  f139					      REPEND
+     18  f13a		       ea		      nop
+     17  f13a					      REPEND
+     18  f13b		       ea		      nop
+     19  f13c					      REPEND
+    165  f13c		       a9 00		      lda	#0
+    166  f13e		       85 0d		      sta	PF0	; zero out graphics for PF0(b)
+      0  f140					      SLEEP	18
+      1  f140				   .CYCLES    SET	18
+      2  f140
+      3  f140				  -	      IF	.CYCLES < 2
+      4  f140				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f140				  -	      ERR
+      6  f140					      ENDIF
+      7  f140
+      8  f140				  -	      IF	.CYCLES & 1
+      9  f140				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f140				  -	      nop	0
+     11  f140				  -	      ELSE
+     12  f140				  -	      bit	VSYNC
+     13  f140				  -	      ENDIF
+     14  f140				  -.CYCLES    SET	.CYCLES - 3
+     15  f140					      ENDIF
+     16  f140
+     17  f140					      REPEAT	.CYCLES / 2
+     18  f140		       ea		      nop
+     17  f140					      REPEND
+     18  f141		       ea		      nop
+     17  f141					      REPEND
+     18  f142		       ea		      nop
+     17  f142					      REPEND
+     18  f143		       ea		      nop
+     17  f143					      REPEND
+     18  f144		       ea		      nop
+     17  f144					      REPEND
+     18  f145		       ea		      nop
+     17  f145					      REPEND
+     18  f146		       ea		      nop
+     17  f146					      REPEND
+     18  f147		       ea		      nop
+     17  f147					      REPEND
+     18  f148		       ea		      nop
+     19  f149					      REPEND
+    168  f149		       a9 38		      lda	#%00111000
+    169  f14b		       85 0f		      sta	PF2	; write graphics for PF2(b) - right side tree leaves
+    170  f14d		       e8		      inx
+    171  f14e		       e0 98		      cpx	#152	; are we at line 152?
+    172  f150		       d0 d5		      bne	Leaf2ndLines	; No, so do another
+    173  f152							;--------------------------------------------------------------------------
+    174  f152				   Leaf3rdLines
+    175  f152		       85 02		      sta	WSYNC
+    176  f154		       a9 c0		      lda	#%11000000
+    177  f156		       85 0d		      sta	PF0	; write graphics for PF0(a) - left side tree leaves
+    178  f158		       a9 80		      lda	#%10000000
+    179  f15a		       85 0e		      sta	PF1	; write graphics for PF1(a) - left side tree leaves
+    180  f15c		       a9 00		      lda	#0
+    181  f15e		       85 0f		      sta	PF2	; zero out graphics for PF2(a)
+      0  f160					      SLEEP	16
+      1  f160				   .CYCLES    SET	16
+      2  f160
+      3  f160				  -	      IF	.CYCLES < 2
+      4  f160				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f160				  -	      ERR
+      6  f160					      ENDIF
+      7  f160
+      8  f160				  -	      IF	.CYCLES & 1
+      9  f160				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f160				  -	      nop	0
+     11  f160				  -	      ELSE
+     12  f160				  -	      bit	VSYNC
+     13  f160				  -	      ENDIF
+     14  f160				  -.CYCLES    SET	.CYCLES - 3
+     15  f160					      ENDIF
+     16  f160
+     17  f160					      REPEAT	.CYCLES / 2
+     18  f160		       ea		      nop
+     17  f160					      REPEND
+     18  f161		       ea		      nop
+     17  f161					      REPEND
+     18  f162		       ea		      nop
+     17  f162					      REPEND
+     18  f163		       ea		      nop
+     17  f163					      REPEND
+     18  f164		       ea		      nop
+     17  f164					      REPEND
+     18  f165		       ea		      nop
+     17  f165					      REPEND
+     18  f166		       ea		      nop
+     17  f166					      REPEND
+     18  f167		       ea		      nop
+     19  f168					      REPEND
+    183  f168		       a9 00		      lda	#0
+    184  f16a		       85 0d		      sta	PF0	; zero out graphics for PF0(b)
+      0  f16c					      SLEEP	8
+      1  f16c				   .CYCLES    SET	8
+      2  f16c
+      3  f16c				  -	      IF	.CYCLES < 2
+      4  f16c				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f16c				  -	      ERR
+      6  f16c					      ENDIF
+      7  f16c
+      8  f16c				  -	      IF	.CYCLES & 1
+      9  f16c				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f16c				  -	      nop	0
+     11  f16c				  -	      ELSE
+     12  f16c				  -	      bit	VSYNC
+     13  f16c				  -	      ENDIF
+     14  f16c				  -.CYCLES    SET	.CYCLES - 3
+     15  f16c					      ENDIF
+     16  f16c
+     17  f16c					      REPEAT	.CYCLES / 2
+     18  f16c		       ea		      nop
+     17  f16c					      REPEND
+     18  f16d		       ea		      nop
+     17  f16d					      REPEND
+     18  f16e		       ea		      nop
+     17  f16e					      REPEND
+     18  f16f		       ea		      nop
+     19  f170					      REPEND
+    186  f170		       a9 00		      lda	#0
+    187  f172		       85 0e		      sta	PF1	; zero out graphics for PF1(b)
+      0  f174					      SLEEP	6
+      1  f174				   .CYCLES    SET	6
+      2  f174
+      3  f174				  -	      IF	.CYCLES < 2
+      4  f174				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f174				  -	      ERR
+      6  f174					      ENDIF
+      7  f174
+      8  f174				  -	      IF	.CYCLES & 1
+      9  f174				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f174				  -	      nop	0
+     11  f174				  -	      ELSE
+     12  f174				  -	      bit	VSYNC
+     13  f174				  -	      ENDIF
+     14  f174				  -.CYCLES    SET	.CYCLES - 3
+     15  f174					      ENDIF
+     16  f174
+     17  f174					      REPEAT	.CYCLES / 2
+     18  f174		       ea		      nop
+     17  f174					      REPEND
+     18  f175		       ea		      nop
+     17  f175					      REPEND
+     18  f176		       ea		      nop
+     19  f177					      REPEND
+    189  f177		       a9 38		      lda	#%00111000
+    190  f179		       85 0f		      sta	PF2	; write graphics for PF2(b) - right side tree leaves
+    191  f17b		       e8		      inx
+    192  f17c		       e0 9c		      cpx	#156	; are we at line 156?
+    193  f17e		       d0 d2		      bne	Leaf3rdLines	; No, so do another
+    194  f180							;--------------------------------------------------------------------------
+    195  f180				   Leaf4thLines
+    196  f180		       85 02		      sta	WSYNC
+    197  f182		       a9 e0		      lda	#%11100000
+    198  f184		       85 0d		      sta	PF0	; write graphics for PF0(a) - left side tree leaves
+    199  f186		       a9 c0		      lda	#%11000000
+    200  f188		       85 0e		      sta	PF1	; write graphics for PF1(a) - left side tree leaves
+    201  f18a		       a9 00		      lda	#0
+    202  f18c		       85 0f		      sta	PF2	; zero out graphics for PF2(a)
+      0  f18e					      SLEEP	16
+      1  f18e				   .CYCLES    SET	16
+      2  f18e
+      3  f18e				  -	      IF	.CYCLES < 2
+      4  f18e				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f18e				  -	      ERR
+      6  f18e					      ENDIF
+      7  f18e
+      8  f18e				  -	      IF	.CYCLES & 1
+      9  f18e				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f18e				  -	      nop	0
+     11  f18e				  -	      ELSE
+     12  f18e				  -	      bit	VSYNC
+     13  f18e				  -	      ENDIF
+     14  f18e				  -.CYCLES    SET	.CYCLES - 3
+     15  f18e					      ENDIF
+     16  f18e
+     17  f18e					      REPEAT	.CYCLES / 2
+     18  f18e		       ea		      nop
+     17  f18e					      REPEND
+     18  f18f		       ea		      nop
+     17  f18f					      REPEND
+     18  f190		       ea		      nop
+     17  f190					      REPEND
+     18  f191		       ea		      nop
+     17  f191					      REPEND
+     18  f192		       ea		      nop
+     17  f192					      REPEND
+     18  f193		       ea		      nop
+     17  f193					      REPEND
+     18  f194		       ea		      nop
+     17  f194					      REPEND
+     18  f195		       ea		      nop
+     19  f196					      REPEND
+    204  f196		       a9 00		      lda	#0
+    205  f198		       85 0d		      sta	PF0	; zero out graphics for PF0(b)
+      0  f19a					      SLEEP	8
+      1  f19a				   .CYCLES    SET	8
+      2  f19a
+      3  f19a				  -	      IF	.CYCLES < 2
+      4  f19a				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f19a				  -	      ERR
+      6  f19a					      ENDIF
+      7  f19a
+      8  f19a				  -	      IF	.CYCLES & 1
+      9  f19a				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f19a				  -	      nop	0
+     11  f19a				  -	      ELSE
+     12  f19a				  -	      bit	VSYNC
+     13  f19a				  -	      ENDIF
+     14  f19a				  -.CYCLES    SET	.CYCLES - 3
+     15  f19a					      ENDIF
+     16  f19a
+     17  f19a					      REPEAT	.CYCLES / 2
+     18  f19a		       ea		      nop
+     17  f19a					      REPEND
+     18  f19b		       ea		      nop
+     17  f19b					      REPEND
+     18  f19c		       ea		      nop
+     17  f19c					      REPEND
+     18  f19d		       ea		      nop
+     19  f19e					      REPEND
+    207  f19e		       a9 00		      lda	#0
+    208  f1a0		       85 0e		      sta	PF1	; zero out graphics for PF1(b)
+      0  f1a2					      SLEEP	6
+      1  f1a2				   .CYCLES    SET	6
+      2  f1a2
+      3  f1a2				  -	      IF	.CYCLES < 2
+      4  f1a2				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f1a2				  -	      ERR
+      6  f1a2					      ENDIF
+      7  f1a2
+      8  f1a2				  -	      IF	.CYCLES & 1
+      9  f1a2				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f1a2				  -	      nop	0
+     11  f1a2				  -	      ELSE
+     12  f1a2				  -	      bit	VSYNC
+     13  f1a2				  -	      ENDIF
+     14  f1a2				  -.CYCLES    SET	.CYCLES - 3
+     15  f1a2					      ENDIF
+     16  f1a2
+     17  f1a2					      REPEAT	.CYCLES / 2
+     18  f1a2		       ea		      nop
+     17  f1a2					      REPEND
+     18  f1a3		       ea		      nop
+     17  f1a3					      REPEND
+     18  f1a4		       ea		      nop
+     19  f1a5					      REPEND
+    210  f1a5		       a9 38		      lda	#%00111000
+    211  f1a7		       85 0f		      sta	PF2	; write graphics for PF2(b) - right side tree leaves
+    212  f1a9		       e8		      inx
+    213  f1aa		       e0 9e		      cpx	#158	; are we at line 158?
+    214  f1ac		       d0 d2		      bne	Leaf4thLines	; No, so do another
+    215  f1ae							;--------------------------------------------------------------------------
+    216  f1ae				   LastLeafLines
+    217  f1ae		       85 02		      sta	WSYNC
+    218  f1b0		       a9 e0		      lda	#%11100000
+    219  f1b2		       85 0d		      sta	PF0	; write graphics for PF0(a) - left side tree leaves
+    220  f1b4		       a9 c0		      lda	#%11000000
+    221  f1b6		       85 0e		      sta	PF1	; write graphics for PF1(a) - left side tree leaves
+    222  f1b8		       a9 00		      lda	#0
+    223  f1ba		       85 0f		      sta	PF2	; zero out graphics for PF2(a)
+      0  f1bc					      SLEEP	16
+      1  f1bc				   .CYCLES    SET	16
+      2  f1bc
+      3  f1bc				  -	      IF	.CYCLES < 2
+      4  f1bc				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f1bc				  -	      ERR
+      6  f1bc					      ENDIF
+      7  f1bc
+      8  f1bc				  -	      IF	.CYCLES & 1
+      9  f1bc				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f1bc				  -	      nop	0
+     11  f1bc				  -	      ELSE
+     12  f1bc				  -	      bit	VSYNC
+     13  f1bc				  -	      ENDIF
+     14  f1bc				  -.CYCLES    SET	.CYCLES - 3
+     15  f1bc					      ENDIF
+     16  f1bc
+     17  f1bc					      REPEAT	.CYCLES / 2
+     18  f1bc		       ea		      nop
+     17  f1bc					      REPEND
+     18  f1bd		       ea		      nop
+     17  f1bd					      REPEND
+     18  f1be		       ea		      nop
+     17  f1be					      REPEND
+     18  f1bf		       ea		      nop
+     17  f1bf					      REPEND
+     18  f1c0		       ea		      nop
+     17  f1c0					      REPEND
+     18  f1c1		       ea		      nop
+     17  f1c1					      REPEND
+     18  f1c2		       ea		      nop
+     17  f1c2					      REPEND
+     18  f1c3		       ea		      nop
+     19  f1c4					      REPEND
+    225  f1c4		       a9 00		      lda	#0
+    226  f1c6		       85 0d		      sta	PF0	; zero out graphics for PF0(b)
+      0  f1c8					      SLEEP	8
+      1  f1c8				   .CYCLES    SET	8
+      2  f1c8
+      3  f1c8				  -	      IF	.CYCLES < 2
+      4  f1c8				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f1c8				  -	      ERR
+      6  f1c8					      ENDIF
+      7  f1c8
+      8  f1c8				  -	      IF	.CYCLES & 1
+      9  f1c8				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f1c8				  -	      nop	0
+     11  f1c8				  -	      ELSE
+     12  f1c8				  -	      bit	VSYNC
+     13  f1c8				  -	      ENDIF
+     14  f1c8				  -.CYCLES    SET	.CYCLES - 3
+     15  f1c8					      ENDIF
+     16  f1c8
+     17  f1c8					      REPEAT	.CYCLES / 2
+     18  f1c8		       ea		      nop
+     17  f1c8					      REPEND
+     18  f1c9		       ea		      nop
+     17  f1c9					      REPEND
+     18  f1ca		       ea		      nop
+     17  f1ca					      REPEND
+     18  f1cb		       ea		      nop
+     19  f1cc					      REPEND
+    228  f1cc		       a9 00		      lda	#0
+    229  f1ce		       85 0e		      sta	PF1	; zero out graphics for PF1(b)
+      0  f1d0					      SLEEP	6
+      1  f1d0				   .CYCLES    SET	6
+      2  f1d0
+      3  f1d0				  -	      IF	.CYCLES < 2
+      4  f1d0				  -	      ECHO	"MACRO ERROR: 'SLEEP': Duration must be > 1"
+      5  f1d0				  -	      ERR
+      6  f1d0					      ENDIF
+      7  f1d0
+      8  f1d0				  -	      IF	.CYCLES & 1
+      9  f1d0				  -	      IFNCONST	NO_ILLEGAL_OPCODES
+     10  f1d0				  -	      nop	0
+     11  f1d0				  -	      ELSE
+     12  f1d0				  -	      bit	VSYNC
+     13  f1d0				  -	      ENDIF
+     14  f1d0				  -.CYCLES    SET	.CYCLES - 3
+     15  f1d0					      ENDIF
+     16  f1d0
+     17  f1d0					      REPEAT	.CYCLES / 2
+     18  f1d0		       ea		      nop
+     17  f1d0					      REPEND
+     18  f1d1		       ea		      nop
+     17  f1d1					      REPEND
+     18  f1d2		       ea		      nop
+     19  f1d3					      REPEND
+    231  f1d3		       a9 7c		      lda	#%01111100
+    232  f1d5		       85 0f		      sta	PF2	; write graphics for PF2(b) - right side tree leaves
+    233  f1d7		       e8		      inx
+    234  f1d8		       e0 a4		      cpx	#164	; are we at line 164?
+    235  f1da		       d0 d2		      bne	LastLeafLines	; No, so do another
+    236  f1dc							;--------------------------------------------------------------------------
+    237  f1dc		       a9 01		      lda	#%00000001
+    238  f1de		       85 0a		      sta	CTRLPF	; reflect playfield
+    239  f1e0		       a9 00		      lda	#0
+    240  f1e2		       85 0f		      sta	PF2	; zero out graphics for PF2(a and b)
+    241  f1e4		       a9 20		      lda	#$20
+    242  f1e6		       85 08		      sta	COLUPF	; set playfield color (tree trunk)
+    243  f1e8		       a9 80		      lda	#%10000000
+    244  f1ea		       85 0d		      sta	PF0
+    245  f1ec							;--------------------------------------------------------------------------
+    246  f1ec				   TreeTrunkLines
+    247  f1ec		       85 02		      sta	WSYNC
+    248  f1ee		       e8		      inx
+    249  f1ef		       e0 b6		      cpx	#182	; are we at line 182?
+    250  f1f1		       d0 f9		      bne	TreeTrunkLines	; No, so do another
+    251  f1f3							;--------------------------------------------------------------------------
+    252  f1f3		       a9 da		      lda	#$DA
+    253  f1f5		       85 08		      sta	COLUPF	; set playfield color (grass)
+    254  f1f7		       a9 98		      lda	#$98
+    255  f1f9		       85 09		      sta	COLUBK	; set background color (water)
+    256  f1fb		       a9 ff		      lda	#%11111111
+    257  f1fd		       85 0d		      sta	PF0	; fill in graphics for PF0 (a and b)
+    258  f1ff		       85 0e		      sta	PF1	; fill in graphics for PF1 (a and b)
+    259  f201		       a9 07		      lda	#%00000111
+    260  f203		       85 0f		      sta	PF2	; set graphics for first line of pond
+    261  f205							;--------------------------------------------------------------------------
+    262  f205							; Pond Lines Follow:
+    263  f205		       85 02		      sta	WSYNC
+    264  f207		       e8		      inx
+    265  f208		       a9 0f		      lda	#%00001111
+    266  f20a		       85 0f		      sta	PF2	; set graphics for second line of pond
+    267  f20c		       85 02		      sta	WSYNC
+    268  f20e		       e8		      inx
+    269  f20f		       a9 1f		      lda	#%00011111
+    270  f211		       85 0f		      sta	PF2	; set graphics for third line of pond
+    271  f213		       85 02		      sta	WSYNC
+    272  f215		       e8		      inx
+    273  f216		       a9 ff		      lda	#%11111111
+    274  f218		       85 0f		      sta	PF2	; fill in graphics for PF2 (a and b) - grass
+    275  f21a							;--------------------------------------------------------------------------
+    276  f21a				   Bottom6Lines
+    277  f21a		       85 02		      sta	WSYNC
+    278  f21c		       e8		      inx
+    279  f21d		       e0 c0		      cpx	#192
+    280  f21f		       d0 f9		      bne	Bottom6Lines
+    281  f221							;--------------------------------------------------------------------------
+    282  f221		       a9 42		      lda	#%01000010
+    283  f223		       85 01		      sta	VBLANK	; end of screen - enter blanking
+    284  f225							; 30 scanlines of overscan...
+    285  f225		       a2 00		      ldx	#0
+    286  f227				   Overscan
+    287  f227		       85 02		      sta	WSYNC
+    288  f229		       e8		      inx
+    289  f22a		       e0 1e		      cpx	#30
+    290  f22c		       d0 f9		      bne	Overscan
+    291  f22e		       4c 11 f0 	      jmp	StartOfFrame
+    292  f231							;------------------------------------------------------------------------------
+    293  fffa					      ORG	$FFFA
+    294  fffa				   InterruptVectors
+    295  fffa		       00 f0		      .word.w	Reset	; NMI
+    296  fffc		       00 f0		      .word.w	Reset	; RESET
+    297  fffe		       00 f0		      .word.w	Reset	; IRQ
+    298  fffe					      END

@@ -44,8 +44,6 @@ uint8_t ntsc_outline_color[] = {155, 155, 0};
 
 // condition flags
 uint8_t tia_fwsync = 0;
-uint8_t tia_fvblank_top = 0;
-uint8_t tia_fvblank_bottom = 0;
 uint8_t tia_fvsync = 0;
 uint8_t tia_fcolubk = 0;
 
@@ -112,42 +110,8 @@ void tia_process_until(uint8_t condition) {
 
     switch (condition) {
         case TIA_WSYNC:
-            while (tia_fwsync) {
-                tia_process_cycle();
-            }
             while (!tia_fwsync) {
                 tia_process_cycle();
-            }
-            break;
-        case TIA_VSYNC:
-                break;
-            if (program_memory[TIA_VSYNC] == 0) {
-                while (tia_fvsync) {
-                    tia_process_cycle();
-
-                }
-                while (!tia_fvsync) {
-                    tia_process_cycle();
-                }
-            } else {
-                printf("skipping this vsync\n");
-            }
-            break;
-        case TIA_VBLANK:
-            if (program_memory[TIA_VBLANK] == 0) {
-                while (tia_fvblank_top) {
-                    tia_process_cycle();
-                }
-                while (!tia_fvblank_top) {
-                    tia_process_cycle();
-                }
-            } else {
-                while (tia_fvblank_bottom) {
-                    tia_process_cycle();
-                }
-                while (!tia_fvblank_bottom) {
-                    tia_process_cycle();
-                }
             }
             break;
         default:
@@ -157,16 +121,10 @@ void tia_process_until(uint8_t condition) {
 
     //printf("tia_process_until done at %d, %d\n", tia_scanline_x, tia_scanline);
     waiting_condition = 0xff;
-
 }
 
 inline void tia_process_flags() {
-    if (tia_scanline_x == 0) {
-        tia_fvsync = (tia_scanline == 3) ? 1 : 0;
-        tia_fvblank_bottom = (tia_scanline >= 232) ? 1 : 0;
-        tia_fvblank_top = (tia_scanline < 3) ? 1 : 0;
-    }
-    tia_fwsync = (tia_scanline_x == 66) ? 1 : 0;
+    tia_fwsync = (tia_scanline_x == 0) ?1 : 0;
 }
 
 inline const uint32_t* ntsc_color(uint8_t byte) {
@@ -175,9 +133,7 @@ inline const uint32_t* ntsc_color(uint8_t byte) {
     // ntsc_colors is a big array running one hue at a time
     int x = (byte & 0xf) / 2;
     int y = (byte & 0xf0) >> 4;
-    const uint32_t *color = ntsc_colors[y * 8 + x];
-    //const uint32_t *color = ntsc_colors[((byte & 0xf0) >> 4) * 8 + ((byte & 0xf) /2)];
-    return color;
+    return ntsc_colors[y * 8 + x];
 }
 
 void tia_colubk_set() {
@@ -186,6 +142,7 @@ void tia_colubk_set() {
 
 
 inline uint8_t tia_process_cycle() {
+    //printf("processing cycle: (%d, %d)\n", tia_scanline_x, tia_scanline);
     uint8_t ret = 0xff;
 
     const uint32_t *color = NULL;
@@ -257,7 +214,7 @@ inline uint8_t tia_process_cycle() {
         }
     }
 
-    if (color == NULL && tia_fcolubk) {
+    if (color == NULL) {// && tia_fcolubk) {
         color = ntsc_color(program_memory[TIA_COLUBK]);
     }
 
@@ -284,7 +241,6 @@ inline uint8_t tia_process_cycle() {
             printf("frame time: %d, framerate: %f\n", (int)diff, 1000.0/avg);
             #endif
             tia_framestart = tia_frameend;
-            
         }
     }
 
@@ -310,6 +266,33 @@ inline uint8_t tia_process_cycle() {
     return ret;
 }
 
+uint8_t tia_write_memory(uint16_t addr, unsigned char data) {
+    //printf("tia_write_memory %x, %x\n", addr, data);
+    switch (addr) {
+        case TIA_WSYNC:
+            tia_process_until(TIA_WSYNC);
+            return 1;
+        case TIA_VSYNC:
+            if (program_memory[TIA_VSYNC] & TIA_VSYNC_START_BIT) {
+                tia_fvsync = 1;
+                tia_scanline = 0;
+                tia_scanline_x = 0;
+                tia_fcolubk = 0;
+                tia_fwsync = 1;
+            } else {
+                tia_fvsync = 0;
+            }
+            return 0;
+
+        case TIA_VBLANK:
+            return 0;
+        case TIA_COLUBK:
+            tia_colubk_set();
+            return 0;
+    }
+    return 0;
+}
+
 int tia_start(unsigned char *pmem) {
     if (tia_started) {
         return 1;
@@ -317,9 +300,9 @@ int tia_start(unsigned char *pmem) {
 
     program_memory = pmem;
     tia_started = 1;
+
     tia_scanline = 0;
     tia_scanline_x = 0;
-    tia_process_flags();
 
     tia_ticksum = 0;
     tia_ticklist = (int *)calloc(TIA_FRAMERATE_MAX_SAMPLES, sizeof(int));

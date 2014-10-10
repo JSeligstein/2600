@@ -16,7 +16,8 @@ const uint8_t TIA_PF1 = 0xE;        // next 8 bytes of platfield
 const uint8_t TIA_PF2 = 0xF;        // last 8 bytes of playfield
 
 
-const uint8_t TIA_MIRROR_BIT = 0x1; // part of TIA_CTRLPF: should we mirror playfield?
+const uint8_t TIA_VSYNC_START_BIT = 0x2;    // flag to start vsync (TIA_VSYNC)
+const uint8_t TIA_MIRROR_BIT = 0x1;         // mirror playfield (TIA_CTRLPF)
 
 void *tia_exec_thread(void *param);
 void *tia_hold_open_thread(void *param);
@@ -25,6 +26,7 @@ void tia_end();
 int tia_start(unsigned char *pmem);
 uint8_t tia_process_cycle();
 void tia_process_until(uint8_t condition);
+uint8_t tia_write_memory(uint16_t addr, unsigned char data);
 void tia_colubk_set();
 
 extern const uint32_t ntsc_colors[][3];
