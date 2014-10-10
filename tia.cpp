@@ -185,7 +185,6 @@ void tia_colubk_set() {
 }
 
 
-int abc = 0, def = 0;
 inline uint8_t tia_process_cycle() {
     uint8_t ret = 0xff;
 
@@ -193,7 +192,6 @@ inline uint8_t tia_process_cycle() {
     uint8_t flag;
 
     // first check if there's a playfield active
-
     if (tia_scanline_x < 68) {
         // no pf
     } else if (tia_scanline_x < 84) {

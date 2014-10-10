@@ -156,8 +156,7 @@ inline int core_cycle(int cycles_to_execute) {
                     if (memory[pc] & 0x80) {
                         pc -= (0xff - memory[pc]);
                     } else {
-                        // we've already incremented pc, so jump forward fewer
-                        pc += memory[pc] - 1 ;
+                        pc += memory[pc] + 1;
                     }
                     cycles_left -= 3;
                 }
@@ -242,6 +241,7 @@ void reset() {
 }
 
 int readRom(char *path) {
+    printf("loading rom: %s\n", path);
     FILE *fp = fopen(path, "rb");
     if (!fp) {
         printf("Could not load rom: %s", path);
@@ -270,13 +270,3 @@ int main(int argc, char **argv) {
 
 
 
-
-
-
-
-
-
-
-
-
-    
